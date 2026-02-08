@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/summary.js": {
+      "maxDuration": 15
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",

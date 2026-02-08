@@ -4,17 +4,17 @@
  */
 
 const SECTION_CONFIG = {
-  'KEY MESSAGES': { display: 'Key Messages', priority: 0, collapsed: false, special: true },
+  'KEY MESSAGES': { display: 'Key Messages', priority: 8, collapsed: true, special: true },
   'SYNOPSIS': { display: 'Synopsis', priority: 1, collapsed: false },
   'SHORT TERM': { display: 'Short Term', priority: 2, collapsed: false },
   'NEAR TERM': { display: 'Near Term', priority: 2, collapsed: false },
   'LONG TERM': { display: 'Long Term', priority: 3, collapsed: false },
   'EXTENDED': { display: 'Extended', priority: 3, collapsed: false },
-  'AVIATION': { display: 'Aviation', priority: 5, collapsed: true },
-  'MARINE': { display: 'Marine', priority: 4, collapsed: false },
+  'AVIATION': { display: 'Aviation', priority: 50, collapsed: true, supplemental: true },
+  'MARINE': { display: 'Marine', priority: 50, collapsed: true, supplemental: true },
   'FIRE WEATHER': { display: 'Fire Weather', priority: 4, collapsed: false },
   'CLIMATE': { display: 'Climate', priority: 6, collapsed: true },
-  'HYDROLOGY': { display: 'Hydrology', priority: 4, collapsed: true },
+  'HYDROLOGY': { display: 'Hydrology', priority: 5, collapsed: true },
   'UPDATE': { display: 'Update', priority: 0, collapsed: false }
 };
 
@@ -164,6 +164,7 @@ function extractSections(text) {
       priority: config.priority,
       collapsed: config.collapsed,
       isSpecial: config.special || false,
+      isSupplemental: config.supplemental || false,
       isWWA,
       timestamp: sectionTimestamp,
       timeRange,

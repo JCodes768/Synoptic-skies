@@ -146,75 +146,105 @@ function renderForecast(periods) {
 
 function renderAFD(parsed) {
   const container = document.getElementById('afd-content');
+  const supplementalContainer = document.getElementById('supplemental-content');
   if (!container) return;
 
   // Update header timestamp
   const timestampEl = document.getElementById('afd-timestamp');
   if (timestampEl && parsed.timestamp) {
-    timestampEl.textContent = `Issued: ${parsed.timestamp}`;
+    timestampEl.textContent = parsed.timestamp;
   }
 
   container.innerHTML = '';
 
-  for (const section of parsed.sections) {
+  // Separate main vs supplemental sections
+  const mainSections = parsed.sections.filter(s => !s.isSupplemental);
+  const supplementalSections = parsed.sections.filter(s => s.isSupplemental);
+
+  for (const section of mainSections) {
     if (section.isWWA && section.body.trim().toLowerCase() === 'none.') continue;
-
-    const sectionEl = document.createElement('section');
-    sectionEl.className = `afd-section${section.isSpecial ? ' afd-section-special' : ''}${section.isWWA ? ' afd-section-alert' : ''}`;
-    sectionEl.setAttribute('data-section', section.name);
-
-    const headerHTML = `
-      <div class="afd-section-header ${section.collapsed ? 'collapsible collapsed' : 'collapsible'}">
-        <h2 class="afd-section-title">
-          ${section.collapsed ? '<span class="collapse-indicator" aria-hidden="true"></span>' : ''}
-          ${escapeHTML(section.displayName)}
-        </h2>
-        ${section.timeRange ? `<span class="afd-section-range">${escapeHTML(section.timeRange)}</span>` : ''}
-        ${section.author ? `<span class="afd-section-author">Forecaster: ${escapeHTML(section.author)}</span>` : ''}
-      </div>
-    `;
-
-    const bodyHTML = bodyToHTML(section.body, section.isSpecial);
-
-    sectionEl.innerHTML = `
-      ${headerHTML}
-      <div class="afd-section-body ${section.collapsed ? 'collapsed' : ''}">${bodyHTML}</div>
-    `;
-
-    if (section.collapsed) {
-      const header = sectionEl.querySelector('.afd-section-header');
-      header.addEventListener('click', () => {
-        header.classList.toggle('collapsed');
-        sectionEl.querySelector('.afd-section-body').classList.toggle('collapsed');
-      });
-      header.style.cursor = 'pointer';
-    }
-
-    container.appendChild(sectionEl);
+    container.appendChild(buildSectionElement(section));
   }
 
   container.classList.remove('loading');
 
-  // Highlight glossary terms in the rendered AFD
+  // Render supplemental sections (Marine, Aviation)
+  if (supplementalContainer && supplementalSections.length > 0) {
+    const wrapper = document.getElementById('supplemental-wrapper');
+    if (wrapper) wrapper.style.display = 'block';
+
+    for (const section of supplementalSections) {
+      supplementalContainer.appendChild(buildSectionElement(section));
+    }
+  }
+
+  // Highlight glossary terms in both containers
   highlightTerms(container);
+  if (supplementalContainer) highlightTerms(supplementalContainer);
+}
+
+function buildSectionElement(section) {
+  const sectionEl = document.createElement('section');
+  sectionEl.className = `afd-section${section.isSpecial ? ' afd-section-special' : ''}${section.isWWA ? ' afd-section-alert' : ''}`;
+  sectionEl.setAttribute('data-section', section.name);
+
+  const headerHTML = `
+    <div class="afd-section-header ${section.collapsed ? 'collapsible collapsed' : 'collapsible'}">
+      <h2 class="afd-section-title">
+        ${section.collapsed ? '<span class="collapse-indicator" aria-hidden="true"></span>' : ''}
+        ${escapeHTML(section.displayName)}
+      </h2>
+      ${section.timeRange ? `<span class="afd-section-range">${escapeHTML(section.timeRange)}</span>` : ''}
+      ${section.author ? `<span class="afd-section-author">Forecaster: ${escapeHTML(section.author)}</span>` : ''}
+    </div>
+  `;
+
+  const bodyHTML = bodyToHTML(section.body, section.isSpecial);
+
+  sectionEl.innerHTML = `
+    ${headerHTML}
+    <div class="afd-section-body ${section.collapsed ? 'collapsed' : ''}">${bodyHTML}</div>
+  `;
+
+  if (section.collapsed) {
+    const header = sectionEl.querySelector('.afd-section-header');
+    header.addEventListener('click', () => {
+      header.classList.toggle('collapsed');
+      sectionEl.querySelector('.afd-section-body').classList.toggle('collapsed');
+    });
+    header.style.cursor = 'pointer';
+  }
+
+  return sectionEl;
 }
 
 function renderAlerts(alerts) {
   const el = document.getElementById('alerts');
   if (!el) return;
 
+  el.style.display = 'block';
+
   if (!alerts || alerts.length === 0) {
-    el.style.display = 'none';
+    el.innerHTML = `
+      <div class="alerts-header">
+        <h2 class="alerts-title">Active Alerts</h2>
+      </div>
+      <p class="alerts-none">No active alerts for this area.</p>
+    `;
     return;
   }
 
-  el.style.display = 'block';
-  el.innerHTML = alerts.map(alert => `
-    <div class="alert-item alert-${alert.severity.toLowerCase()}">
-      <div class="alert-event">${escapeHTML(alert.event)}</div>
-      <div class="alert-headline">${escapeHTML(alert.headline || '')}</div>
+  el.innerHTML = `
+    <div class="alerts-header">
+      <h2 class="alerts-title">Active Alerts</h2>
     </div>
-  `).join('');
+    ${alerts.map(alert => `
+      <div class="alert-item alert-${alert.severity.toLowerCase()}">
+        <div class="alert-event">${escapeHTML(alert.event)}</div>
+        <div class="alert-headline">${escapeHTML(alert.headline || '')}</div>
+      </div>
+    `).join('')}
+  `;
 }
 
 function renderForecasterCard(authors) {
@@ -233,6 +263,78 @@ function renderForecasterCard(authors) {
     <div class="forecaster-credit">authored today's forecast discussion</div>
   `;
   el.style.display = 'block';
+}
+
+// ── The Gist (AI Summary) ───────────────────────────────────
+
+const GIST_CACHE_KEY = 'synoptic-skies-gist';
+let currentAfdText = null;
+let currentAfdId = null;
+
+function initGist() {
+  const btn = document.getElementById('gist-btn');
+  if (!btn) return;
+
+  // Check for cached summary
+  try {
+    const cached = sessionStorage.getItem(GIST_CACHE_KEY);
+    if (cached) {
+      const { summary, afdId } = JSON.parse(cached);
+      if (afdId && afdId === currentAfdId) {
+        showGistSummary(summary);
+        return;
+      }
+    }
+  } catch (e) { /* ignore */ }
+
+  btn.addEventListener('click', fetchGistSummary);
+}
+
+async function fetchGistSummary() {
+  const contentEl = document.getElementById('gist-content');
+  if (!contentEl || !currentAfdText) return;
+
+  contentEl.innerHTML = '<p class="gist-loading">Generating summary&hellip;</p>';
+
+  try {
+    const response = await fetch('/api/summary', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ afdText: currentAfdText, afdId: currentAfdId })
+    });
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    const summary = data.summary;
+
+    // Cache the result
+    try {
+      sessionStorage.setItem(GIST_CACHE_KEY, JSON.stringify({
+        summary,
+        afdId: currentAfdId
+      }));
+    } catch (e) { /* ok */ }
+
+    showGistSummary(summary);
+  } catch (err) {
+    console.error('Gist fetch failed:', err);
+    contentEl.innerHTML = `
+      <p class="gist-error">Unable to generate summary. Try again later.</p>
+      <button id="gist-btn" class="gist-btn" style="margin-top:var(--space-sm)">Retry</button>
+    `;
+    contentEl.querySelector('#gist-btn')?.addEventListener('click', fetchGistSummary);
+  }
+}
+
+function showGistSummary(summary) {
+  const contentEl = document.getElementById('gist-content');
+  if (!contentEl) return;
+
+  contentEl.innerHTML = `
+    <p class="gist-text">${escapeHTML(summary)}</p>
+    <p class="gist-disclaimer">Generated by AI — always refer to the full forecast discussion below.</p>
+  `;
 }
 
 // ── Loading & Error States ──────────────────────────────────
@@ -281,6 +383,11 @@ async function init() {
     const parsed = parseAFD(afdResult.value.productText);
     renderAFD(parsed);
     renderForecasterCard(parsed.authors);
+
+    // Store AFD for Gist feature
+    currentAfdText = afdResult.value.productText;
+    currentAfdId = afdResult.value.id;
+    initGist();
 
     // Select and show term of the day based on AFD content
     selectTermOfTheDay(afdResult.value.productText);

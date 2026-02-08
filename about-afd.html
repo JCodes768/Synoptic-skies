@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="What is an Area Forecast Discussion? Learn about the NWS forecaster narratives that power Synoptic Skies.">
+  <title>About the AFD — Synoptic Skies</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <a href="index.html" class="site-title"><span>Synoptic Skies</span></a>
+        <div class="header-subtitle">About the Area Forecast Discussion</div>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" aria-label="Switch to dark mode">Dark Mode</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="about-page">
+    <h1>About the Area Forecast Discussion</h1>
+    <p class="about-page-intro">
+      The Area Forecast Discussion is one of the most fascinating — and least known — products the National Weather Service publishes every day. Written by real human forecasters, it's the narrative behind the numbers.
+    </p>
+
+    <section class="about-section">
+      <h2>What Is an AFD?</h2>
+      <p>
+        An Area Forecast Discussion (AFD) is a free-form text product issued several times daily by each of the 122 National Weather Service Weather Forecast Offices (WFOs) across the United States. Unlike the structured, machine-friendly forecasts that populate weather apps, the AFD is a forecaster writing in their own voice — explaining <em>why</em> the weather is doing what it's doing and <em>what</em> they expect to happen next.
+      </p>
+      <p>
+        Each AFD typically covers the synoptic-scale (large-scale) weather pattern, the short-term forecast (next day or two), the extended outlook, and any hazardous weather considerations. Some offices also include marine, aviation, fire weather, and hydrology sections.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>A Brief History</h2>
+      <p>
+        The AFD has its roots in the internal forecast reasoning notes that meteorologists at NWS offices shared among themselves starting in the 1960s. As technology evolved, these discussions were formalized and eventually made available to the public via NOAA Weather Wire, and later the internet.
+      </p>
+      <p>
+        Today, AFDs are freely accessible through the NWS API and remain one of the few weather products where you can read a real human forecaster's reasoning process — their confidence levels, the models they trust (or don't), and the tricky judgment calls they face every shift.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>How to Read an AFD</h2>
+      <p>
+        AFDs are written in a shorthand that can seem intimidating at first. Forecasters use abbreviations like "sfc" (surface), "aloft" (upper atmosphere), and reference numerical weather models by name — GFS, ECMWF (the "Euro"), NAM, HRRR. Don't worry if you don't know what these mean yet; that's exactly why we built the <a href="glossary.html">glossary</a>.
+      </p>
+      <p>
+        The most important thing to know: the AFD tells you the <em>story</em> of the weather. Start with the Synopsis for the big picture, then read the Short Term for what's coming soon. The Long Term gives you the week-ahead outlook. Sections like Aviation and Marine serve specialized audiences.
+      </p>
+      <blockquote>
+        "The AFD is the weather forecast for people who want to understand the weather, not just survive it."
+      </blockquote>
+    </section>
+
+    <section class="about-section">
+      <h2>The Forecasters</h2>
+      <p>
+        Every AFD is written and signed by a real meteorologist working at a local Weather Forecast Office. These are highly trained professionals who blend numerical model guidance with their deep understanding of local geography, microclimates, and weather patterns.
+      </p>
+      <p>
+        The San Francisco Bay Area AFD is produced by the WFO in Monterey, California (office code MTR). This office covers a region with extraordinary geographic and climatic diversity — from coastal fog to inland valleys, mountain snow to urban microclimates. Their forecasters are experts in the interplay between the Pacific Ocean, the Coast Ranges, and the Central Valley.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>Why This Matters</h2>
+      <p>
+        In an age of algorithmic weather apps and AI-generated forecasts, the AFD is a reminder that weather forecasting is fundamentally a human endeavor. Numerical models provide the raw ingredients, but it takes a skilled forecaster to weigh conflicting model guidance, account for local effects, and communicate uncertainty.
+      </p>
+      <p>
+        Synoptic Skies exists to make this remarkable public resource more accessible. We believe that understanding the "why" behind the weather — not just the "what" — makes you a more informed citizen and a better decision-maker when weather matters.
+      </p>
+      <p>
+        All data on this site comes directly from the National Weather Service and is free, public, and open. We don't modify the forecast text — we just make it easier to read.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data from the National Weather Service / NOAA</p>
+    <div class="footer-links">
+      <a href="index.html">Back to Forecast</a>
+      <a href="glossary.html">Glossary</a>
+      <a href="https://github.com/JCodes768/Synoptic-skies" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initTheme } from './js/theme.js';
+    initTheme();
+  </script>
+
+</body>
+</html>

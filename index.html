@@ -22,14 +22,12 @@
       <div class="header-brand">
         <h1 class="site-title"><span>Synoptic Skies</span></h1>
         <div class="header-subtitle">
-          NWS Area Forecast Discussion for <strong>San Francisco Bay Area</strong>
-        </div>
-        <div class="header-office-meta">
-          Issued by <strong>MTR</strong> &mdash; San Francisco, CA &middot;
-          <span id="afd-timestamp">Loading...</span>
+          NWS <strong>San Francisco Bay Area</strong> &middot; WFO <strong>MTR</strong>, Monterey CA &middot;
+          <span id="afd-timestamp">Loading&hellip;</span>
         </div>
       </div>
       <div class="header-actions">
+        <a href="about-afd.html" class="header-about-link">About the AFD</a>
         <div class="text-size-controls" role="group" aria-label="Text size">
           <button id="text-decrease" aria-label="Decrease text size" title="Smaller text">A&minus;</button>
           <button id="text-increase" aria-label="Increase text size" title="Larger text">A+</button>
@@ -45,6 +43,18 @@
     <!-- Left Column: AFD Content -->
     <div class="main-content">
       <div id="alerts"></div>
+
+      <!-- The Gist: AI-powered summary -->
+      <div id="gist-wrapper" class="gist-wrapper">
+        <div class="gist-header">
+          <h2 class="gist-title">The Gist</h2>
+          <span class="gist-badge">AI Summary</span>
+        </div>
+        <div id="gist-content" class="gist-content">
+          <button id="gist-btn" class="gist-btn">Summarize today's forecast</button>
+        </div>
+      </div>
+
       <div id="afd-content" class="loading"></div>
     </div>
 
@@ -79,10 +89,19 @@
 
   </main>
 
+  <!-- Supplemental Forecasts (Marine, Aviation) -->
+  <div id="supplemental-wrapper" class="supplemental-wrapper" style="display:none;">
+    <div class="supplemental-inner">
+      <h2 class="supplemental-heading">Supplemental Forecasts</h2>
+      <div id="supplemental-content"></div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="site-footer">
     <p>Data from the National Weather Service / NOAA &middot; Not for life-safety decisions</p>
     <div class="footer-links">
+      <a href="about-afd.html">About the AFD</a>
       <a href="glossary.html">Glossary</a>
       <a href="https://github.com/JCodes768/Synoptic-skies" target="_blank" rel="noopener">GitHub</a>
     </div>

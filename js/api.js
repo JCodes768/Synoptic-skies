@@ -10,7 +10,7 @@ const USER_AGENT = '(synopticskies.com, joshcodes@proton.me)';
 export const CONFIG = {
   office: 'MTR',
   officeName: 'San Francisco Bay Area',
-  officeCity: 'San Francisco',
+  officeCity: 'Monterey',
   officeState: 'CA',
   station: 'KSFO',
   gridpoint: { wfo: 'MTR', x: 85, y: 105 },

@@ -25,8 +25,8 @@
   --color-accent-glow: rgba(212, 133, 59, 0.15);
   --color-border: #ddd5c8;
   --color-border-light: #ece6d9;
-  --color-gradient-start: #d4853b;
-  --color-gradient-end: #e8a85c;
+  --color-gradient-start: #e87a2e;
+  --color-gradient-end: #2563a8;
   --color-link: #b56a24;
   --color-link-hover: #8f5219;
 
@@ -328,7 +328,6 @@ a.site-title {
 /* ── Alerts ──────────────────────────────────────────────────── */
 
 #alerts {
-  display: none;
   margin-bottom: var(--space-lg);
 }
 
@@ -440,7 +439,6 @@ a.site-title {
   width: 100%;
   height: auto;
   display: block;
-  filter: grayscale(1);
   opacity: 0;
   transition: opacity var(--transition-slow);
 }
@@ -987,6 +985,213 @@ a.site-title {
 
 .glossary-entry[open] .glossary-entry-term {
   color: var(--color-accent);
+}
+
+/* ── Header About Link ─────────────────────────────────────── */
+
+.header-about-link {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.header-about-link:hover {
+  color: var(--color-accent);
+}
+
+/* ── Alerts Section ────────────────────────────────────────── */
+
+.alerts-header {
+  margin-bottom: var(--space-sm);
+}
+
+.alerts-title {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+}
+
+.alerts-none {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: var(--space-sm) 0;
+}
+
+/* ── The Gist ──────────────────────────────────────────────── */
+
+.gist-wrapper {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.gist-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--color-gradient-start), var(--color-gradient-end), transparent) 1;
+}
+
+.gist-title {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.gist-badge {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-accent);
+  background: var(--color-accent-glow);
+  padding: 2px var(--space-sm);
+  border-radius: var(--border-radius);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.gist-content {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.gist-btn {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  padding: var(--space-sm) var(--space-lg);
+  background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  letter-spacing: 0.3px;
+}
+.gist-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+.gist-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.gist-loading {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.gist-text {
+  white-space: pre-wrap;
+}
+
+.gist-error {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-alert-text);
+}
+
+.gist-disclaimer {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-md);
+  font-style: italic;
+}
+
+/* ── Supplemental Forecasts ────────────────────────────────── */
+
+.supplemental-wrapper {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--space-lg) var(--space-xl);
+}
+
+.supplemental-inner {
+  border-top: 2px solid var(--color-border);
+  padding-top: var(--space-xl);
+}
+
+.supplemental-heading {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+/* ── About the AFD Page ────────────────────────────────────── */
+
+.about-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+}
+
+.about-page h1 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.about-page-intro {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-2xl);
+}
+
+.about-section {
+  margin-bottom: var(--space-2xl);
+}
+
+.about-section h2 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--color-gradient-start), var(--color-gradient-end), transparent) 1;
+}
+
+.about-section p {
+  font-size: var(--font-size-base);
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.about-section p:last-child {
+  margin-bottom: 0;
+}
+
+.about-section blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: var(--space-lg);
+  margin: var(--space-lg) 0;
+  font-style: italic;
+  color: var(--color-text-muted);
 }
 
 /* ── Responsive: Tablet ─────────────────────────────────────── */
