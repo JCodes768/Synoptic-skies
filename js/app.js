@@ -464,7 +464,7 @@ async function loadAllData() {
   currentAfdId = null;
   const gistContent = document.getElementById('gist-content');
   if (gistContent) {
-    gistContent.innerHTML = '<button id="gist-btn" class="gist-btn">Summarize today\'s forecast</button>';
+    gistContent.innerHTML = '<button id="gist-btn" class="gist-btn">Summarize the forecast, then read the human\'s below</button>';
   }
 
   // Fetch all API data in parallel

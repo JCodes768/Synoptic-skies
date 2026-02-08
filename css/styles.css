@@ -370,8 +370,7 @@ a.site-title {
 }
 
 .weather-icon {
-  filter: grayscale(1);
-  opacity: 0.85;
+  opacity: 0.9;
   transition: filter var(--transition-base);
 }
 
@@ -648,14 +647,13 @@ a.site-title {
 /* ── Glossary ───────────────────────────────────────────────── */
 
 .glossary-term {
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-decoration-color: var(--color-glossary-underline);
-  text-underline-offset: 3px;
-  text-decoration-thickness: 2px;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--color-gradient-start), var(--color-gradient-end)) 1;
+  padding-bottom: 1px;
   cursor: help;
   transition: background-color var(--transition-fast);
-  border-radius: 2px;
+  border-radius: 0;
 }
 
 .glossary-term:hover,
