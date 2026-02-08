@@ -3,7 +3,7 @@
  * Orchestrates data fetching, rendering, and UI interactions.
  */
 
-import { fetchLatestAFD, fetchCurrentConditions, fetchForecast, fetchAlerts, CONFIG } from './api.js';
+import { fetchLatestAFD, fetchCurrentConditions, fetchForecast, fetchAlerts, lookupZip, CONFIG } from './api.js';
 import { parseAFD, bodyToHTML } from './afd-parser.js';
 import { loadGlossary, initGlossaryUI, highlightTerms, selectTermOfTheDay, showTermOfTheDay } from './glossary.js';
 import { initSatellite } from './satellite.js';
@@ -355,23 +355,110 @@ function showError(elementId, message) {
   }
 }
 
+// ── Zip Code Location ───────────────────────────────────────
+
+const ZIP_STORAGE_KEY = 'synoptic-skies-zip';
+
+function initZipInput() {
+  const form = document.getElementById('zip-form');
+  const input = document.getElementById('zip-input');
+  const status = document.getElementById('zip-status');
+  if (!form || !input) return;
+
+  // Restore saved zip
+  const savedZip = localStorage.getItem(ZIP_STORAGE_KEY);
+  if (savedZip) input.value = savedZip;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const zip = input.value.trim();
+    if (!/^\d{5}$/.test(zip)) {
+      if (status) status.textContent = 'Enter a 5-digit zip';
+      return;
+    }
+
+    if (status) status.textContent = 'Looking up...';
+    input.disabled = true;
+
+    try {
+      await lookupZip(zip);
+      localStorage.setItem(ZIP_STORAGE_KEY, zip);
+      updateHeaderForLocation();
+      await loadAllData();
+      if (status) status.textContent = '';
+    } catch (err) {
+      console.error('Zip lookup failed:', err);
+      if (status) status.textContent = err.message || 'Lookup failed';
+    } finally {
+      input.disabled = false;
+    }
+  });
+}
+
+function updateHeaderForLocation() {
+  const subtitleEl = document.querySelector('.header-subtitle');
+  if (!subtitleEl) return;
+
+  const timestampEl = document.getElementById('afd-timestamp');
+  const timeText = timestampEl?.textContent || 'Loading\u2026';
+
+  subtitleEl.innerHTML = `
+    NWS <strong>${escapeHTML(CONFIG.officeName)}</strong> &middot;
+    WFO <strong>${escapeHTML(CONFIG.office)}</strong>, ${escapeHTML(CONFIG.officeCity)} ${escapeHTML(CONFIG.officeState)} &middot;
+    <span id="afd-timestamp">${escapeHTML(timeText)}</span>
+  `;
+
+  document.title = `Synoptic Skies \u2014 ${CONFIG.officeName} Forecast Discussion`;
+}
+
 // ── Initialization ──────────────────────────────────────────
 
 async function init() {
   initTheme();
   initTextSize();
+  initZipInput();
 
   // Set up glossary sidebar
   const glossarySidebar = document.getElementById('glossary-content');
   initGlossaryUI(glossarySidebar);
 
+  // Load glossary data first (needed before AFD rendering)
+  await loadGlossary();
+
+  // Check for saved zip and apply it before loading data
+  const savedZip = localStorage.getItem(ZIP_STORAGE_KEY);
+  if (savedZip && savedZip !== CONFIG.zip) {
+    try {
+      await lookupZip(savedZip);
+      updateHeaderForLocation();
+    } catch (e) {
+      console.warn('Saved zip lookup failed, using default:', e);
+      localStorage.removeItem(ZIP_STORAGE_KEY);
+    }
+  }
+
+  await loadAllData();
+}
+
+async function loadAllData() {
   // Show loading states
   showLoading('current-conditions');
   showLoading('forecast');
   showLoading('afd-content');
 
-  // Load glossary data first (needed before AFD rendering)
-  await loadGlossary();
+  // Clear supplemental container
+  const supplementalContainer = document.getElementById('supplemental-content');
+  if (supplementalContainer) supplementalContainer.innerHTML = '';
+  const supplementalWrapper = document.getElementById('supplemental-wrapper');
+  if (supplementalWrapper) supplementalWrapper.style.display = 'none';
+
+  // Reset Gist state
+  currentAfdText = null;
+  currentAfdId = null;
+  const gistContent = document.getElementById('gist-content');
+  if (gistContent) {
+    gistContent.innerHTML = '<button id="gist-btn" class="gist-btn">Summarize today\'s forecast</button>';
+  }
 
   // Fetch all API data in parallel
   const [afdResult, conditionsResult, forecastResult, alertsResult] = await Promise.allSettled([

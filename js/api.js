@@ -14,6 +14,9 @@ export const CONFIG = {
   officeState: 'CA',
   station: 'KSFO',
   gridpoint: { wfo: 'MTR', x: 85, y: 105 },
+  lat: 37.7516,
+  lon: -122.4477,
+  zip: '94110'
 };
 
 const headers = {
@@ -146,8 +149,8 @@ export async function fetchForecast() {
  * Fetch active weather alerts for the area
  */
 export async function fetchAlerts() {
-  const url = `${API_BASE}/alerts/active?point=37.7516,-122.4477`;
-  const data = await apiFetch(url, 'alerts-mtr', 300000);
+  const url = `${API_BASE}/alerts/active?point=${CONFIG.lat},${CONFIG.lon}`;
+  const data = await apiFetch(url, `alerts-${CONFIG.office}`, 300000);
 
   if (!data.features || data.features.length === 0) {
     return [];
@@ -162,6 +165,84 @@ export async function fetchAlerts() {
     onset: f.properties.onset,
     expires: f.properties.expires
   }));
+}
+
+/**
+ * Look up a US zip code and update CONFIG for that location.
+ * Uses zippopotam.us for geocoding, then NWS /points for WFO metadata.
+ */
+export async function lookupZip(zip) {
+  // 1. Geocode zip → lat/lon
+  const geoResp = await fetch(`https://api.zippopotam.us/us/${zip}`);
+  if (!geoResp.ok) throw new Error('Invalid zip code');
+  const geoData = await geoResp.json();
+  const place = geoData.places[0];
+  const lat = parseFloat(place.latitude);
+  const lon = parseFloat(place.longitude);
+
+  // 2. NWS point metadata → WFO, gridpoint, station list
+  const pointsUrl = `${API_BASE}/points/${lat.toFixed(4)},${lon.toFixed(4)}`;
+  const pointsResp = await fetch(pointsUrl, { headers });
+  if (!pointsResp.ok) throw new Error('Location not supported by NWS');
+  const pointsData = await pointsResp.json();
+  const props = pointsData.properties;
+
+  // 3. Nearest observation station
+  let nearestStation = CONFIG.station;
+  try {
+    const stationsResp = await fetch(props.observationStations, { headers });
+    const stationsData = await stationsResp.json();
+    nearestStation = stationsData.features?.[0]?.properties?.stationIdentifier || nearestStation;
+  } catch (e) { /* fall back to default */ }
+
+  // 4. WFO office name
+  let officeName = props.cwa;
+  try {
+    const officeResp = await fetch(`${API_BASE}/offices/${props.cwa}`, { headers });
+    const officeData = await officeResp.json();
+    officeName = officeData.name || props.cwa;
+  } catch (e) { /* fall back to code */ }
+
+  // Clean up office name — remove state suffix like ", CA"
+  officeName = officeName.replace(/,\s*[A-Z]{2}$/, '');
+
+  // 5. WFO city from relative location
+  const relCity = props.relativeLocation?.properties?.city || place['place name'];
+  const relState = props.relativeLocation?.properties?.state || place['state abbreviation'];
+
+  // 6. Update CONFIG in place (ES module export)
+  Object.assign(CONFIG, {
+    office: props.cwa,
+    officeName,
+    officeCity: relCity,
+    officeState: relState,
+    station: nearestStation,
+    gridpoint: { wfo: props.cwa, x: props.gridX, y: props.gridY },
+    lat,
+    lon,
+    zip
+  });
+
+  // 7. Clear stale caches
+  clearCaches();
+
+  return CONFIG;
+}
+
+/**
+ * Clear session caches so fresh data is fetched for a new location.
+ */
+function clearCaches() {
+  const keysToRemove = [];
+  for (let i = 0; i < sessionStorage.length; i++) {
+    const key = sessionStorage.key(i);
+    if (key.startsWith('afd-') || key.startsWith('conditions-') ||
+        key.startsWith('forecast-') || key.startsWith('alerts-') ||
+        key === 'synoptic-skies-gist') {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach(k => sessionStorage.removeItem(k));
 }
 
 // -- Unit conversion helpers --
