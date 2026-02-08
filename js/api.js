@@ -168,17 +168,34 @@ export async function fetchAlerts() {
 }
 
 /**
- * Look up a US zip code and update CONFIG for that location.
- * Uses zippopotam.us for geocoding, then NWS /points for WFO metadata.
+ * Look up a location (zip or city, state) and update CONFIG.
+ * Accepts "94110" or "San Francisco, CA".
  */
-export async function lookupZip(zip) {
-  // 1. Geocode zip → lat/lon
-  const geoResp = await fetch(`https://api.zippopotam.us/us/${zip}`);
-  if (!geoResp.ok) throw new Error('Invalid zip code');
-  const geoData = await geoResp.json();
-  const place = geoData.places[0];
-  const lat = parseFloat(place.latitude);
-  const lon = parseFloat(place.longitude);
+export async function lookupLocation(query) {
+  const trimmed = query.trim();
+  let lat, lon;
+
+  if (/^\d{5}$/.test(trimmed)) {
+    // Zip code → use zippopotam.us
+    const geoResp = await fetch(`https://api.zippopotam.us/us/${trimmed}`);
+    if (!geoResp.ok) throw new Error('Invalid zip code');
+    const geoData = await geoResp.json();
+    const place = geoData.places[0];
+    lat = parseFloat(place.latitude);
+    lon = parseFloat(place.longitude);
+  } else {
+    // City, State → use Nominatim (OpenStreetMap)
+    const encoded = encodeURIComponent(trimmed + ', United States');
+    const nomResp = await fetch(
+      `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=1&countrycodes=us`,
+      { headers: { 'User-Agent': 'SynopticSkies/1.0 (synopticskies.com)' } }
+    );
+    if (!nomResp.ok) throw new Error('Geocoding failed');
+    const nomData = await nomResp.json();
+    if (!nomData.length) throw new Error('Location not found');
+    lat = parseFloat(nomData[0].lat);
+    lon = parseFloat(nomData[0].lon);
+  }
 
   // 2. NWS point metadata → WFO, gridpoint, station list
   const pointsUrl = `${API_BASE}/points/${lat.toFixed(4)},${lon.toFixed(4)}`;
@@ -220,7 +237,7 @@ export async function lookupZip(zip) {
     gridpoint: { wfo: props.cwa, x: props.gridX, y: props.gridY },
     lat,
     lon,
-    zip
+    query: query.trim()
   });
 
   // 7. Clear stale caches

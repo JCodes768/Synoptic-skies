@@ -3,7 +3,7 @@
  * Orchestrates data fetching, rendering, and UI interactions.
  */
 
-import { fetchLatestAFD, fetchCurrentConditions, fetchForecast, fetchAlerts, lookupZip, CONFIG } from './api.js';
+import { fetchLatestAFD, fetchCurrentConditions, fetchForecast, fetchAlerts, lookupLocation, CONFIG } from './api.js';
 import { parseAFD, bodyToHTML } from './afd-parser.js';
 import { loadGlossary, initGlossaryUI, highlightTerms, selectTermOfTheDay, showTermOfTheDay } from './glossary.js';
 import { initSatellite } from './satellite.js';
@@ -270,17 +270,19 @@ function renderForecasterCard(authors) {
 const GIST_CACHE_KEY = 'synoptic-skies-gist';
 let currentAfdText = null;
 let currentAfdId = null;
+let currentPointForecast = null;
 
 function initGist() {
   const btn = document.getElementById('gist-btn');
   if (!btn) return;
 
-  // Check for cached summary
+  // Check for cached summary (keyed by AFD ID + location)
+  const cacheId = `${currentAfdId}-${CONFIG.officeCity}`;
   try {
     const cached = sessionStorage.getItem(GIST_CACHE_KEY);
     if (cached) {
-      const { summary, afdId } = JSON.parse(cached);
-      if (afdId && afdId === currentAfdId) {
+      const { summary, id } = JSON.parse(cached);
+      if (id && id === cacheId) {
         showGistSummary(summary);
         return;
       }
@@ -300,7 +302,12 @@ async function fetchGistSummary() {
     const response = await fetch('/api/summary', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ afdText: currentAfdText, afdId: currentAfdId })
+      body: JSON.stringify({
+        afdText: currentAfdText,
+        afdId: currentAfdId,
+        location: `${CONFIG.officeCity}, ${CONFIG.officeState}`,
+        pointForecast: currentPointForecast
+      })
     });
 
     const data = await response.json();
@@ -311,11 +318,11 @@ async function fetchGistSummary() {
 
     const summary = data.summary;
 
-    // Cache the result
+    // Cache the result (keyed by AFD ID + location)
     try {
       sessionStorage.setItem(GIST_CACHE_KEY, JSON.stringify({
         summary,
-        afdId: currentAfdId
+        id: `${currentAfdId}-${CONFIG.officeCity}`
       }));
     } catch (e) { /* ok */ }
 
@@ -357,23 +364,23 @@ function showError(elementId, message) {
 
 // ── Zip Code Location ───────────────────────────────────────
 
-const ZIP_STORAGE_KEY = 'synoptic-skies-zip';
+const LOCATION_STORAGE_KEY = 'synoptic-skies-location';
 
-function initZipInput() {
+function initLocationInput() {
   const form = document.getElementById('zip-form');
   const input = document.getElementById('zip-input');
   const status = document.getElementById('zip-status');
   if (!form || !input) return;
 
-  // Restore saved zip
-  const savedZip = localStorage.getItem(ZIP_STORAGE_KEY);
-  if (savedZip) input.value = savedZip;
+  // Restore saved location
+  const saved = localStorage.getItem(LOCATION_STORAGE_KEY);
+  if (saved) input.value = saved;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const zip = input.value.trim();
-    if (!/^\d{5}$/.test(zip)) {
-      if (status) status.textContent = 'Enter a 5-digit zip';
+    const query = input.value.trim();
+    if (!query) {
+      if (status) status.textContent = 'Enter a zip or city, state';
       return;
     }
 
@@ -381,13 +388,13 @@ function initZipInput() {
     input.disabled = true;
 
     try {
-      await lookupZip(zip);
-      localStorage.setItem(ZIP_STORAGE_KEY, zip);
+      await lookupLocation(query);
+      localStorage.setItem(LOCATION_STORAGE_KEY, query);
       updateHeaderForLocation();
       await loadAllData();
       if (status) status.textContent = '';
     } catch (err) {
-      console.error('Zip lookup failed:', err);
+      console.error('Location lookup failed:', err);
       if (status) status.textContent = err.message || 'Lookup failed';
     } finally {
       input.disabled = false;
@@ -416,7 +423,7 @@ function updateHeaderForLocation() {
 async function init() {
   initTheme();
   initTextSize();
-  initZipInput();
+  initLocationInput();
 
   // Set up glossary sidebar
   const glossarySidebar = document.getElementById('glossary-content');
@@ -425,15 +432,15 @@ async function init() {
   // Load glossary data first (needed before AFD rendering)
   await loadGlossary();
 
-  // Check for saved zip and apply it before loading data
-  const savedZip = localStorage.getItem(ZIP_STORAGE_KEY);
-  if (savedZip && savedZip !== CONFIG.zip) {
+  // Check for saved location and apply it before loading data
+  const savedLocation = localStorage.getItem(LOCATION_STORAGE_KEY);
+  if (savedLocation) {
     try {
-      await lookupZip(savedZip);
+      await lookupLocation(savedLocation);
       updateHeaderForLocation();
     } catch (e) {
-      console.warn('Saved zip lookup failed, using default:', e);
-      localStorage.removeItem(ZIP_STORAGE_KEY);
+      console.warn('Saved location lookup failed, using default:', e);
+      localStorage.removeItem(LOCATION_STORAGE_KEY);
     }
   }
 
@@ -498,6 +505,10 @@ async function loadAllData() {
   // Render forecast
   if (forecastResult.status === 'fulfilled') {
     renderForecast(forecastResult.value);
+    // Store point forecast for Gist personalization
+    currentPointForecast = forecastResult.value.slice(0, 4)
+      .map(p => `${p.name}: ${p.detailedForecast}`)
+      .join(' ');
   } else {
     showError('forecast', 'Unable to load forecast.');
     console.error('Forecast fetch failed:', forecastResult.reason);

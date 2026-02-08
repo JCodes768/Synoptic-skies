@@ -27,8 +27,8 @@
         </div>
         <form id="zip-form" class="zip-form" autocomplete="off">
           <label for="zip-input" class="zip-label">Location:</label>
-          <input id="zip-input" type="text" inputmode="numeric" pattern="\d{5}" maxlength="5"
-            placeholder="Zip code" aria-label="Enter zip code to change location" class="zip-input">
+          <input id="zip-input" type="text" maxlength="60"
+            placeholder="Zip or City, ST" aria-label="Enter zip code or city, state" class="zip-input">
           <button type="submit" class="zip-go" aria-label="Go">Go</button>
           <span id="zip-status" class="zip-status"></span>
         </form>

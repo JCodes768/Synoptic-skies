@@ -4,25 +4,34 @@
  */
 
 const SECTION_CONFIG = {
-  'KEY MESSAGES': { display: 'Key Messages', priority: 8, collapsed: true, special: true },
+  // Core narrative sections (expanded by default)
+  'UPDATE': { display: 'Update', priority: 0, collapsed: false },
+  'WHAT HAS CHANGED': { display: 'What Has Changed', priority: 0, collapsed: false },
   'SYNOPSIS': { display: 'Synopsis', priority: 1, collapsed: false },
+  'DISCUSSION': { display: 'Discussion', priority: 1, collapsed: false },
   'SHORT TERM': { display: 'Short Term', priority: 2, collapsed: false },
   'NEAR TERM': { display: 'Near Term', priority: 2, collapsed: false },
   'LONG TERM': { display: 'Long Term', priority: 3, collapsed: false },
   'EXTENDED': { display: 'Extended', priority: 3, collapsed: false },
+  'FIRE WEATHER': { display: 'Fire Weather', priority: 4, collapsed: false },
+  'HYDROLOGY': { display: 'Hydrology', priority: 5, collapsed: false },
+
+  // Deprioritized / collapsed sections
+  'KEY MESSAGES': { display: 'Key Messages', priority: 8, collapsed: true, special: true },
+  'CLIMATE': { display: 'Climate', priority: 6, collapsed: true },
+  'PRELIMINARY POINT TEMPS/POPS': { display: 'Point Temps & PoPs', priority: 7, collapsed: true },
+  'SPOTTER INFORMATION STATEMENT': { display: 'Spotter Info', priority: 9, collapsed: true },
+
+  // Supplemental sections (separate area below main content)
   'AVIATION': { display: 'Aviation', priority: 50, collapsed: true, supplemental: true },
   'MARINE': { display: 'Marine', priority: 50, collapsed: true, supplemental: true },
-  'FIRE WEATHER': { display: 'Fire Weather', priority: 4, collapsed: false },
-  'CLIMATE': { display: 'Climate', priority: 6, collapsed: true },
-  'HYDROLOGY': { display: 'Hydrology', priority: 5, collapsed: true },
-  'UPDATE': { display: 'Update', priority: 0, collapsed: false }
 };
 
 // Only these section names are valid for author attribution
 const VALID_AUTHOR_SECTIONS = new Set([
-  'SYNOPSIS', 'SHORT TERM', 'NEAR TERM', 'LONG TERM', 'EXTENDED',
+  'SYNOPSIS', 'DISCUSSION', 'SHORT TERM', 'NEAR TERM', 'LONG TERM', 'EXTENDED',
   'AVIATION', 'MARINE', 'FIRE WEATHER', 'CLIMATE', 'HYDROLOGY',
-  'UPDATE', 'KEY MESSAGES'
+  'UPDATE', 'KEY MESSAGES', 'WHAT HAS CHANGED'
 ]);
 
 /**

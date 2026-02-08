@@ -1004,7 +1004,7 @@ a.site-title {
 }
 
 .zip-input {
-  width: 68px;
+  width: 140px;
   padding: 3px var(--space-sm);
   font-family: var(--font-mono);
   font-size: var(--font-size-xs);
@@ -1014,8 +1014,7 @@ a.site-title {
   border-radius: var(--border-radius) 0 0 var(--border-radius);
   outline: none;
   transition: border-color var(--transition-fast);
-  letter-spacing: 1px;
-  text-align: center;
+  letter-spacing: 0.3px;
 }
 .zip-input:focus {
   border-color: var(--color-accent);

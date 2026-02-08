@@ -81,6 +81,7 @@ export function initSatellite(container, lat = 37.7516, lon = -122.4477) {
 
   const img = container.querySelector('.satellite-image');
   const loading = container.querySelector('.satellite-loading');
+  const caption = container.querySelector('.satellite-caption');
 
   img.onload = () => {
     loading.style.display = 'none';
@@ -88,6 +89,15 @@ export function initSatellite(container, lat = 37.7516, lon = -122.4477) {
   };
 
   img.onerror = () => {
+    // Try alternate satellite designation (GOES16↔GOES19 transition)
+    const altSat = sat === 'GOES16' ? 'GOES19' : sat === 'GOES19' ? 'GOES16' : null;
+    if (altSat && !img.dataset.retried) {
+      img.dataset.retried = 'true';
+      const altUrl = `${CDN_BASE}/${altSat}/ABI/SECTOR/${sector}/GEOCOLOR/1200x1200.jpg`;
+      img.src = altUrl;
+      caption.textContent = `${altSat === 'GOES19' ? 'GOES-East' : satLabel} GeoColor \u00B7 ${sectorName} \u00B7 CIRA/NOAA`;
+      return;
+    }
     loading.textContent = 'Satellite imagery unavailable';
     loading.classList.add('satellite-error');
     img.style.display = 'none';
