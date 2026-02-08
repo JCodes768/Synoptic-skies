@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Synoptic Skies — The NWS Area Forecast Discussion, presented as a readable, visual, educational experience. The forecaster's narrative is the centerpiece.">
+  <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1318" media="(prefers-color-scheme: dark)">
+
+  <title>Synoptic Skies — Bay Area Forecast Discussion</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Preconnect to API and font origins -->
+  <link rel="preconnect" href="https://api.weather.gov">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <h1 class="site-title"><span>Synoptic Skies</span></h1>
+        <div class="header-office">NWS San Francisco Bay Area (MTR)</div>
+      </div>
+      <div class="header-meta">
+        <span id="afd-timestamp">Loading forecast...</span>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" aria-label="Switch to dark mode">Dark Mode</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main Layout ─────────────────────────────────────────── -->
+  <main class="main-layout">
+
+    <!-- ── Left Column: AFD Content ──────────────────────────── -->
+    <div class="main-content">
+
+      <!-- Alerts (shown if any active) -->
+      <div id="alerts"></div>
+
+      <!-- AFD Sections -->
+      <div id="afd-content" class="loading"></div>
+
+    </div>
+
+    <!-- ── Right Column: Sidebar ─────────────────────────────── -->
+    <aside class="sidebar">
+
+      <!-- Current Conditions -->
+      <div class="widget widget-conditions">
+        <h3 class="widget-title">Current Conditions</h3>
+        <div id="current-conditions" class="loading"></div>
+      </div>
+
+      <!-- Satellite -->
+      <div class="widget widget-satellite">
+        <h3 class="widget-title">Satellite</h3>
+        <div id="satellite"></div>
+      </div>
+
+      <!-- Forecast -->
+      <div class="widget widget-forecast">
+        <h3 class="widget-title">Forecast</h3>
+        <div id="forecast" class="loading"></div>
+      </div>
+
+      <!-- Glossary -->
+      <div class="widget widget-glossary">
+        <h3 class="widget-title">Glossary</h3>
+        <div id="glossary-content">
+          <p class="glossary-default-text">Hover a highlighted term in the forecast discussion to learn more about it.</p>
+        </div>
+      </div>
+
+      <!-- Forecaster Card -->
+      <div class="widget widget-forecaster" id="forecaster-card"></div>
+
+    </aside>
+
+  </main>
+
+  <!-- ── Footer ──────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>Data from the National Weather Service / NOAA &middot; Not for life-safety decisions</p>
+    <div class="footer-links">
+      <a href="https://github.com/JCodes768/Synoptic-skies" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ─────────────────────────────────────────────── -->
+  <script type="module" src="js/app.js"></script>
+
+</body>
+</html>

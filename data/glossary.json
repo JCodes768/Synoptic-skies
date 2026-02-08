@@ -1,0 +1,269 @@
+{
+  "terms": [
+    {
+      "term": "trough",
+      "short": "An elongated area of low atmospheric pressure.",
+      "long": "A trough is an elongated region of relatively low atmospheric pressure, often associated with fronts. Upper-level troughs bring rising air, clouds, and precipitation. On weather maps, troughs appear as dips in the height contours, channeling storm systems and moisture."
+    },
+    {
+      "term": "ridge",
+      "short": "An elongated area of high atmospheric pressure.",
+      "long": "A ridge is an elongated region of relatively high atmospheric pressure — the opposite of a trough. Ridges bring sinking air, clear skies, and warmer temperatures. A strong ridge over the West Coast is often called a 'heat dome' in summer and can block incoming storm systems."
+    },
+    {
+      "term": "cold front",
+      "short": "The leading edge of a cooler air mass replacing warmer air.",
+      "long": "A cold front is the boundary where a mass of cold air advances and undercuts warmer air ahead of it. The warm air is forced upward, often producing a narrow band of clouds, showers, and sometimes thunderstorms. After the front passes, expect cooler temperatures, lower humidity, and clearing skies."
+    },
+    {
+      "term": "warm front",
+      "short": "The leading edge of a warmer air mass replacing cooler air.",
+      "long": "A warm front is the boundary where warm air advances over a retreating mass of cooler air. Because warm air is lighter, it rises gradually over the cooler air, creating a broad area of clouds and steady precipitation well ahead of the front's surface position. Warm fronts move slower than cold fronts."
+    },
+    {
+      "term": "occluded front",
+      "short": "A front formed when a cold front overtakes a warm front.",
+      "long": "An occluded front forms when a faster-moving cold front catches up to and merges with a warm front. The warm air is lifted entirely off the surface, trapped between two cooler air masses. Occluded fronts often bring prolonged periods of clouds and precipitation, and are associated with mature low-pressure systems."
+    },
+    {
+      "term": "stationary front",
+      "short": "A front with little or no movement.",
+      "long": "A stationary front is a boundary between two air masses that are not moving significantly. Neither the warm nor cold air is advancing. Stationary fronts can persist for days, bringing extended periods of cloudiness and precipitation along the boundary."
+    },
+    {
+      "term": "zonal flow",
+      "short": "West-to-east atmospheric flow with little north-south movement.",
+      "long": "Zonal flow describes a pattern where the jet stream and upper-level winds blow mostly from west to east with minimal north-south undulation. Zonal flow tends to keep weather systems moving quickly and prevents arctic air from plunging south or warm air from surging north. It typically brings benign, progressive weather."
+    },
+    {
+      "term": "meridional flow",
+      "short": "Atmospheric flow with strong north-south undulations.",
+      "long": "Meridional flow describes a jet stream pattern with deep troughs and ridges — strong north-south undulations. This pattern allows cold air to dive south and warm air to surge north, creating more extreme weather events. Blocking patterns and persistent weather anomalies are more common during meridional flow."
+    },
+    {
+      "term": "jet stream",
+      "short": "A fast, narrow band of wind in the upper atmosphere.",
+      "long": "The jet stream is a ribbon of strong winds (typically 100-200+ mph) at around 30,000 feet altitude, flowing roughly west to east. It marks the boundary between warm and cold air masses and steers surface weather systems. Storms tend to form and intensify along and south of the jet stream."
+    },
+    {
+      "term": "atmospheric river",
+      "short": "A long, narrow corridor of concentrated moisture transport.",
+      "long": "An atmospheric river (AR) is a corridor of water vapor roughly 250-375 miles wide that can extend thousands of miles from the tropics to higher latitudes. When an AR makes landfall, it can produce heavy rain and snow, especially on mountain slopes. California receives 30-50% of its annual precipitation from atmospheric rivers. They are ranked on a 1-5 scale from beneficial to hazardous."
+    },
+    {
+      "term": "IVT",
+      "short": "Integrated Vapor Transport — a measure of moisture flux in the atmosphere.",
+      "long": "Integrated Vapor Transport (IVT) measures the total amount of water vapor being transported through the atmosphere, calculated by integrating moisture and wind speed through the depth of the atmosphere. IVT is the primary metric used to identify and categorize atmospheric rivers. Values above 250 kg/m/s typically indicate an atmospheric river."
+    },
+    {
+      "term": "QPF",
+      "short": "Quantitative Precipitation Forecast — predicted rainfall amounts.",
+      "long": "QPF stands for Quantitative Precipitation Forecast — the forecasted amount of liquid-equivalent precipitation (rain, or melted snow) for a given period, usually expressed in inches. QPF is one of the most challenging aspects of weather forecasting, as small errors in storm track or intensity can dramatically change local rainfall totals."
+    },
+    {
+      "term": "precipitable water",
+      "short": "Total water vapor in a column of atmosphere, if condensed to liquid.",
+      "long": "Precipitable water (PWAT) is the total amount of water vapor contained in a vertical column of atmosphere from the surface to the top. If all the moisture in that column were condensed and collected, it would equal the precipitable water value (measured in inches). High PWAT values indicate a moisture-rich atmosphere capable of producing heavy precipitation."
+    },
+    {
+      "term": "dew point",
+      "short": "Temperature at which air becomes saturated and dew forms.",
+      "long": "The dew point is the temperature to which air must be cooled (at constant pressure) for water vapor to condense into liquid water. It's a direct measure of moisture content — higher dew points mean more moisture. Dew points above 60°F feel humid, above 70°F feel oppressive. In the Bay Area, dew points are typically in the 40s-50s°F."
+    },
+    {
+      "term": "CAPE",
+      "short": "Convective Available Potential Energy — a measure of atmospheric instability.",
+      "long": "CAPE (Convective Available Potential Energy) measures the amount of energy available for convection (thunderstorm development). It's calculated by comparing a rising air parcel's temperature to the surrounding environment. Higher CAPE values indicate greater instability and potential for strong updrafts. Values above 1000 J/kg suggest significant thunderstorm potential; above 2500 J/kg indicates severe weather risk."
+    },
+    {
+      "term": "CIN",
+      "short": "Convective Inhibition — energy suppressing thunderstorm development.",
+      "long": "Convective Inhibition (CIN) is a measure of the energy that prevents or suppresses convection. It acts as a 'cap' or 'lid' on the atmosphere — parcels of air must overcome this barrier before they can rise freely and form thunderstorms. A strong cap can suppress storms even when CAPE is high, but if the cap breaks, explosive development can occur."
+    },
+    {
+      "term": "wind shear",
+      "short": "Change in wind speed or direction with altitude.",
+      "long": "Wind shear is the change in wind speed and/or direction over a short distance, either vertically (with altitude) or horizontally. Vertical wind shear is critical for severe weather: moderate shear organizes thunderstorms into long-lived supercells, while excessive shear can tear storms apart. Low-level wind shear is also a significant aviation hazard."
+    },
+    {
+      "term": "onshore flow",
+      "short": "Wind blowing from the ocean toward land.",
+      "long": "Onshore flow describes wind moving from the ocean onto land. In the Bay Area, onshore (westerly) flow brings cool, moist marine air through the Golden Gate and other gaps in the coastal mountains, producing fog, low clouds, and moderate temperatures. Onshore flow is the dominant pattern during summer."
+    },
+    {
+      "term": "offshore flow",
+      "short": "Wind blowing from land toward the ocean.",
+      "long": "Offshore flow describes wind moving from land toward the ocean. In California, offshore (easterly) flow brings warm, dry air from the interior valleys over the coastal mountains. This compresses and heats the air (Foehn effect), producing warm, dry conditions and excellent visibility. During autumn, strong offshore flow events are associated with critical fire weather conditions."
+    },
+    {
+      "term": "Santa Ana winds",
+      "short": "Strong, dry offshore winds in Southern California.",
+      "long": "Santa Ana winds are strong, hot, dry winds that blow from the interior deserts through the mountain passes of Southern California. They typically occur in autumn and winter when high pressure builds over the Great Basin. While the Bay Area doesn't experience Santa Anas directly, similar offshore wind events (Diablo winds) affect the region."
+    },
+    {
+      "term": "Diablo winds",
+      "short": "Strong, dry offshore winds in the San Francisco Bay Area.",
+      "long": "Diablo winds are the Bay Area's version of hot, dry offshore winds, named after Mount Diablo. They blow from the northeast, descending from the Central Valley over the coastal mountains. Like Santa Anas, they are associated with extreme fire weather danger. Diablo winds are less frequent but can be devastating, as seen in multiple major California wildfire events."
+    },
+    {
+      "term": "stratus",
+      "short": "Low, flat, featureless cloud layer.",
+      "long": "Stratus clouds are low-level, uniform, gray cloud layers that often cover the entire sky like a blanket. In the Bay Area, marine stratus is the characteristic summer cloud that rolls in from the Pacific, engulfing the coast and pouring through the Golden Gate gap. It typically forms overnight and burns off ('burns back') by midday."
+    },
+    {
+      "term": "fog",
+      "short": "A cloud at ground level reducing visibility.",
+      "long": "Fog is essentially a stratus cloud at ground level, reducing visibility to less than 0.6 miles (1 km). The Bay Area is famous for advection fog — warm, moist Pacific air flowing over the cold California Current creates fog that is pulled inland by temperature differences between the cool coast and warm interior valleys."
+    },
+    {
+      "term": "marine layer",
+      "short": "A cool, moist layer of air near the coast beneath a temperature inversion.",
+      "long": "The marine layer is a mass of cool, dense, moist air that forms over the ocean and is trapped near the surface beneath a temperature inversion. Its depth determines whether the coast gets fog (deep marine layer) or just low clouds. In the Bay Area, the marine layer depth is a key forecast variable, especially in summer."
+    },
+    {
+      "term": "inversion",
+      "short": "A layer where temperature increases with altitude instead of decreasing.",
+      "long": "A temperature inversion occurs when a warm layer of air sits above a cooler layer, trapping the cool air near the surface. Inversions act as a lid, preventing vertical mixing. They are responsible for trapping fog, smog, and marine layers. The subsidence inversion created by the Pacific High is the dominant feature of Bay Area summer weather."
+    },
+    {
+      "term": "VFR",
+      "short": "Visual Flight Rules — good visibility conditions for aviation.",
+      "long": "VFR (Visual Flight Rules) indicates aviation weather conditions with ceiling above 3,000 feet and visibility greater than 5 miles. Pilots can fly by visual reference to the ground. This represents the best flying conditions."
+    },
+    {
+      "term": "MVFR",
+      "short": "Marginal Visual Flight Rules — reduced but flyable visibility.",
+      "long": "MVFR (Marginal VFR) indicates conditions between VFR and IFR: ceiling 1,000-3,000 feet and/or visibility 3-5 miles. Pilots can still fly visually but with reduced margins. Common in the Bay Area when the marine layer is present but not fully engulfing airports."
+    },
+    {
+      "term": "IFR",
+      "short": "Instrument Flight Rules — poor visibility requiring instrument navigation.",
+      "long": "IFR (Instrument Flight Rules) indicates conditions with ceiling 500-1,000 feet and/or visibility 1-3 miles. Pilots must navigate using instruments rather than visual reference. Bay Area airports frequently experience IFR conditions during summer fog events and winter storms."
+    },
+    {
+      "term": "LIFR",
+      "short": "Low Instrument Flight Rules — very poor visibility.",
+      "long": "LIFR (Low IFR) indicates the worst aviation weather category: ceiling below 500 feet and/or visibility below 1 mile. These conditions severely limit flight operations and can cause major delays at airports. Dense fog events in the Bay Area can produce LIFR conditions."
+    },
+    {
+      "term": "ceiling",
+      "short": "Height of the lowest cloud layer covering more than half the sky.",
+      "long": "In aviation meteorology, the ceiling is the height above ground of the lowest layer of clouds reported as broken (5/8-7/8 coverage) or overcast (8/8 coverage). The ceiling determines flight rules category and affects landing approaches. A 'low ceiling' of a few hundred feet is characteristic of Bay Area fog events."
+    },
+    {
+      "term": "high pressure",
+      "short": "An area of sinking air bringing clear, stable conditions.",
+      "long": "A high-pressure system (anticyclone) is an area where atmospheric pressure is higher than surrounding areas. Air sinks in a high, suppressing cloud formation and precipitation. In the Northern Hemisphere, winds circulate clockwise around a high. The semi-permanent Pacific High is the dominant influence on Bay Area weather, especially in summer."
+    },
+    {
+      "term": "low pressure",
+      "short": "An area of rising air often bringing clouds and precipitation.",
+      "long": "A low-pressure system (cyclone) is an area where atmospheric pressure is lower than surrounding areas. Air converges and rises in a low, producing clouds and precipitation. In the Northern Hemisphere, winds circulate counterclockwise around a low. Winter storms approaching California are low-pressure systems tracking across the Pacific."
+    },
+    {
+      "term": "upper-level",
+      "short": "Referring to conditions high in the atmosphere, typically above 18,000 feet.",
+      "long": "Upper-level refers to weather features and conditions in the middle to upper troposphere, roughly 18,000-40,000 feet. Upper-level charts (especially the 500mb level, about 18,000 feet) show the large-scale flow pattern that steers surface weather systems. Forecasters analyze upper-level troughs, ridges, and jet streams to predict surface weather days in advance."
+    },
+    {
+      "term": "surface",
+      "short": "Referring to weather conditions at or near ground level.",
+      "long": "Surface refers to atmospheric conditions at or near ground level, as opposed to upper-level features. Surface maps show sea-level pressure, fronts, wind, and temperature. Surface features (like fronts and pressure centers) are driven by the upper-level pattern but have their own important effects on local weather."
+    },
+    {
+      "term": "ensemble",
+      "short": "Multiple model runs with slightly different starting conditions.",
+      "long": "An ensemble is a collection of weather model forecasts run simultaneously with slightly different initial conditions. Since we can't measure the atmosphere perfectly, ensembles explore the range of possible outcomes. When ensemble members agree, forecasters have high confidence; when they diverge, uncertainty is high. The GFS and ECMWF both produce ensemble systems."
+    },
+    {
+      "term": "GFS",
+      "short": "Global Forecast System — the primary American weather model.",
+      "long": "The GFS (Global Forecast System) is the primary global weather prediction model run by NOAA/NCEP. It runs four times daily and produces forecasts out to 16 days. The GFS is freely available and widely used but generally considered less skillful than the European model (ECMWF) for medium-range forecasting."
+    },
+    {
+      "term": "ECMWF",
+      "short": "European Centre for Medium-Range Weather Forecasts model.",
+      "long": "The ECMWF (often called 'the European model' or 'the Euro') is widely regarded as the world's most accurate global weather model. Run by the European Centre for Medium-Range Weather Forecasts, it typically outperforms the GFS in medium-range (3-10 day) forecasting. NWS forecasters frequently reference it in AFDs."
+    },
+    {
+      "term": "NAM",
+      "short": "North American Mesoscale model — a regional weather model.",
+      "long": "The NAM (North American Mesoscale Forecast System) is a regional weather model covering North America with higher resolution than the GFS. It's better at resolving smaller-scale features like sea breezes, terrain effects, and convective systems. Runs four times daily with forecasts out to 84 hours."
+    },
+    {
+      "term": "HRRR",
+      "short": "High-Resolution Rapid Refresh — a frequently-updated short-range model.",
+      "long": "The HRRR (High-Resolution Rapid Refresh) is a high-resolution (3km) weather model that updates every hour with forecasts out to 48 hours. It excels at short-range forecasting of features like thunderstorms, fog, and local terrain effects. Forecasters rely on HRRR for the next 12-24 hours."
+    },
+    {
+      "term": "shortwave",
+      "short": "A small-scale disturbance embedded in the larger flow pattern.",
+      "long": "A shortwave (or shortwave trough) is a small-scale ripple or disturbance embedded in the larger upper-level flow pattern. Shortwaves can trigger surface development, enhance precipitation, or destabilize the atmosphere as they pass through. They're often mentioned in AFDs as triggers for weather changes that the main trough/ridge pattern alone wouldn't explain."
+    },
+    {
+      "term": "closed low",
+      "short": "A low-pressure center fully enclosed by a circulation.",
+      "long": "A closed low is an upper-level low-pressure center that has become cut off from the main jet stream flow, with circulation completely encircling it. Closed lows can be slow-moving and unpredictable, sometimes stalling for days and producing prolonged periods of unsettled weather. They are notoriously difficult to forecast."
+    },
+    {
+      "term": "cut-off low",
+      "short": "A closed low that has separated from the main jet stream.",
+      "long": "A cut-off low is a closed low-pressure system that has become completely detached from the main westerly flow of the jet stream. These systems drift slowly (or stall) and can produce extended periods of clouds, rain, and cooler temperatures. They are among the most challenging features to forecast due to their erratic movement."
+    },
+    {
+      "term": "subsidence",
+      "short": "Large-scale sinking of air in the atmosphere.",
+      "long": "Subsidence is the large-scale sinking of air, typically associated with high-pressure systems. As air sinks, it compresses and warms, creating a temperature inversion and suppressing cloud formation. Subsidence from the Pacific High is responsible for California's dry summers and the persistent inversion that caps the marine layer."
+    },
+    {
+      "term": "convection",
+      "short": "Vertical air movement, often producing thunderstorms.",
+      "long": "Convection is the process of warm air rising due to buoyancy. In meteorology, it usually refers to the development of cumulonimbus clouds and thunderstorms. Deep convection can produce heavy rain, hail, lightning, and tornadoes. In the Bay Area, convection is relatively rare but can occur with cold upper-level lows or strong instability."
+    },
+    {
+      "term": "lee trough",
+      "short": "A trough of low pressure forming on the downwind side of mountains.",
+      "long": "A lee trough is an area of low pressure that develops on the downwind (lee) side of a mountain range. In California, a lee trough forms in the Central Valley when flow crosses the coastal mountains. The thermal lee trough is important for Bay Area weather — it drives the sea breeze and onshore flow pattern in summer."
+    },
+    {
+      "term": "thermal trough",
+      "short": "A trough of low pressure caused by intense surface heating.",
+      "long": "A thermal trough is a low-pressure area created by strong surface heating. In California, the Central Valley thermal trough forms in summer as the valley floor heats up, creating a pressure gradient that draws marine air through gaps in the coastal mountains (especially the Golden Gate). This drives the Bay Area's summer fog and wind patterns."
+    },
+    {
+      "term": "monsoon",
+      "short": "A seasonal wind shift bringing moisture from tropical regions.",
+      "long": "The North American Monsoon is a seasonal pattern that brings moisture from the Gulf of California and Gulf of Mexico into the southwestern United States during summer (July-September). While primarily affecting Arizona and New Mexico, monsoonal moisture can occasionally surge into California, bringing unusual humidity and thunderstorm activity."
+    },
+    {
+      "term": "lapse rate",
+      "short": "The rate at which temperature decreases with altitude.",
+      "long": "The lapse rate is the rate at which air temperature changes with altitude. The standard lapse rate is about 3.5°F per 1,000 feet. When the actual lapse rate is steeper (temperature drops faster), the atmosphere is unstable and prone to convection. When it's shallower or inverted, the atmosphere is stable."
+    },
+    {
+      "term": "snow level",
+      "short": "The elevation where precipitation transitions from rain to snow.",
+      "long": "The snow level is the lowest altitude at which precipitation falls as snow rather than rain. It's closely related to (but slightly lower than) the freezing level. In California storms, the snow level is critical for determining how much precipitation falls as rain vs. snow in the mountains, affecting water supply and flood risk."
+    },
+    {
+      "term": "freezing level",
+      "short": "The altitude where the temperature drops to 32°F (0°C).",
+      "long": "The freezing level is the height in the atmosphere where the temperature drops to 32°F (0°C). Above this level, precipitation falls as snow or ice. The freezing level rises and falls with weather systems — it drops with cold fronts and rises with warm fronts. It's a key forecast variable for mountain weather and precipitation type."
+    },
+    {
+      "term": "swell",
+      "short": "Long-period ocean waves generated by distant storms.",
+      "long": "Swell consists of long-period ocean waves that have traveled far from the storm that generated them. Unlike choppy local wind waves, swell is organized and can travel thousands of miles across the ocean. Forecasters describe swell by height, period (seconds between waves), and direction. Long-period NW swell is common along the California coast."
+    },
+    {
+      "term": "small craft advisory",
+      "short": "A marine warning for winds 21-33 knots or rough seas.",
+      "long": "A Small Craft Advisory is issued when sustained winds of 21-33 knots (24-38 mph) and/or seas of 7 feet or greater are expected. It warns operators of small boats of potentially hazardous conditions. In the Bay Area, Small Craft Advisories are common during strong afternoon sea breezes and winter storms."
+    },
+    {
+      "term": "gale warning",
+      "short": "A marine warning for winds 34-47 knots.",
+      "long": "A Gale Warning is issued for sustained winds of 34-47 knots (39-54 mph) over water. Gale conditions create very rough seas dangerous to most vessels. In the Bay Area, gale warnings are issued during strong winter storms and occasionally during intense offshore wind events."
+    }
+  ]
+}
