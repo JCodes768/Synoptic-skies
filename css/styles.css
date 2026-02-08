@@ -216,6 +216,17 @@ a.site-title {
   background-clip: text;
 }
 
+.site-title-sub {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: var(--color-text-muted) !important;
+  background-clip: unset !important;
+}
+
 .header-subtitle {
   font-family: var(--font-sans);
   font-size: var(--font-size-sm);
@@ -1055,12 +1066,20 @@ a.site-title {
 .header-about-link {
   font-family: var(--font-mono);
   font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-  letter-spacing: 0.3px;
+  color: var(--color-accent);
+  letter-spacing: 0.5px;
   white-space: nowrap;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--border-radius);
+  background: var(--color-accent-glow);
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  font-weight: 600;
 }
 .header-about-link:hover {
-  color: var(--color-accent);
+  background: var(--color-accent);
+  color: #fff;
 }
 
 /* ── Alerts Section ────────────────────────────────────────── */

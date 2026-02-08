@@ -195,6 +195,7 @@ function buildSectionElement(section) {
         ${escapeHTML(section.displayName)}
       </h2>
       ${section.timeRange ? `<span class="afd-section-range">${escapeHTML(section.timeRange)}</span>` : ''}
+      ${section.timestamp ? `<span class="afd-section-range">Issued ${escapeHTML(section.timestamp)}</span>` : ''}
       ${section.author ? `<span class="afd-section-author">Forecaster: ${escapeHTML(section.author)}</span>` : ''}
     </div>
   `;
@@ -415,7 +416,7 @@ function updateHeaderForLocation() {
     <span id="afd-timestamp">${escapeHTML(timeText)}</span>
   `;
 
-  document.title = `Synoptic Skies \u2014 ${CONFIG.officeName} Forecast Discussion`;
+  document.title = `Synoptic Skies \u2014 ${CONFIG.officeName} Area Forecast Discussion`;
 }
 
 // ── Initialization ──────────────────────────────────────────
@@ -464,7 +465,7 @@ async function loadAllData() {
   currentAfdId = null;
   const gistContent = document.getElementById('gist-content');
   if (gistContent) {
-    gistContent.innerHTML = '<button id="gist-btn" class="gist-btn">Summarize the forecast, then read the human\'s below</button>';
+    gistContent.innerHTML = '<button id="gist-btn" class="gist-btn">Summarize the forecast, and/or read the human\'s below</button>';
   }
 
   // Fetch all API data in parallel

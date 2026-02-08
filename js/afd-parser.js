@@ -45,11 +45,18 @@ export function parseAFD(rawText) {
   const authors = extractAuthors(rawText);
   const sections = extractSections(rawText);
 
-  // Attach authors to their sections
+  // Attach authors and fallback timestamps to sections
   for (const section of sections) {
     const authorKey = findAuthorKey(section.name, authors);
     if (authorKey) {
       section.author = authors[authorKey];
+    } else if (authors['_general']) {
+      // Fallback: some offices attribute the whole AFD to one person
+      section.author = authors['_general'];
+    }
+    // If section has no timestamp, inherit the product-level timestamp
+    if (!section.timestamp && productTimestamp) {
+      section.timestamp = productTimestamp;
     }
   }
 
@@ -68,8 +75,9 @@ function extractProductTimestamp(lines) {
 
 /**
  * Extract author attributions from the bottom of the AFD.
- * Filters to only known section names, removing artifacts like
- * "VISIT US", URLs, office names, etc.
+ * Handles multiple formats:
+ *   - "SECTION NAME...AuthorCode" (MTR, BOX style)
+ *   - Bare "AuthorName" or "AuthorA/AuthorB" lines (GSP, PQ style)
  */
 function extractAuthors(text) {
   const authors = {};
@@ -79,8 +87,10 @@ function extractAuthors(text) {
   const attribution = text.substring(dollarIndex + 2);
   const lines = attribution.split('\n');
 
+  let foundSectionStyle = false;
+
   for (const line of lines) {
-    // Match "SECTION NAME...AuthorCode" pattern
+    // Match "SECTION NAME...AuthorCode" pattern (standard format)
     const match = line.match(/^\s*([A-Z][A-Z\s/]+?)\.{2,}\s*([A-Za-z][A-Za-z/\s]*)/);
     if (!match) continue;
 
@@ -91,12 +101,34 @@ function extractAuthors(text) {
     if (!isKnownSection(sectionName)) continue;
 
     // Clean the author name: take only the first word/code
-    // Author codes are typically short like "Sarment", "Smith", "AB"
     authorName = authorName.split(/\s+/)[0].replace(/[^A-Za-z/]/g, '');
 
     if (!authorName || authorName.length === 0 || authorName.length > 25) continue;
 
     authors[sectionName] = authorName;
+    foundSectionStyle = true;
+  }
+
+  // If no section-style attributions found, look for bare author names
+  // (some offices just put "Smith" or "JW/AB" after $$)
+  if (!foundSectionStyle) {
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      // Skip lines that look like URLs, office names, or boilerplate
+      if (trimmed.includes('http') || trimmed.includes('www') ||
+          trimmed.includes('NATIONAL') || trimmed.includes('WEATHER SERVICE') ||
+          trimmed.includes('VISIT') || trimmed.length > 40) continue;
+      // Match initials/names like "JW", "Smith", "Smith/Jones"
+      const nameMatch = trimmed.match(/^([A-Za-z][A-Za-z/\s]{0,30})$/);
+      if (nameMatch) {
+        const name = nameMatch[1].trim().split(/\s+/)[0].replace(/[^A-Za-z/]/g, '');
+        if (name && name.length >= 1 && name.length <= 25) {
+          authors['_general'] = name;
+          break;
+        }
+      }
+    }
   }
 
   return authors;
@@ -127,13 +159,18 @@ function extractSections(text) {
   const dollarIndex = text.lastIndexOf('$$');
   const bodyText = dollarIndex !== -1 ? text.substring(0, dollarIndex) : text;
 
-  const sectionRegex = /\.([A-Z][A-Z\s/]+?)\.{3}/g;
+  // Match section headers: .SECTION NAME... or .SECTION NAME /time range/...
+  const sectionRegex = /\.([A-Z][A-Z\s/]+?)(?:\s*\/[^/]*\/\s*)?\.{3}/g;
   const matches = [];
   let match;
 
   while ((match = sectionRegex.exec(bodyText)) !== null) {
+    // Normalize section name: strip any trailing time range qualifier
+    const rawName = match[1].trim();
+    // Extract just the known section name prefix
+    const name = normalizeSecName(rawName);
     matches.push({
-      name: match[1].trim(),
+      name,
       startIndex: match.index,
       headerEnd: match.index + match[0].length
     });
@@ -280,6 +317,21 @@ function escapeHTML(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+function normalizeSecName(rawName) {
+  const upper = rawName.toUpperCase().trim();
+  // Direct match
+  if (SECTION_CONFIG[upper]) return upper;
+  // Try matching known section names as prefixes (e.g., "SHORT TERM" from "SHORT TERM THROUGH TUESDAY")
+  for (const key of Object.keys(SECTION_CONFIG)) {
+    if (upper.startsWith(key)) return key;
+  }
+  // Also check VALID_AUTHOR_SECTIONS
+  for (const key of VALID_AUTHOR_SECTIONS) {
+    if (upper.startsWith(key)) return key;
+  }
+  return upper;
 }
 
 function titleCase(str) {
