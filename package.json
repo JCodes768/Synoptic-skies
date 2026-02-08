@@ -2,6 +2,7 @@
   "name": "synoptic-skies",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "NWS Area Forecast Discussion, presented as a readable experience",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0"
