@@ -3,7 +3,7 @@
  * Loads GOES-18 Pacific Southwest image. Simple and clean.
  */
 
-const SATELLITE_URL = 'https://cdn.star.nesdis.noaa.gov/GOES18/ABI/WFO/mtr/GEOCOLOR/1200x1200.jpg';
+const SATELLITE_URL = 'https://cdn.star.nesdis.noaa.gov/GOES18/ABI/SECTOR/psw/GEOCOLOR/1200x1200.jpg';
 
 /**
  * Initialize the satellite widget — just a B&W image, no effects
@@ -16,7 +16,7 @@ export function initSatellite(container) {
       <img
         class="satellite-image"
         src="${SATELLITE_URL}"
-        alt="GOES-18 GeoColor satellite imagery — San Francisco Bay Area"
+        alt="GOES-18 GeoColor satellite imagery — Pacific Southwest"
         crossorigin="anonymous"
         loading="lazy"
       />
