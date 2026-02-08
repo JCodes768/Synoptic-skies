@@ -173,7 +173,7 @@ export async function fetchAlerts() {
  */
 export async function lookupLocation(query) {
   const trimmed = query.trim();
-  let lat, lon;
+  let lat, lon, geocodedCity, geocodedState;
 
   if (/^\d{5}$/.test(trimmed)) {
     // Zip code → use zippopotam.us
@@ -183,11 +183,13 @@ export async function lookupLocation(query) {
     const place = geoData.places[0];
     lat = parseFloat(place.latitude);
     lon = parseFloat(place.longitude);
+    geocodedCity = place['place name'];
+    geocodedState = place['state abbreviation'];
   } else {
     // City, State → use Nominatim (OpenStreetMap)
     const encoded = encodeURIComponent(trimmed + ', United States');
     const nomResp = await fetch(
-      `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=1&countrycodes=us`,
+      `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=1&countrycodes=us&addressdetails=1`,
       { headers: { 'User-Agent': 'SynopticSkies/1.0 (synopticskies.com)' } }
     );
     if (!nomResp.ok) throw new Error('Geocoding failed');
@@ -195,6 +197,9 @@ export async function lookupLocation(query) {
     if (!nomData.length) throw new Error('Location not found');
     lat = parseFloat(nomData[0].lat);
     lon = parseFloat(nomData[0].lon);
+    const addr = nomData[0].address || {};
+    geocodedCity = addr.city || addr.town || addr.village || nomData[0].display_name.split(',')[0];
+    geocodedState = addr.state_code?.toUpperCase() || addr.state || '';
   }
 
   // 2. NWS point metadata → WFO, gridpoint, station list
@@ -223,16 +228,17 @@ export async function lookupLocation(query) {
   // Clean up office name — remove state suffix like ", CA"
   officeName = officeName.replace(/,\s*[A-Z]{2}$/, '');
 
-  // 5. WFO city from relative location
-  const relCity = props.relativeLocation?.properties?.city || place['place name'];
-  const relState = props.relativeLocation?.properties?.state || place['state abbreviation'];
+  // 5. City: prefer the geocoded city (what the user actually searched for),
+  //    fall back to NWS relative location only if geocoder didn't provide one
+  const city = geocodedCity || props.relativeLocation?.properties?.city || '';
+  const state = geocodedState || props.relativeLocation?.properties?.state || '';
 
   // 6. Update CONFIG in place (ES module export)
   Object.assign(CONFIG, {
     office: props.cwa,
     officeName,
-    officeCity: relCity,
-    officeState: relState,
+    officeCity: city,
+    officeState: state,
     station: nearestStation,
     gridpoint: { wfo: props.cwa, x: props.gridX, y: props.gridY },
     lat,

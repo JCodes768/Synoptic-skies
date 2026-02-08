@@ -1313,10 +1313,23 @@ a.site-title {
     position: absolute;
     top: var(--space-sm);
     right: var(--space-md);
+    gap: 4px;
   }
 
   .header-about-link {
     display: none;
+  }
+
+  .text-size-controls {
+    display: none;
+  }
+
+  .site-title-sub {
+    display: none;
+  }
+
+  .header-brand {
+    padding-right: 100px;
   }
 
   .main-layout {

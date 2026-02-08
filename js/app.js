@@ -411,8 +411,8 @@ function updateHeaderForLocation() {
   const timeText = timestampEl?.textContent || 'Loading\u2026';
 
   subtitleEl.innerHTML = `
-    NWS <strong>${escapeHTML(CONFIG.officeName)}</strong> &middot;
-    WFO <strong>${escapeHTML(CONFIG.office)}</strong>, ${escapeHTML(CONFIG.officeCity)} ${escapeHTML(CONFIG.officeState)} &middot;
+    <strong>${escapeHTML(CONFIG.officeCity)}, ${escapeHTML(CONFIG.officeState)}</strong> &mdash;
+    forecast discussion produced by NWS <strong>${escapeHTML(CONFIG.officeName)}</strong> (WFO ${escapeHTML(CONFIG.office)}) &middot;
     <span id="afd-timestamp">${escapeHTML(timeText)}</span>
   `;
 
