@@ -25,14 +25,15 @@
           NWS <strong>San Francisco Bay Area</strong> &middot; WFO <strong>MTR</strong>, Monterey CA &middot;
           <span id="afd-timestamp">Loading&hellip;</span>
         </div>
-      </div>
-      <div class="header-actions">
         <form id="zip-form" class="zip-form" autocomplete="off">
+          <label for="zip-input" class="zip-label">Location:</label>
           <input id="zip-input" type="text" inputmode="numeric" pattern="\d{5}" maxlength="5"
             placeholder="Zip code" aria-label="Enter zip code to change location" class="zip-input">
           <button type="submit" class="zip-go" aria-label="Go">Go</button>
           <span id="zip-status" class="zip-status"></span>
         </form>
+      </div>
+      <div class="header-actions">
         <a href="about-afd.html" class="header-about-link">About the AFD</a>
         <div class="text-size-controls" role="group" aria-label="Text size">
           <button id="text-decrease" aria-label="Decrease text size" title="Smaller text">A&minus;</button>

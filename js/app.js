@@ -509,7 +509,7 @@ async function loadAllData() {
   }
 
   // Initialize satellite widget
-  initSatellite(document.getElementById('satellite'));
+  initSatellite(document.getElementById('satellite'), CONFIG.lat, CONFIG.lon);
 }
 
 // ── Helpers ─────────────────────────────────────────────────
