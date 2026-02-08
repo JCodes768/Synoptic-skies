@@ -1,7 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
 
-const client = new Anthropic();
-
 const SYSTEM_PROMPT = `You are a helpful weather assistant for a website called Synoptic Skies. Your job is to summarize NWS Area Forecast Discussions (AFDs) for a general audience.
 
 Rules:
@@ -19,6 +17,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Check for API key before doing anything
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return res.status(500).json({ error: 'ANTHROPIC_API_KEY is not configured on the server.' });
+  }
+
   const { afdText, afdId } = req.body || {};
 
   if (!afdText || typeof afdText !== 'string') {
@@ -30,6 +33,8 @@ export default async function handler(req, res) {
   }
 
   try {
+    const client = new Anthropic();
+
     const message = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 300,
@@ -50,6 +55,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ summary, afdId: afdId || null });
   } catch (err) {
     console.error('Summary generation error:', err);
-    return res.status(500).json({ error: 'Failed to generate summary' });
+    const msg = err.message || 'Failed to generate summary';
+    return res.status(500).json({ error: msg });
   }
 }

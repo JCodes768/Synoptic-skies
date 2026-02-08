@@ -303,9 +303,12 @@ async function fetchGistSummary() {
       body: JSON.stringify({ afdText: currentAfdText, afdId: currentAfdId })
     });
 
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || `HTTP ${response.status}`);
+    }
+
     const summary = data.summary;
 
     // Cache the result
@@ -320,7 +323,7 @@ async function fetchGistSummary() {
   } catch (err) {
     console.error('Gist fetch failed:', err);
     contentEl.innerHTML = `
-      <p class="gist-error">Unable to generate summary. Try again later.</p>
+      <p class="gist-error">Unable to generate summary: ${escapeHTML(err.message)}</p>
       <button id="gist-btn" class="gist-btn" style="margin-top:var(--space-sm)">Retry</button>
     `;
     contentEl.querySelector('#gist-btn')?.addEventListener('click', fetchGistSummary);
