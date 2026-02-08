@@ -7,6 +7,7 @@
 let glossaryData = [];
 let sidebarEl = null;
 let tooltipEl = null;
+let termOfTheDay = null;
 
 /**
  * Load glossary data from JSON
@@ -25,20 +26,28 @@ export async function loadGlossary() {
 }
 
 /**
- * Initialize the glossary UI: tooltip element and sidebar reference
- * @param {HTMLElement} sidebar - The glossary sidebar element
+ * Initialize the glossary UI
+ * @param {HTMLElement} sidebar - The glossary sidebar content element
  */
 export function initGlossaryUI(sidebar) {
   sidebarEl = sidebar;
 
-  // Create the floating tooltip
+  // Create floating tooltip
   tooltipEl = document.createElement('div');
   tooltipEl.className = 'glossary-tooltip';
   tooltipEl.setAttribute('role', 'tooltip');
   tooltipEl.style.display = 'none';
   document.body.appendChild(tooltipEl);
 
-  // Hide tooltip when clicking elsewhere
+  // Tooltip hover persistence
+  tooltipEl.addEventListener('mouseenter', () => {
+    if (hideTimeout) clearTimeout(hideTimeout);
+  });
+  tooltipEl.addEventListener('mouseleave', () => {
+    hideTooltip();
+  });
+
+  // Dismiss on click elsewhere
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.glossary-term') && !e.target.closest('.glossary-tooltip')) {
       hideTooltip();
@@ -47,94 +56,166 @@ export function initGlossaryUI(sidebar) {
 }
 
 /**
- * Scan an HTML element for glossary terms and wrap them in interactive spans.
- * Operates on the rendered HTML, replacing text nodes.
- * @param {HTMLElement} element - The DOM element containing AFD text
+ * Select "term of the day" based on terms found in the AFD text.
+ * Prefers more interesting/educational terms.
+ */
+export function selectTermOfTheDay(afdText) {
+  if (!glossaryData.length || !afdText) return null;
+
+  const text = afdText.toLowerCase();
+
+  // Find all glossary terms that appear in the AFD
+  const found = glossaryData.filter(entry => {
+    const escaped = entry.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+    return regex.test(text);
+  });
+
+  if (found.length === 0) {
+    // Fallback: pick any term
+    termOfTheDay = glossaryData[0];
+    return termOfTheDay;
+  }
+
+  // Score terms: prefer longer terms (more specific), longer definitions (more educational)
+  found.sort((a, b) => {
+    const scoreA = a.term.length * 2 + (a.long.length / 40);
+    const scoreB = b.term.length * 2 + (b.long.length / 40);
+    return scoreB - scoreA;
+  });
+
+  // Use day of year for daily rotation among top candidates
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  const index = dayOfYear % Math.min(found.length, 7);
+
+  termOfTheDay = found[index];
+  return termOfTheDay;
+}
+
+/**
+ * Show the term of the day in the sidebar
+ */
+export function showTermOfTheDay() {
+  if (!sidebarEl || !termOfTheDay) return;
+
+  sidebarEl.innerHTML = `
+    <div class="glossary-totd-label">Term of the Day</div>
+    <h4 class="glossary-sidebar-term">${esc(termOfTheDay.term)}</h4>
+    <p class="glossary-sidebar-definition">${esc(termOfTheDay.long)}</p>
+    <a href="glossary.html" class="glossary-browse-link">Browse all terms &rarr;</a>
+  `;
+  sidebarEl.classList.add('glossary-active');
+}
+
+/**
+ * Scan a DOM element for glossary terms and wrap them in interactive spans.
+ * Uses DocumentFragment for safe DOM manipulation (no innerHTML XSS risk).
  */
 export function highlightTerms(element) {
   if (!glossaryData.length || !element) return;
 
-  // Walk all text nodes within the element
-  const walker = document.createTreeWalker(
-    element,
-    NodeFilter.SHOW_TEXT,
-    {
-      acceptNode: (node) => {
-        // Skip if already inside a glossary-term span
-        if (node.parentElement.closest('.glossary-term')) {
-          return NodeFilter.FILTER_REJECT;
-        }
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    }
-  );
-
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null);
   const textNodes = [];
   let node;
   while ((node = walker.nextNode())) {
+    if (node.parentElement.closest('.glossary-term')) continue;
+    if (!node.textContent.trim()) continue;
     textNodes.push(node);
   }
 
-  // Process each text node
   for (const textNode of textNodes) {
-    const replaced = replaceTermsInText(textNode.textContent);
-    if (replaced !== textNode.textContent) {
-      const span = document.createElement('span');
-      span.innerHTML = replaced;
-      textNode.parentNode.replaceChild(span, textNode);
-    }
+    const matches = findTermMatches(textNode.textContent);
+    if (matches.length === 0) continue;
+
+    const fragment = buildHighlightedFragment(textNode.textContent, matches);
+    textNode.parentNode.replaceChild(fragment, textNode);
   }
 
-  // Attach event listeners to all new glossary-term spans
+  // Attach event listeners
   element.querySelectorAll('.glossary-term').forEach(termEl => {
     termEl.addEventListener('mouseenter', handleTermHover);
-    termEl.addEventListener('mouseleave', scheduleHideTooltip);
+    termEl.addEventListener('mouseleave', handleTermLeave);
     termEl.addEventListener('click', handleTermClick);
     termEl.addEventListener('focus', handleTermHover);
-    termEl.addEventListener('blur', scheduleHideTooltip);
+    termEl.addEventListener('blur', handleTermLeave);
   });
 }
 
 /**
- * Replace glossary terms in a text string with wrapped spans.
- * Uses word boundary matching to avoid partial matches.
+ * Find glossary term matches in a text string.
+ * Returns sorted, non-overlapping match positions.
  */
-function replaceTermsInText(text) {
-  if (!text.trim()) return text;
-
-  let result = text;
-  const matched = new Set();
+function findTermMatches(text) {
+  const matches = [];
+  const usedRanges = [];
 
   for (const entry of glossaryData) {
-    const term = entry.term;
-    // Skip if we've already matched this term (prevent overlapping)
-    if (matched.has(term.toLowerCase())) continue;
+    const escaped = entry.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+    const match = regex.exec(text);
+    if (!match) continue;
 
-    // Build a regex that matches the term with word boundaries, case-insensitive
-    // Escape special regex characters in the term
-    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`\\b(${escaped})\\b`, 'gi');
+    const start = match.index;
+    const end = start + match[0].length;
 
-    if (regex.test(result)) {
-      matched.add(term.toLowerCase());
-      // Only replace the first occurrence per text node to keep things clean
-      let replaced = false;
-      result = result.replace(regex, (match) => {
-        if (replaced) return match;
-        replaced = true;
-        return `<span class="glossary-term" data-term="${escapeAttr(term.toLowerCase())}" tabindex="0">${escapeHTML(match)}</span>`;
-      });
-    }
+    // Skip if overlaps with an existing match
+    const overlaps = usedRanges.some(r => start < r.end && end > r.start);
+    if (overlaps) continue;
+
+    matches.push({ start, end, term: entry.term, original: match[0] });
+    usedRanges.push({ start, end });
   }
 
-  return result;
+  return matches.sort((a, b) => a.start - b.start);
 }
+
+/**
+ * Build a DocumentFragment with glossary terms wrapped in interactive spans.
+ * Uses createTextNode for non-matched text (safe, no escaping needed).
+ */
+function buildHighlightedFragment(text, matches) {
+  const fragment = document.createDocumentFragment();
+  let pos = 0;
+
+  for (const m of matches) {
+    if (m.start > pos) {
+      fragment.appendChild(document.createTextNode(text.substring(pos, m.start)));
+    }
+
+    const span = document.createElement('span');
+    span.className = 'glossary-term';
+    span.dataset.term = m.term.toLowerCase();
+    span.tabIndex = 0;
+    span.textContent = m.original;
+    fragment.appendChild(span);
+
+    pos = m.end;
+  }
+
+  if (pos < text.length) {
+    fragment.appendChild(document.createTextNode(text.substring(pos)));
+  }
+
+  return fragment;
+}
+
+// ── Event handlers ──────────────────────────────────────────
 
 function handleTermHover(e) {
   const term = e.target.dataset.term;
   if (!term) return;
   showTooltip(e.target, term);
   showSidebarDefinition(term);
+}
+
+function handleTermLeave() {
+  scheduleHideTooltip();
+  // Revert sidebar to term of the day after a delay
+  setTimeout(() => {
+    if (!document.querySelector('.glossary-term:hover')) {
+      showTermOfTheDay();
+    }
+  }, 400);
 }
 
 function handleTermClick(e) {
@@ -144,7 +225,6 @@ function handleTermClick(e) {
   showTooltip(e.target, term);
   showSidebarDefinition(term);
 
-  // On mobile, check if we should show the bottom sheet
   if (window.innerWidth < 768) {
     showMobileDefinition(term);
   }
@@ -153,7 +233,7 @@ function handleTermClick(e) {
 let hideTimeout = null;
 
 function scheduleHideTooltip() {
-  hideTimeout = setTimeout(hideTooltip, 200);
+  hideTimeout = setTimeout(hideTooltip, 250);
 }
 
 function showTooltip(targetEl, termKey) {
@@ -165,20 +245,18 @@ function showTooltip(targetEl, termKey) {
   tooltipEl.textContent = entry.short;
   tooltipEl.style.display = 'block';
 
-  // Position above the term
   const rect = targetEl.getBoundingClientRect();
   const tipRect = tooltipEl.getBoundingClientRect();
 
   let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
   let top = rect.top - tipRect.height - 8;
 
-  // Keep within viewport
   if (left < 8) left = 8;
   if (left + tipRect.width > window.innerWidth - 8) {
     left = window.innerWidth - tipRect.width - 8;
   }
   if (top < 8) {
-    top = rect.bottom + 8; // Show below if no room above
+    top = rect.bottom + 8;
   }
 
   tooltipEl.style.left = left + 'px';
@@ -186,9 +264,7 @@ function showTooltip(targetEl, termKey) {
 }
 
 function hideTooltip() {
-  if (tooltipEl) {
-    tooltipEl.style.display = 'none';
-  }
+  if (tooltipEl) tooltipEl.style.display = 'none';
 }
 
 function showSidebarDefinition(termKey) {
@@ -198,20 +274,17 @@ function showSidebarDefinition(termKey) {
   if (!entry) return;
 
   sidebarEl.innerHTML = `
-    <h4 class="glossary-sidebar-term">${escapeHTML(entry.term)}</h4>
-    <p class="glossary-sidebar-definition">${escapeHTML(entry.long)}</p>
+    <h4 class="glossary-sidebar-term">${esc(entry.term)}</h4>
+    <p class="glossary-sidebar-definition">${esc(entry.long)}</p>
+    <a href="glossary.html" class="glossary-browse-link">Browse all terms &rarr;</a>
   `;
   sidebarEl.classList.add('glossary-active');
 }
 
-/**
- * Show a mobile bottom sheet with the term definition
- */
 function showMobileDefinition(termKey) {
   const entry = glossaryData.find(t => t.term.toLowerCase() === termKey.toLowerCase());
   if (!entry) return;
 
-  // Remove any existing bottom sheet
   const existing = document.querySelector('.glossary-bottom-sheet');
   if (existing) existing.remove();
 
@@ -220,22 +293,18 @@ function showMobileDefinition(termKey) {
   sheet.innerHTML = `
     <div class="glossary-bottom-sheet-content">
       <button class="glossary-bottom-sheet-close" aria-label="Close">&times;</button>
-      <h4>${escapeHTML(entry.term)}</h4>
-      <p>${escapeHTML(entry.long)}</p>
+      <h4>${esc(entry.term)}</h4>
+      <p>${esc(entry.long)}</p>
     </div>
   `;
 
   document.body.appendChild(sheet);
-
-  // Trigger animation
   requestAnimationFrame(() => sheet.classList.add('visible'));
 
-  // Close handlers
   sheet.querySelector('.glossary-bottom-sheet-close').addEventListener('click', () => {
     sheet.classList.remove('visible');
     setTimeout(() => sheet.remove(), 300);
   });
-
   sheet.addEventListener('click', (e) => {
     if (e.target === sheet) {
       sheet.classList.remove('visible');
@@ -244,17 +313,9 @@ function showMobileDefinition(termKey) {
   });
 }
 
-function escapeHTML(str) {
+function esc(str) {
   return str
     .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
-function escapeAttr(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 }

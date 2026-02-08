@@ -3,243 +3,102 @@
  * Orchestrates data fetching, rendering, and UI interactions.
  */
 
-import { fetchLatestAFD, fetchCurrentConditions, fetchForecast, fetchAlerts } from './api.js';
+import { fetchLatestAFD, fetchCurrentConditions, fetchForecast, fetchAlerts, CONFIG } from './api.js';
 import { parseAFD, bodyToHTML } from './afd-parser.js';
-import { loadGlossary, initGlossaryUI, highlightTerms } from './glossary.js';
+import { loadGlossary, initGlossaryUI, highlightTerms, selectTermOfTheDay, showTermOfTheDay } from './glossary.js';
 import { initSatellite } from './satellite.js';
 import { initTheme } from './theme.js';
 
-// ── Pixel Art Weather Icons ──────────────────────────────────────
-// Simple 16x16 pixel grid icons as SVG
+// ── Meteocons Integration ───────────────────────────────────
+// Using Meteocons by Bas Milius via jsDelivr CDN, rendered in grayscale
 
-function pixelIcon(grid, color = 'currentColor') {
-  const size = 16;
-  const px = 3; // pixel size in SVG units
-  let rects = '';
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      if (grid[y] && grid[y][x]) {
-        rects += `<rect x="${x * px}" y="${y * px}" width="${px}" height="${px}" fill="${color}"/>`;
-      }
-    }
-  }
-  return `<svg viewBox="0 0 ${size * px} ${size * px}" class="pixel-icon" aria-hidden="true">${rects}</svg>`;
-}
-
-// Icon grid definitions (1 = filled pixel, 0 = empty)
-const ICON_GRIDS = {
-  sunny: [
-    [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
-    [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0],
-    [0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0],
-    [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0],
-    [0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0],
-    [0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0],
-    [1,1,0,0,1,1,1,1,1,1,1,0,0,1,1,0],
-    [1,1,0,0,1,1,1,1,1,1,1,0,0,1,1,0],
-    [0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0],
-    [0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0],
-    [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0],
-    [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0],
-    [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  ],
-  cloudy: [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0],
-    [0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  ],
-  partlyCloudy: [
-    [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0],
-    [0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0],
-    [0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0],
-    [0,0,0,0,1,1,1,1,1,1,1,1,0,1,1,0],
-    [0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  ],
-  rain: [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0],
-    [0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
-    [0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0],
-    [0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
-    [0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  ],
-  thunderstorm: [
-    [0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0],
-    [0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  ],
-  snow: [
-    [0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0],
-    [0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0],
-    [0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
-    [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0],
-    [0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0],
-    [0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  ],
-  fog: [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  ],
-  wind: [
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-    [0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  ],
-  nightClear: [
-    [0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0],
-    [0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0],
-    [0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0],
-    [0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0],
-    [0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0],
-    [0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0],
-    [0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0],
-    [0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0],
-    [0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0],
-    [0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0],
-    [0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  ],
-};
+const METEOCON_BASE = 'https://cdn.jsdelivr.net/gh/basmilius/weather-icons@dev/production/fill/svg/';
 
 /**
- * Map NWS short forecast text to an icon key
+ * Map NWS short forecast text to a Meteocon icon filename
  */
-function forecastToIconKey(shortForecast, isDaytime) {
+function getIconName(shortForecast, isDaytime = true) {
   const text = shortForecast.toLowerCase();
 
-  if (text.includes('thunder') || text.includes('tstm')) return 'thunderstorm';
-  if (text.includes('snow') || text.includes('blizzard') || text.includes('flurr')) return 'snow';
-  if (text.includes('rain') || text.includes('shower') || text.includes('drizzle')) return 'rain';
-  if (text.includes('fog') || text.includes('mist') || text.includes('haz')) return 'fog';
+  if (text.includes('thunder') || text.includes('tstm')) return 'thunderstorms';
+  if (text.includes('blizzard')) return 'snow';
+  if (text.includes('sleet') || text.includes('freezing rain')) return 'sleet';
+  if (text.includes('snow') || text.includes('flurr')) return 'snow';
+  if (text.includes('rain') || text.includes('shower')) return isDaytime ? 'partly-cloudy-day-rain' : 'partly-cloudy-night-rain';
+  if (text.includes('drizzle')) return 'drizzle';
+  if (text.includes('fog') || text.includes('mist')) return isDaytime ? 'fog-day' : 'fog-night';
+  if (text.includes('haze') || text.includes('smoke')) return isDaytime ? 'haze-day' : 'haze-night';
   if (text.includes('wind') && !text.includes('cloud')) return 'wind';
-  if (text.includes('overcast') || text.includes('cloudy') && !text.includes('partly') && !text.includes('mostly clear')) return 'cloudy';
-  if (text.includes('partly') || text.includes('mostly cloudy') || text.includes('mostly sunny')) {
-    return isDaytime ? 'partlyCloudy' : 'nightClear';
-  }
-  if (text.includes('sunny') || text.includes('clear')) {
-    return isDaytime ? 'sunny' : 'nightClear';
-  }
+  if (text.includes('overcast')) return isDaytime ? 'overcast-day' : 'overcast-night';
+  if (text.includes('mostly cloudy')) return isDaytime ? 'overcast-day' : 'overcast-night';
+  if (text.includes('partly cloudy') || text.includes('partly sunny')) return isDaytime ? 'partly-cloudy-day' : 'partly-cloudy-night';
+  if (text.includes('mostly sunny') || text.includes('mostly clear')) return isDaytime ? 'partly-cloudy-day' : 'partly-cloudy-night';
+  if (text.includes('sunny') || text.includes('clear')) return isDaytime ? 'clear-day' : 'clear-night';
+  if (text.includes('cloud')) return 'cloudy';
 
-  return isDaytime ? 'partlyCloudy' : 'nightClear';
+  return isDaytime ? 'partly-cloudy-day' : 'partly-cloudy-night';
 }
 
-function getWeatherIcon(shortForecast, isDaytime = true) {
-  const key = forecastToIconKey(shortForecast, isDaytime);
-  const grid = ICON_GRIDS[key] || ICON_GRIDS.partlyCloudy;
-  return pixelIcon(grid);
+function weatherIconHTML(shortForecast, isDaytime = true, size = '48') {
+  const name = getIconName(shortForecast, isDaytime);
+  const url = `${METEOCON_BASE}${name}.svg`;
+  return `<img src="${url}" alt="" class="weather-icon" width="${size}" height="${size}" loading="lazy" onerror="this.style.display='none'">`;
 }
 
-// ── Rendering Functions ─────────────────────────────────────────
+/**
+ * Is it currently daytime? (rough check for icon selection)
+ */
+function isDaytimeNow() {
+  const hour = new Date().getHours();
+  return hour >= 6 && hour < 20;
+}
+
+// ── Text Size Controls ──────────────────────────────────────
+
+const TEXT_SIZE_KEY = 'synoptic-skies-text-scale';
+let textScale = parseFloat(localStorage.getItem(TEXT_SIZE_KEY) || '1');
+
+function initTextSize() {
+  applyTextScale();
+
+  const decrease = document.getElementById('text-decrease');
+  const increase = document.getElementById('text-increase');
+
+  if (decrease) decrease.addEventListener('click', () => adjustTextSize(-0.1));
+  if (increase) increase.addEventListener('click', () => adjustTextSize(0.1));
+}
+
+function adjustTextSize(delta) {
+  textScale = Math.max(0.75, Math.min(1.5, textScale + delta));
+  localStorage.setItem(TEXT_SIZE_KEY, textScale.toString());
+  applyTextScale();
+}
+
+function applyTextScale() {
+  document.documentElement.style.setProperty('--text-size-adjust', textScale.toString());
+}
+
+// ── Rendering Functions ─────────────────────────────────────
 
 function renderCurrentConditions(data) {
   const el = document.getElementById('current-conditions');
   if (!el) return;
 
-  const icon = getWeatherIcon(data.textDescription, true);
+  const daytime = isDaytimeNow();
+  const icon = weatherIconHTML(data.textDescription, daytime, '56');
 
   el.innerHTML = `
     <div class="conditions-header">
       <div class="conditions-icon">${icon}</div>
       <div class="conditions-temp">
-        <span class="temp-value">${data.temperature ?? '--'}°F</span>
+        <span class="temp-value">${data.temperature ?? '--'}\u00B0F</span>
         <span class="temp-desc">${escapeHTML(data.textDescription)}</span>
       </div>
     </div>
     <div class="conditions-details">
       <div class="detail-row">
         <span class="detail-label">Wind</span>
-        <span class="detail-value">${data.windDirection} ${data.windSpeed ?? '--'} mph${data.windGust ? ` (gusts ${data.windGust})` : ''}</span>
+        <span class="detail-value">${data.windDirection} ${data.windSpeed ?? '--'} mph${data.windGust ? ` (G${data.windGust})` : ''}</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Humidity</span>
@@ -247,11 +106,11 @@ function renderCurrentConditions(data) {
       </div>
       <div class="detail-row">
         <span class="detail-label">Dew Point</span>
-        <span class="detail-value">${data.dewpoint ?? '--'}°F</span>
+        <span class="detail-value">${data.dewpoint ?? '--'}\u00B0F</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Pressure</span>
-        <span class="detail-value">${data.pressure ?? '--'} inHg</span>
+        <span class="detail-value">${data.pressure ?? '--'}" Hg</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Visibility</span>
@@ -268,16 +127,15 @@ function renderForecast(periods) {
   const el = document.getElementById('forecast');
   if (!el) return;
 
-  // Show up to 10 periods (5 day/night pairs for ~5 days)
   const display = periods.slice(0, 10);
 
   el.innerHTML = display.map(period => {
-    const icon = getWeatherIcon(period.shortForecast, period.isDaytime);
+    const icon = weatherIconHTML(period.shortForecast, period.isDaytime, '32');
     return `
       <div class="forecast-period ${period.isDaytime ? 'daytime' : 'nighttime'}">
         <div class="forecast-name">${escapeHTML(period.name)}</div>
         <div class="forecast-icon">${icon}</div>
-        <div class="forecast-temp">${period.temperature}°${period.temperatureUnit}</div>
+        <div class="forecast-temp">${period.temperature}\u00B0${period.temperatureUnit}</div>
         <div class="forecast-desc">${escapeHTML(period.shortForecast)}</div>
       </div>
     `;
@@ -290,7 +148,7 @@ function renderAFD(parsed) {
   const container = document.getElementById('afd-content');
   if (!container) return;
 
-  // Update the header timestamp
+  // Update header timestamp
   const timestampEl = document.getElementById('afd-timestamp');
   if (timestampEl && parsed.timestamp) {
     timestampEl.textContent = `Issued: ${parsed.timestamp}`;
@@ -299,14 +157,12 @@ function renderAFD(parsed) {
   container.innerHTML = '';
 
   for (const section of parsed.sections) {
-    // Skip the watches/warnings/advisories "None" section
     if (section.isWWA && section.body.trim().toLowerCase() === 'none.') continue;
 
     const sectionEl = document.createElement('section');
-    sectionEl.className = `afd-section ${section.isSpecial ? 'afd-section-special' : ''} ${section.isWWA ? 'afd-section-alert' : ''}`;
+    sectionEl.className = `afd-section${section.isSpecial ? ' afd-section-special' : ''}${section.isWWA ? ' afd-section-alert' : ''}`;
     sectionEl.setAttribute('data-section', section.name);
 
-    // Build the header
     const headerHTML = `
       <div class="afd-section-header ${section.collapsed ? 'collapsible collapsed' : 'collapsible'}">
         <h2 class="afd-section-title">
@@ -325,7 +181,6 @@ function renderAFD(parsed) {
       <div class="afd-section-body ${section.collapsed ? 'collapsed' : ''}">${bodyHTML}</div>
     `;
 
-    // Collapse/expand behavior
     if (section.collapsed) {
       const header = sectionEl.querySelector('.afd-section-header');
       header.addEventListener('click', () => {
@@ -340,7 +195,7 @@ function renderAFD(parsed) {
 
   container.classList.remove('loading');
 
-  // Highlight glossary terms after rendering
+  // Highlight glossary terms in the rendered AFD
   highlightTerms(container);
 }
 
@@ -372,18 +227,15 @@ function renderForecasterCard(authors) {
     return;
   }
 
-  const sections = Object.entries(authors).map(
-    ([section, name]) => `<span class="forecaster-section">${titleCase(section)}</span>`
-  );
-
   el.innerHTML = `
+    <h3 class="widget-title">Today's Forecasters</h3>
     <div class="forecaster-names">${names.map(n => `<strong>${escapeHTML(n)}</strong>`).join(', ')}</div>
-    <div class="forecaster-credit">authored today's forecast</div>
+    <div class="forecaster-credit">authored today's forecast discussion</div>
   `;
   el.style.display = 'block';
 }
 
-// ── Loading States ──────────────────────────────────────────────
+// ── Loading & Error States ──────────────────────────────────
 
 function showLoading(elementId) {
   const el = document.getElementById(elementId);
@@ -398,13 +250,13 @@ function showError(elementId, message) {
   }
 }
 
-// ── Initialization ──────────────────────────────────────────────
+// ── Initialization ──────────────────────────────────────────
 
 async function init() {
-  // Initialize theme immediately (no async needed)
   initTheme();
+  initTextSize();
 
-  // Initialize glossary sidebar
+  // Set up glossary sidebar
   const glossarySidebar = document.getElementById('glossary-content');
   initGlossaryUI(glossarySidebar);
 
@@ -413,10 +265,10 @@ async function init() {
   showLoading('forecast');
   showLoading('afd-content');
 
-  // Load glossary data (needed before AFD rendering)
+  // Load glossary data first (needed before AFD rendering)
   await loadGlossary();
 
-  // Fetch all data in parallel
+  // Fetch all API data in parallel
   const [afdResult, conditionsResult, forecastResult, alertsResult] = await Promise.allSettled([
     fetchLatestAFD(),
     fetchCurrentConditions(),
@@ -429,6 +281,10 @@ async function init() {
     const parsed = parseAFD(afdResult.value.productText);
     renderAFD(parsed);
     renderForecasterCard(parsed.authors);
+
+    // Select and show term of the day based on AFD content
+    selectTermOfTheDay(afdResult.value.productText);
+    showTermOfTheDay();
   } else {
     showError('afd-content', 'Unable to load forecast discussion. The NWS API may be temporarily unavailable.');
     console.error('AFD fetch failed:', afdResult.reason);
@@ -459,7 +315,7 @@ async function init() {
   initSatellite(document.getElementById('satellite'));
 }
 
-// ── Helpers ─────────────────────────────────────────────────────
+// ── Helpers ─────────────────────────────────────────────────
 
 function escapeHTML(str) {
   if (!str) return '';
@@ -470,10 +326,6 @@ function escapeHTML(str) {
     .replace(/"/g, '&quot;');
 }
 
-function titleCase(str) {
-  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
-}
-
-// ── Launch ──────────────────────────────────────────────────────
+// ── Launch ──────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', init);

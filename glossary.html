@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Weather glossary — common meteorological terms found in NWS Area Forecast Discussions.">
+  <title>Glossary — Synoptic Skies</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <a href="index.html" class="site-title"><span>Synoptic Skies</span></a>
+        <div class="header-subtitle">Weather Glossary</div>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" aria-label="Switch to dark mode">Dark Mode</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="glossary-page">
+    <div class="glossary-page-header">
+      <h1>Weather Glossary</h1>
+      <p class="glossary-page-intro">Terms commonly found in NWS Area Forecast Discussions, explained in plain language.</p>
+      <div class="glossary-search-wrapper">
+        <input type="search" id="glossary-search" placeholder="Search terms..." autocomplete="off" />
+      </div>
+      <div id="glossary-count" class="glossary-count"></div>
+    </div>
+
+    <div id="glossary-list"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data from the National Weather Service / NOAA</p>
+    <div class="footer-links">
+      <a href="index.html">Back to Forecast</a>
+      <a href="https://github.com/JCodes768/Synoptic-skies" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initTheme } from './js/theme.js';
+
+    initTheme();
+
+    let allTerms = [];
+
+    async function loadGlossary() {
+      const resp = await fetch('./data/glossary.json');
+      const data = await resp.json();
+      return data.terms.sort((a, b) => a.term.localeCompare(b.term));
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function renderTerms(terms) {
+      const list = document.getElementById('glossary-list');
+      const count = document.getElementById('glossary-count');
+
+      count.textContent = `${terms.length} term${terms.length !== 1 ? 's' : ''}`;
+
+      if (terms.length === 0) {
+        list.innerHTML = '<p class="glossary-no-results">No matching terms found.</p>';
+        return;
+      }
+
+      list.innerHTML = terms.map(t => `
+        <details class="glossary-entry">
+          <summary class="glossary-entry-summary">
+            <span class="glossary-entry-term">${escapeHTML(t.term)}</span>
+            <span class="glossary-entry-short">${escapeHTML(t.short)}</span>
+          </summary>
+          <div class="glossary-entry-long">${escapeHTML(t.long)}</div>
+        </details>
+      `).join('');
+    }
+
+    async function init() {
+      allTerms = await loadGlossary();
+      renderTerms(allTerms);
+
+      const search = document.getElementById('glossary-search');
+      search.addEventListener('input', () => {
+        const query = search.value.toLowerCase().trim();
+        if (!query) {
+          renderTerms(allTerms);
+          return;
+        }
+        const filtered = allTerms.filter(t =>
+          t.term.toLowerCase().includes(query) ||
+          t.short.toLowerCase().includes(query) ||
+          t.long.toLowerCase().includes(query)
+        );
+        renderTerms(filtered);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+
+</body>
+</html>

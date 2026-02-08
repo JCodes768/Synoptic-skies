@@ -6,12 +6,14 @@
 const API_BASE = 'https://api.weather.gov';
 const USER_AGENT = '(synopticskies.com, joshcodes@proton.me)';
 
-// Default office and station config — MTR (San Francisco Bay Area)
-const CONFIG = {
+// Default config — MTR (San Francisco Bay Area), KSFO, 94110 area
+export const CONFIG = {
   office: 'MTR',
-  station: 'KOAK',
+  officeName: 'San Francisco Bay Area',
+  officeCity: 'San Francisco',
+  officeState: 'CA',
+  station: 'KSFO',
   gridpoint: { wfo: 'MTR', x: 85, y: 105 },
-  state: 'CA'
 };
 
 const headers = {
@@ -23,15 +25,16 @@ const headers = {
  * Generic fetch wrapper with caching and error handling
  */
 async function apiFetch(url, cacheKey, cacheDuration = 300000) {
-  // Check sessionStorage cache
   if (cacheKey) {
-    const cached = sessionStorage.getItem(cacheKey);
-    if (cached) {
-      const { data, timestamp } = JSON.parse(cached);
-      if (Date.now() - timestamp < cacheDuration) {
-        return data;
+    try {
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < cacheDuration) {
+          return data;
+        }
       }
-    }
+    } catch (e) { /* ignore cache errors */ }
   }
 
   const response = await fetch(url, { headers });
@@ -42,27 +45,22 @@ async function apiFetch(url, cacheKey, cacheDuration = 300000) {
 
   const data = await response.json();
 
-  // Cache the result
   if (cacheKey) {
     try {
       sessionStorage.setItem(cacheKey, JSON.stringify({
         data,
         timestamp: Date.now()
       }));
-    } catch (e) {
-      // sessionStorage full or unavailable — not critical
-    }
+    } catch (e) { /* sessionStorage full or unavailable */ }
   }
 
   return data;
 }
 
 /**
- * Fetch the latest Area Forecast Discussion for the configured office
- * Returns { id, issuanceTime, productText }
+ * Fetch the latest Area Forecast Discussion
  */
 export async function fetchLatestAFD() {
-  // First get the list of recent AFDs
   const listUrl = `${API_BASE}/products/types/AFD/locations/${CONFIG.office}`;
   const list = await apiFetch(listUrl, `afd-list-${CONFIG.office}`, 600000);
 
@@ -70,12 +68,12 @@ export async function fetchLatestAFD() {
     throw new Error('No AFD products found');
   }
 
-  // Fetch the most recent one
   const latestId = list['@graph'][0].id;
-  const cachedProduct = sessionStorage.getItem(`afd-${latestId}`);
-  if (cachedProduct) {
-    return JSON.parse(cachedProduct);
-  }
+
+  try {
+    const cachedProduct = sessionStorage.getItem(`afd-${latestId}`);
+    if (cachedProduct) return JSON.parse(cachedProduct);
+  } catch (e) { /* ignore */ }
 
   const productUrl = `${API_BASE}/products/${latestId}`;
   const product = await apiFetch(productUrl, null);
@@ -95,7 +93,7 @@ export async function fetchLatestAFD() {
 }
 
 /**
- * Fetch current weather conditions from the configured station
+ * Fetch current weather conditions from KSFO
  */
 export async function fetchCurrentConditions() {
   const url = `${API_BASE}/stations/${CONFIG.station}/observations/latest`;
@@ -123,7 +121,7 @@ export async function fetchCurrentConditions() {
 }
 
 /**
- * Fetch 7-day forecast for the configured gridpoint
+ * Fetch 7-day forecast for 94110 area
  */
 export async function fetchForecast() {
   const { wfo, x, y } = CONFIG.gridpoint;
@@ -148,8 +146,8 @@ export async function fetchForecast() {
  * Fetch active weather alerts for the area
  */
 export async function fetchAlerts() {
-  const url = `${API_BASE}/alerts/active?point=37.8044,-122.2712`;
-  const data = await apiFetch(url, `alerts-mtr`, 300000);
+  const url = `${API_BASE}/alerts/active?point=37.7516,-122.4477`;
+  const data = await apiFetch(url, 'alerts-mtr', 300000);
 
   if (!data.features || data.features.length === 0) {
     return [];
@@ -178,7 +176,6 @@ function convertTemp(measurement) {
 
 function convertWind(measurement) {
   if (!measurement || measurement.value == null) return null;
-  // API returns km/h, convert to mph
   if (measurement.unitCode === 'wmoUnit:km_h-1' || measurement.unitCode === 'unit:km_h-1') {
     return Math.round(measurement.value * 0.621371);
   }
@@ -187,7 +184,6 @@ function convertWind(measurement) {
 
 function convertPressure(measurement) {
   if (!measurement || measurement.value == null) return null;
-  // API returns Pascals, convert to inHg
   if (measurement.unitCode === 'wmoUnit:Pa' || measurement.unitCode === 'unit:Pa') {
     return (measurement.value * 0.00029530).toFixed(2);
   }
@@ -196,7 +192,6 @@ function convertPressure(measurement) {
 
 function convertVisibility(measurement) {
   if (!measurement || measurement.value == null) return null;
-  // API returns meters, convert to miles
   if (measurement.unitCode === 'wmoUnit:m' || measurement.unitCode === 'unit:m') {
     return (measurement.value * 0.000621371).toFixed(1);
   }
