@@ -197,6 +197,16 @@ a:hover {
   min-width: 0;
 }
 
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-icon {
+  flex-shrink: 0;
+}
+
 .site-title {
   font-family: var(--font-mono);
   font-size: var(--font-size-xl);
