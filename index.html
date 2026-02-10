@@ -40,7 +40,7 @@
           <h1 class="site-title"><span>Synoptic Skies</span> <span class="site-title-sub">Your Area Forecast Discussion</span></h1>
         </div>
         <div class="header-subtitle">
-          Produced by NWS <strong>San Francisco Bay Area</strong> (WFO MTR) &middot;
+          Forecast issued by NWS <strong>San Francisco Bay Area</strong> (WFO MTR) &middot;
           <span id="afd-timestamp">Loading&hellip;</span>
         </div>
         <form id="zip-form" class="zip-form" autocomplete="off">
@@ -67,6 +67,9 @@
 
     <!-- Left Column: AFD Content -->
     <div class="main-content">
+      <div id="conditions-bar" class="conditions-bar">
+        <div id="current-conditions" class="loading"></div>
+      </div>
       <div id="alerts"></div>
 
       <!-- The Gist: AI-powered summary -->
@@ -98,11 +101,6 @@
         <div id="satellite"></div>
       </div>
 
-      <div class="widget widget-conditions">
-        <h3 class="widget-title">Current Conditions</h3>
-        <div id="current-conditions" class="loading"></div>
-      </div>
-
       <div class="widget widget-forecast">
         <h3 class="widget-title">Forecast</h3>
         <div id="forecast" class="loading"></div>
@@ -110,10 +108,6 @@
 
       <div class="widget widget-forecaster" id="forecaster-card"></div>
 
-      <div class="widget widget-wfo-map">
-        <h3 class="widget-title">Your Forecast Office</h3>
-        <div id="wfo-map" class="wfo-map-inset"></div>
-      </div>
 
     </aside>
 

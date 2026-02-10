@@ -5,7 +5,7 @@
 
 import { fetchLatestAFD, fetchCurrentConditions, fetchForecast, fetchAlerts, lookupLocation, CONFIG } from './api.js';
 import { parseAFD, bodyToHTML } from './afd-parser.js';
-import { loadGlossary, initGlossaryUI, highlightTerms, selectTermOfTheDay, showTermOfTheDay } from './glossary.js';
+import { loadGlossary, initGlossaryUI, highlightTerms, selectTermOfTheDay, showTermOfTheDay, buildAfdTermList } from './glossary.js';
 import { initSatellite } from './satellite.js';
 import { initTheme } from './theme.js';
 
@@ -109,12 +109,14 @@ function renderForecast(periods) {
   const display = periods.slice(0, 10);
 
   el.innerHTML = display.map(period => {
-    const icon = weatherIconHTML(period.shortForecast, period.isDaytime, '32');
+    const icon = weatherIconHTML(period.shortForecast, period.isDaytime, '28');
     return `
       <div class="forecast-period ${period.isDaytime ? 'daytime' : 'nighttime'}">
-        <div class="forecast-name">${escapeHTML(period.name)}</div>
         <div class="forecast-icon">${icon}</div>
-        <div class="forecast-temp">${period.temperature}\u00B0${period.temperatureUnit}</div>
+        <div class="forecast-name-row">
+          <span class="forecast-name">${escapeHTML(period.name)}</span>
+          <span class="forecast-temp">${period.temperature}\u00B0${period.temperatureUnit}</span>
+        </div>
         <div class="forecast-desc">${escapeHTML(period.shortForecast)}</div>
       </div>
     `;
@@ -391,19 +393,9 @@ function updateHeaderForLocation() {
 
   subtitleEl.innerHTML = `
     <strong>${escapeHTML(CONFIG.officeCity)}, ${escapeHTML(CONFIG.officeState)}</strong> &mdash;
-    forecast discussion produced by NWS <strong>${escapeHTML(CONFIG.officeName)}</strong> (WFO ${escapeHTML(CONFIG.office)}) &middot;
+    forecast issued by NWS <strong>${escapeHTML(CONFIG.officeName)}</strong> (WFO ${escapeHTML(CONFIG.office)}) &middot;
     <span id="afd-timestamp">${escapeHTML(timeText)}</span>
   `;
-
-  // WFO info blurb
-  let blurb = document.getElementById('wfo-blurb');
-  if (!blurb) {
-    blurb = document.createElement('div');
-    blurb.id = 'wfo-blurb';
-    blurb.className = 'header-office-meta';
-    subtitleEl.insertAdjacentElement('afterend', blurb);
-  }
-  blurb.innerHTML = `Your forecast is written by real meteorologists at the NWS office in <strong>${escapeHTML(CONFIG.officeCity)}, ${escapeHTML(CONFIG.officeState)}</strong> (WFO ${escapeHTML(CONFIG.office)}). <a href="about-afd.html">Learn more</a>`;
 
   document.title = `Synoptic Skies \u2014 ${CONFIG.officeName} Area Forecast Discussion`;
 }
@@ -487,6 +479,7 @@ async function loadAllData() {
 
     // Select and show term of the day based on AFD content
     selectTermOfTheDay(afdResult.value.productText);
+    buildAfdTermList(afdResult.value.productText);
     showTermOfTheDay();
   } else {
     showError('afd-content', 'Unable to load forecast discussion. The NWS API may be temporarily unavailable.');
@@ -520,49 +513,9 @@ async function loadAllData() {
 
   // Initialize satellite widget
   initSatellite(document.getElementById('satellite'), CONFIG.lat, CONFIG.lon);
-
-  // Initialize WFO map widget
-  initWfoMap(CONFIG.office);
 }
 
 // ── Helpers ─────────────────────────────────────────────────
-
-async function initWfoMap(wfoCode) {
-  const container = document.getElementById('wfo-map');
-  if (!container) return;
-
-  try {
-    const resp = await fetch('data/wfo-map.svg');
-    if (!resp.ok) return;
-    const svgText = await resp.text();
-    container.innerHTML = svgText;
-
-    const svg = container.querySelector('svg');
-    if (!svg) return;
-
-    // Find the text label for the current WFO
-    const label = svg.getElementById(`wfo-${wfoCode}`);
-    if (!label) return;
-
-    // Get position from the corresponding circle (previous sibling)
-    const dot = label.previousElementSibling;
-    if (!dot) return;
-
-    const cx = parseFloat(dot.getAttribute('cx'));
-    const cy = parseFloat(dot.getAttribute('cy'));
-
-    // Add highlight class to the dot
-    dot.classList.add('wfo-highlight');
-
-    // Zoom the viewBox to center on the highlighted WFO
-    const zoom = 200;
-    const vx = Math.max(0, cx - zoom);
-    const vy = Math.max(0, cy - zoom);
-    svg.setAttribute('viewBox', `${vx} ${vy} ${zoom * 2} ${zoom * 2}`);
-  } catch {
-    // Map is non-critical, fail silently
-  }
-}
 
 function formatPreviousTime(isoString) {
   try {

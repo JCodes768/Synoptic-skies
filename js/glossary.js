@@ -95,16 +95,48 @@ export function selectTermOfTheDay(afdText) {
 /**
  * Show the term of the day in the sidebar
  */
+let afdTerms = [];
+let carouselIndex = -1; // -1 means showing term of the day
+
 export function showTermOfTheDay() {
   if (!sidebarEl || !termOfTheDay) return;
+  carouselIndex = -1;
+  renderSidebarTerm(termOfTheDay, true);
+}
+
+function renderSidebarTerm(entry, isTotd) {
+  if (!sidebarEl || !entry) return;
 
   sidebarEl.innerHTML = `
-    <div class="glossary-totd-label">Term of the Day</div>
-    <h4 class="glossary-sidebar-term">${esc(termOfTheDay.term)}</h4>
-    <p class="glossary-sidebar-definition">${esc(termOfTheDay.long)}</p>
-    <a href="glossary.html" class="glossary-browse-link">Browse all terms &rarr;</a>
+    ${isTotd ? '<div class="glossary-totd-label">Term of the Day</div>' : '<div class="glossary-totd-label">Glossary</div>'}
+    <h4 class="glossary-sidebar-term">${esc(entry.term)}</h4>
+    <p class="glossary-sidebar-definition">${esc(entry.long)}</p>
+    <div class="glossary-sidebar-nav">
+      <button class="glossary-next-btn" aria-label="Next term">Next term &rarr;</button>
+      <a href="glossary.html" class="glossary-browse-link">Browse all</a>
+    </div>
   `;
   sidebarEl.classList.add('glossary-active');
+
+  sidebarEl.querySelector('.glossary-next-btn')?.addEventListener('click', showNextTerm);
+}
+
+function showNextTerm() {
+  if (!afdTerms.length) return;
+  carouselIndex = (carouselIndex + 1) % afdTerms.length;
+  renderSidebarTerm(afdTerms[carouselIndex], false);
+}
+
+/**
+ * Build list of terms found in the AFD for the carousel.
+ */
+export function buildAfdTermList(afdText) {
+  if (!glossaryData.length || !afdText) return;
+  const text = afdText.toLowerCase();
+  afdTerms = glossaryData.filter(entry => {
+    const escaped = entry.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`\\b${escaped}\\b`, 'i').test(text);
+  });
 }
 
 /**
@@ -210,10 +242,14 @@ function handleTermHover(e) {
 
 function handleTermLeave() {
   scheduleHideTooltip();
-  // Revert sidebar to term of the day after a delay
+  // Revert sidebar to current carousel state after a delay
   setTimeout(() => {
     if (!document.querySelector('.glossary-term:hover')) {
-      showTermOfTheDay();
+      if (carouselIndex >= 0 && afdTerms[carouselIndex]) {
+        renderSidebarTerm(afdTerms[carouselIndex], false);
+      } else {
+        showTermOfTheDay();
+      }
     }
   }, 400);
 }
