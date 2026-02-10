@@ -230,16 +230,26 @@ function extractSectionTimestamp(body) {
   return match ? match[1].trim() : null;
 }
 
+function isStandaloneTimeRange(line) {
+  // Must be short and free of sentence punctuation — real time ranges are
+  // standalone labels like "Tonight through Wednesday", not body text.
+  if (!line || line.length > 60 || line.includes('.') || line.includes(',')) return false;
+  // Pattern 1: starts with a day name / Tonight / Today / This
+  if (/^(?:today|tonight|this\s+\w+|(?:sun|mon|tue|wed|thu|fri|sat)\w*(?:\s+(?:night|afternoon|evening|morning))?)\s+through\s+/i.test(line)) {
+    return true;
+  }
+  // Pattern 2: abbreviated date range "Mon 10 through Fri 14"
+  if (/^\w{3}\s+\d{1,2}\s+through\s+\w{3}\s+\d{1,2}/i.test(line)) {
+    return true;
+  }
+  return false;
+}
+
 function extractTimeRange(body) {
   const lines = body.split('\n');
   for (let i = 0; i < Math.min(lines.length, 5); i++) {
     const line = lines[i].trim();
-    if (/^[A-Z][a-z]+(?:\s+\w+)?\s+through\s+[A-Z][a-z]+/i.test(line)) {
-      return line;
-    }
-    if (/^\w{3}\s+\d{1,2}\s+through\s+\w{3}\s+\d{1,2}/i.test(line)) {
-      return line;
-    }
+    if (isStandaloneTimeRange(line)) return line;
   }
   return null;
 }
@@ -254,12 +264,8 @@ function cleanBody(body) {
     lines.shift();
   }
 
-  if (lines.length > 0) {
-    const first = lines[0].trim();
-    if (/^[A-Z][a-z]+(?:\s+\w+)?\s+through\s+[A-Z][a-z]+/i.test(first) ||
-        /^\w{3}\s+\d{1,2}\s+through\s+\w{3}\s+\d{1,2}/i.test(first)) {
-      lines.shift();
-    }
+  if (lines.length > 0 && isStandaloneTimeRange(lines[0].trim())) {
+    lines.shift();
   }
 
   while (lines.length > 0 && lines[0].trim() === '') lines.shift();

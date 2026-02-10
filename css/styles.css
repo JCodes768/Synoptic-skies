@@ -507,6 +507,41 @@ a.site-title {
   transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
+/* Inline alerts within conditions bar */
+.alerts-inline-none {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.alerts-inline-header {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border-light);
+  margin-bottom: var(--space-sm);
+}
+
+.alerts-label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+}
+
+.conditions-bar .alert-item {
+  margin-bottom: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.conditions-bar .alert-item:last-child {
+  margin-bottom: 0;
+}
+
 /* ── Satellite ──────────────────────────────────────────────── */
 
 .satellite-wrapper {
@@ -1201,28 +1236,6 @@ a.site-title {
   color: #fff;
 }
 
-/* ── Alerts Section ────────────────────────────────────────── */
-
-.alerts-header {
-  margin-bottom: var(--space-sm);
-}
-
-.alerts-title {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--color-text-muted);
-}
-
-.alerts-none {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  font-style: italic;
-  padding: var(--space-sm) 0;
-}
 
 /* ── The Gist ──────────────────────────────────────────────── */
 

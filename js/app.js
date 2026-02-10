@@ -204,22 +204,13 @@ function renderAlerts(alerts) {
   const el = document.getElementById('alerts');
   if (!el) return;
 
-  el.style.display = 'block';
-
   if (!alerts || alerts.length === 0) {
-    el.innerHTML = `
-      <div class="alerts-header">
-        <h2 class="alerts-title">Active Alerts</h2>
-      </div>
-      <p class="alerts-none">No active alerts for this area.</p>
-    `;
+    el.innerHTML = `<div class="alerts-inline-none"><span class="alerts-label">Active Weather Alerts:</span> None</div>`;
     return;
   }
 
   el.innerHTML = `
-    <div class="alerts-header">
-      <h2 class="alerts-title">Active Alerts</h2>
-    </div>
+    <div class="alerts-inline-header"><span class="alerts-label">Active Weather Alerts</span></div>
     ${alerts.map(alert => `
       <div class="alert-item alert-${alert.severity.toLowerCase()}">
         <div class="alert-event">${escapeHTML(alert.event)}</div>
