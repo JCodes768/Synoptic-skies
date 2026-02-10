@@ -72,6 +72,7 @@ export async function fetchLatestAFD() {
   }
 
   const latestId = list['@graph'][0].id;
+  const previousIssuanceTime = list['@graph'][1]?.issuanceTime || null;
 
   try {
     const cachedProduct = sessionStorage.getItem(`afd-${latestId}`);
@@ -84,6 +85,7 @@ export async function fetchLatestAFD() {
   const result = {
     id: latestId,
     issuanceTime: product.issuanceTime,
+    previousIssuanceTime,
     productText: product.productText,
     productName: product.productName
   };

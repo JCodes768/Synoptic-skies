@@ -85,39 +85,18 @@ function renderCurrentConditions(data) {
   if (!el) return;
 
   const daytime = isDaytimeNow();
-  const icon = weatherIconHTML(data.textDescription, daytime, '56');
+  const icon = weatherIconHTML(data.textDescription, daytime, '44');
 
   el.innerHTML = `
-    <div class="conditions-header">
+    <div class="conditions-compact">
       <div class="conditions-icon">${icon}</div>
-      <div class="conditions-temp">
-        <span class="temp-value">${data.temperature ?? '--'}\u00B0F</span>
-        <span class="temp-desc">${escapeHTML(data.textDescription)}</span>
-      </div>
+      <span class="temp-value">${data.temperature ?? '--'}\u00B0F</span>
+      <span class="temp-desc">${escapeHTML(data.textDescription)}</span>
     </div>
-    <div class="conditions-details">
-      <div class="detail-row">
-        <span class="detail-label">Wind</span>
-        <span class="detail-value">${data.windDirection} ${data.windSpeed ?? '--'} mph${data.windGust ? ` (G${data.windGust})` : ''}</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Humidity</span>
-        <span class="detail-value">${data.humidity ?? '--'}%</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Dew Point</span>
-        <span class="detail-value">${data.dewpoint ?? '--'}\u00B0F</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Pressure</span>
-        <span class="detail-value">${data.pressure ?? '--'}" Hg</span>
-      </div>
-      <div class="detail-row">
-        <span class="detail-label">Visibility</span>
-        <span class="detail-value">${data.visibility ?? '--'} mi</span>
-      </div>
+    <div class="conditions-details-compact">
+      <span class="detail-compact"><span class="detail-label">Wind</span> ${data.windDirection} ${data.windSpeed ?? '--'} mph${data.windGust ? ` (G${data.windGust})` : ''}</span>
+      <span class="detail-compact"><span class="detail-label">Dew Pt</span> ${data.dewpoint ?? '--'}\u00B0F</span>
     </div>
-    <div class="conditions-station">Station: ${data.station}</div>
   `;
 
   el.classList.remove('loading');
@@ -416,6 +395,16 @@ function updateHeaderForLocation() {
     <span id="afd-timestamp">${escapeHTML(timeText)}</span>
   `;
 
+  // WFO info blurb
+  let blurb = document.getElementById('wfo-blurb');
+  if (!blurb) {
+    blurb = document.createElement('div');
+    blurb.id = 'wfo-blurb';
+    blurb.className = 'header-office-meta';
+    subtitleEl.insertAdjacentElement('afterend', blurb);
+  }
+  blurb.innerHTML = `Your forecast is written by real meteorologists at the NWS office in <strong>${escapeHTML(CONFIG.officeCity)}, ${escapeHTML(CONFIG.officeState)}</strong> (WFO ${escapeHTML(CONFIG.office)}). <a href="about-afd.html">Learn more</a>`;
+
   document.title = `Synoptic Skies \u2014 ${CONFIG.officeName} Area Forecast Discussion`;
 }
 
@@ -479,6 +468,15 @@ async function loadAllData() {
   // Render AFD
   if (afdResult.status === 'fulfilled') {
     const parsed = parseAFD(afdResult.value.productText);
+
+    // Enhance "What Has Changed" heading with previous issuance time
+    if (afdResult.value.previousIssuanceTime) {
+      const whcSection = parsed.sections.find(s => s.name === 'WHAT HAS CHANGED');
+      if (whcSection) {
+        whcSection.displayName = `What Has Changed since ${formatPreviousTime(afdResult.value.previousIssuanceTime)}`;
+      }
+    }
+
     renderAFD(parsed);
     renderForecasterCard(parsed.authors);
 
@@ -522,9 +520,64 @@ async function loadAllData() {
 
   // Initialize satellite widget
   initSatellite(document.getElementById('satellite'), CONFIG.lat, CONFIG.lon);
+
+  // Initialize WFO map widget
+  initWfoMap(CONFIG.office);
 }
 
 // ── Helpers ─────────────────────────────────────────────────
+
+async function initWfoMap(wfoCode) {
+  const container = document.getElementById('wfo-map');
+  if (!container) return;
+
+  try {
+    const resp = await fetch('data/wfo-map.svg');
+    if (!resp.ok) return;
+    const svgText = await resp.text();
+    container.innerHTML = svgText;
+
+    const svg = container.querySelector('svg');
+    if (!svg) return;
+
+    // Find the text label for the current WFO
+    const label = svg.getElementById(`wfo-${wfoCode}`);
+    if (!label) return;
+
+    // Get position from the corresponding circle (previous sibling)
+    const dot = label.previousElementSibling;
+    if (!dot) return;
+
+    const cx = parseFloat(dot.getAttribute('cx'));
+    const cy = parseFloat(dot.getAttribute('cy'));
+
+    // Add highlight class to the dot
+    dot.classList.add('wfo-highlight');
+
+    // Zoom the viewBox to center on the highlighted WFO
+    const zoom = 200;
+    const vx = Math.max(0, cx - zoom);
+    const vy = Math.max(0, cy - zoom);
+    svg.setAttribute('viewBox', `${vx} ${vy} ${zoom * 2} ${zoom * 2}`);
+  } catch {
+    // Map is non-critical, fail silently
+  }
+}
+
+function formatPreviousTime(isoString) {
+  try {
+    const d = new Date(isoString);
+    const day = d.toLocaleDateString('en-US', { weekday: 'short' });
+    let hours = d.getHours();
+    const minutes = d.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    const minStr = minutes > 0 ? `:${minutes.toString().padStart(2, '0')}` : '';
+    return `${day} ${hours}${minStr} ${ampm}`;
+  } catch {
+    return '';
+  }
+}
 
 function escapeHTML(str) {
   if (!str) return '';

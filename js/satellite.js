@@ -72,7 +72,7 @@ export function initSatellite(container, lat = 37.7516, lon = -122.4477) {
         src="${url}"
         alt="${satLabel} GeoColor satellite imagery — ${sectorName}"
         crossorigin="anonymous"
-        loading="lazy"
+        loading="eager"
       />
       <div class="satellite-loading">Loading satellite...</div>
     </div>

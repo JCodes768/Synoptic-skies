@@ -316,11 +316,15 @@ a.site-title {
 }
 
 .sidebar {
-  position: sticky;
-  top: 100px;
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
+}
+
+.widget-glossary {
+  position: sticky;
+  top: 80px;
+  z-index: 10;
 }
 
 /* ── Widget Cards ───────────────────────────────────────────── */
@@ -444,6 +448,52 @@ a.site-title {
   color: var(--color-text-muted);
   margin-top: var(--space-md);
   text-align: right;
+}
+
+/* Compact conditions layout */
+.conditions-compact {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.conditions-compact .conditions-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.conditions-compact .temp-value {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.conditions-compact .temp-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.conditions-details-compact {
+  display: flex;
+  gap: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+.detail-compact {
+  color: var(--color-text-secondary);
+}
+
+.detail-compact .detail-label {
+  color: var(--color-text-muted);
+  margin-right: 2px;
 }
 
 /* ── Satellite ──────────────────────────────────────────────── */
@@ -1284,6 +1334,45 @@ a.site-title {
   margin: var(--space-lg) 0;
   font-style: italic;
   color: var(--color-text-muted);
+}
+
+/* -- WFO Map ------------------------------------------------------ */
+
+.wfo-map-container {
+  margin: var(--space-lg) 0;
+}
+
+.wfo-map-static {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+
+.wfo-map-caption {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-top: var(--space-sm);
+  font-style: italic;
+}
+
+/* Sidebar WFO map inset */
+.wfo-map-inset {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+  overflow: hidden;
+}
+
+.wfo-map-inset svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* ── Responsive: Tablet ─────────────────────────────────────── */

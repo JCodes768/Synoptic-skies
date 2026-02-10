@@ -86,9 +86,11 @@
     <!-- Right Column: Sidebar -->
     <aside class="sidebar">
 
-      <div class="widget widget-conditions">
-        <h3 class="widget-title">Current Conditions</h3>
-        <div id="current-conditions" class="loading"></div>
+      <div class="widget widget-glossary">
+        <h3 class="widget-title">Glossary</h3>
+        <div id="glossary-content">
+          <p class="glossary-default-text">Hover a highlighted term in the forecast discussion to learn more about it.</p>
+        </div>
       </div>
 
       <div class="widget widget-satellite">
@@ -96,11 +98,9 @@
         <div id="satellite"></div>
       </div>
 
-      <div class="widget widget-glossary">
-        <h3 class="widget-title">Glossary</h3>
-        <div id="glossary-content">
-          <p class="glossary-default-text">Hover a highlighted term in the forecast discussion to learn more about it.</p>
-        </div>
+      <div class="widget widget-conditions">
+        <h3 class="widget-title">Current Conditions</h3>
+        <div id="current-conditions" class="loading"></div>
       </div>
 
       <div class="widget widget-forecast">
@@ -109,6 +109,11 @@
       </div>
 
       <div class="widget widget-forecaster" id="forecaster-card"></div>
+
+      <div class="widget widget-wfo-map">
+        <h3 class="widget-title">Your Forecast Office</h3>
+        <div id="wfo-map" class="wfo-map-inset"></div>
+      </div>
 
     </aside>
 

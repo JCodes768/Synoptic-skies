@@ -1,0 +1,332 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600">
+  <style>
+    .us-outline { fill: none; stroke: #999; stroke-width: 1.5; }
+    .wfo-dot { fill: #d4853b; r: 3; }
+    .wfo-label { font-family: sans-serif; font-size: 7px; fill: #666; text-anchor: middle; dominant-baseline: text-before-edge; }
+    .wfo-highlight { fill: #e87a2e; r: 6; animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse {
+      0%   { opacity: 1; }
+      50%  { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+  </style>
+
+  <!-- Continental US outline -->
+  <path class="us-outline" d="M 120,70 C 130,65 145,60 160,55 C 180,48 200,45 220,42 C 240,40 260,38 280,38 C 300,37 320,38 340,40 C 360,42 380,45 400,50 C 420,55 435,58 448,63 C 460,68 470,72 478,78 L 490,90 C 500,100 510,105 520,108 C 530,112 540,118 548,128 C 553,135 555,142 555,150 L 555,155 C 553,160 548,162 542,165 C 538,167 535,170 533,175 C 530,180 528,185 530,190 C 532,195 535,198 538,200 C 540,202 538,206 535,210 C 530,218 525,222 520,228 C 518,232 520,236 522,240 C 525,248 528,255 530,262 C 532,268 535,275 535,282 C 535,290 533,298 530,305 C 528,310 525,315 522,320 C 518,328 515,335 515,342 C 515,348 518,355 520,362 C 522,368 525,375 528,382 C 530,388 532,395 530,400 C 528,405 522,408 515,405 C 508,402 502,398 498,392 C 495,388 492,382 490,378 C 488,372 485,368 480,365 C 475,362 470,358 465,355 C 460,352 455,348 450,345 C 445,342 438,340 432,340 C 425,340 418,342 412,345 C 405,348 398,352 392,355 C 385,358 378,360 370,360 C 362,360 355,358 348,355 C 340,352 332,348 325,345 C 318,342 312,340 305,345 C 298,350 292,358 288,365 C 285,372 280,380 275,385 C 268,392 260,395 250,395 C 240,395 230,390 222,385 C 215,380 210,372 205,365 C 200,358 195,350 188,345 C 180,340 172,338 165,340 C 158,342 152,348 148,355 C 145,362 140,370 135,375 C 128,382 120,385 112,382 C 105,380 100,372 98,365 C 95,355 93,345 92,335 C 90,325 90,315 90,305 C 90,295 92,285 95,275 C 98,265 100,255 100,245 C 100,235 98,225 95,218 C 92,210 88,205 85,200 C 82,195 80,188 80,180 C 82,170 88,162 95,155 C 100,150 108,142 115,135 C 120,128 125,120 128,112 C 130,105 128,95 125,85 L 120,70 Z"/>
+
+  <!-- WFO locations -->
+  <!-- Pacific Northwest -->
+  <circle class="wfo-dot" cx="135" cy="85"/>
+  <text class="wfo-label" id="wfo-SEW" x="135" y="90">SEW</text>
+
+  <circle class="wfo-dot" cx="130" cy="120"/>
+  <text class="wfo-label" id="wfo-PQR" x="130" y="125">PQR</text>
+
+  <circle class="wfo-dot" cx="170" cy="100"/>
+  <text class="wfo-label" id="wfo-OTX" x="170" y="105">OTX</text>
+
+  <circle class="wfo-dot" cx="155" cy="120"/>
+  <text class="wfo-label" id="wfo-PDT" x="155" y="125">PDT</text>
+
+  <circle class="wfo-dot" cx="120" cy="145"/>
+  <text class="wfo-label" id="wfo-MFR" x="120" y="150">MFR</text>
+
+  <!-- California -->
+  <circle class="wfo-dot" cx="100" cy="160"/>
+  <text class="wfo-label" id="wfo-EKA" x="100" y="165">EKA</text>
+
+  <circle class="wfo-dot" cx="110" cy="195"/>
+  <text class="wfo-label" id="wfo-STO" x="110" y="200">STO</text>
+
+  <circle class="wfo-dot" cx="95" cy="225"/>
+  <text class="wfo-label" id="wfo-MTR" x="95" y="230">MTR</text>
+
+  <circle class="wfo-dot" cx="115" cy="245"/>
+  <text class="wfo-label" id="wfo-HNX" x="115" y="250">HNX</text>
+
+  <circle class="wfo-dot" cx="115" cy="290"/>
+  <text class="wfo-label" id="wfo-LOX" x="115" y="295">LOX</text>
+
+  <circle class="wfo-dot" cx="130" cy="315"/>
+  <text class="wfo-label" id="wfo-SGX" x="130" y="320">SGX</text>
+
+  <!-- Great Basin / Intermountain West -->
+  <circle class="wfo-dot" cx="165" cy="155"/>
+  <text class="wfo-label" id="wfo-BOI" x="165" y="160">BOI</text>
+
+  <circle class="wfo-dot" cx="185" cy="125"/>
+  <text class="wfo-label" id="wfo-MSO" x="185" y="130">MSO</text>
+
+  <circle class="wfo-dot" cx="195" cy="180"/>
+  <text class="wfo-label" id="wfo-PIH" x="195" y="185">PIH</text>
+
+  <circle class="wfo-dot" cx="195" cy="210"/>
+  <text class="wfo-label" id="wfo-SLC" x="195" y="215">SLC</text>
+
+  <circle class="wfo-dot" cx="165" cy="265"/>
+  <text class="wfo-label" id="wfo-VEF" x="165" y="270">VEF</text>
+
+  <circle class="wfo-dot" cx="225" cy="195"/>
+  <text class="wfo-label" id="wfo-RIW" x="225" y="200">RIW</text>
+
+  <!-- Montana / Dakotas -->
+  <circle class="wfo-dot" cx="210" cy="115"/>
+  <text class="wfo-label" id="wfo-TFX" x="210" y="120">TFX</text>
+
+  <circle class="wfo-dot" cx="235" cy="145"/>
+  <text class="wfo-label" id="wfo-BYZ" x="235" y="150">BYZ</text>
+
+  <circle class="wfo-dot" cx="250" cy="115"/>
+  <text class="wfo-label" id="wfo-GGW" x="250" y="120">GGW</text>
+
+  <circle class="wfo-dot" cx="290" cy="140"/>
+  <text class="wfo-label" id="wfo-BIS" x="290" y="145">BIS</text>
+
+  <circle class="wfo-dot" cx="270" cy="185"/>
+  <text class="wfo-label" id="wfo-UNR" x="270" y="190">UNR</text>
+
+  <circle class="wfo-dot" cx="305" cy="170"/>
+  <text class="wfo-label" id="wfo-ABR" x="305" y="175">ABR</text>
+
+  <circle class="wfo-dot" cx="310" cy="130"/>
+  <text class="wfo-label" id="wfo-FGF" x="310" y="135">FGF</text>
+
+  <!-- Arizona / New Mexico -->
+  <circle class="wfo-dot" cx="190" cy="275"/>
+  <text class="wfo-label" id="wfo-FGZ" x="190" y="280">FGZ</text>
+
+  <circle class="wfo-dot" cx="185" cy="310"/>
+  <text class="wfo-label" id="wfo-PSR" x="185" y="315">PSR</text>
+
+  <circle class="wfo-dot" cx="195" cy="325"/>
+  <text class="wfo-label" id="wfo-TWC" x="195" y="330">TWC</text>
+
+  <circle class="wfo-dot" cx="240" cy="295"/>
+  <text class="wfo-label" id="wfo-ABQ" x="240" y="300">ABQ</text>
+
+  <circle class="wfo-dot" cx="235" cy="335"/>
+  <text class="wfo-label" id="wfo-EPZ" x="235" y="340">EPZ</text>
+
+  <!-- Colorado / Wyoming -->
+  <circle class="wfo-dot" cx="250" cy="245"/>
+  <text class="wfo-label" id="wfo-BOU" x="250" y="250">BOU</text>
+
+  <circle class="wfo-dot" cx="250" cy="265"/>
+  <text class="wfo-label" id="wfo-PUB" x="250" y="270">PUB</text>
+
+  <circle class="wfo-dot" cx="255" cy="215"/>
+  <text class="wfo-label" id="wfo-CYS" x="255" y="220">CYS</text>
+
+  <!-- Nebraska / Kansas -->
+  <circle class="wfo-dot" cx="290" cy="215"/>
+  <text class="wfo-label" id="wfo-LBF" x="290" y="220">LBF</text>
+
+  <circle class="wfo-dot" cx="285" cy="240"/>
+  <text class="wfo-label" id="wfo-GLD" x="285" y="245">GLD</text>
+
+  <circle class="wfo-dot" cx="315" cy="230"/>
+  <text class="wfo-label" id="wfo-GID" x="315" y="235">GID</text>
+
+  <circle class="wfo-dot" cx="345" cy="225"/>
+  <text class="wfo-label" id="wfo-OAX" x="345" y="230">OAX</text>
+
+  <circle class="wfo-dot" cx="300" cy="260"/>
+  <text class="wfo-label" id="wfo-DDC" x="300" y="265">DDC</text>
+
+  <circle class="wfo-dot" cx="325" cy="260"/>
+  <text class="wfo-label" id="wfo-ICT" x="325" y="265">ICT</text>
+
+  <circle class="wfo-dot" cx="345" cy="245"/>
+  <text class="wfo-label" id="wfo-TOP" x="345" y="250">TOP</text>
+
+  <!-- Minnesota / Wisconsin / Iowa -->
+  <circle class="wfo-dot" cx="355" cy="150"/>
+  <text class="wfo-label" id="wfo-DLH" x="355" y="155">DLH</text>
+
+  <circle class="wfo-dot" cx="350" cy="175"/>
+  <text class="wfo-label" id="wfo-MPX" x="350" y="180">MPX</text>
+
+  <circle class="wfo-dot" cx="325" cy="195"/>
+  <text class="wfo-label" id="wfo-FSD" x="325" y="200">FSD</text>
+
+  <circle class="wfo-dot" cx="370" cy="190"/>
+  <text class="wfo-label" id="wfo-ARX" x="370" y="195">ARX</text>
+
+  <circle class="wfo-dot" cx="365" cy="225"/>
+  <text class="wfo-label" id="wfo-DMX" x="365" y="230">DMX</text>
+
+  <circle class="wfo-dot" cx="380" cy="220"/>
+  <text class="wfo-label" id="wfo-DVN" x="380" y="225">DVN</text>
+
+  <!-- Wisconsin / Michigan -->
+  <circle class="wfo-dot" cx="385" cy="170"/>
+  <text class="wfo-label" id="wfo-GRB" x="385" y="175">GRB</text>
+
+  <circle class="wfo-dot" cx="390" cy="190"/>
+  <text class="wfo-label" id="wfo-MKX" x="390" y="195">MKX</text>
+
+  <circle class="wfo-dot" cx="415" cy="175"/>
+  <text class="wfo-label" id="wfo-APX" x="415" y="180">APX</text>
+
+  <circle class="wfo-dot" cx="415" cy="195"/>
+  <text class="wfo-label" id="wfo-GRR" x="415" y="200">GRR</text>
+
+  <circle class="wfo-dot" cx="430" cy="195"/>
+  <text class="wfo-label" id="wfo-DTX" x="430" y="200">DTX</text>
+
+  <!-- Illinois / Indiana / Ohio -->
+  <circle class="wfo-dot" cx="400" cy="210"/>
+  <text class="wfo-label" id="wfo-LOT" x="400" y="215">LOT</text>
+
+  <circle class="wfo-dot" cx="425" cy="210"/>
+  <text class="wfo-label" id="wfo-IWX" x="425" y="215">IWX</text>
+
+  <circle class="wfo-dot" cx="425" cy="235"/>
+  <text class="wfo-label" id="wfo-IND" x="425" y="240">IND</text>
+
+  <circle class="wfo-dot" cx="440" cy="235"/>
+  <text class="wfo-label" id="wfo-ILN" x="440" y="240">ILN</text>
+
+  <circle class="wfo-dot" cx="455" cy="205"/>
+  <text class="wfo-label" id="wfo-CLE" x="455" y="210">CLE</text>
+
+  <!-- Missouri / Arkansas / Mississippi Valley -->
+  <circle class="wfo-dot" cx="365" cy="265"/>
+  <text class="wfo-label" id="wfo-SGF" x="365" y="270">SGF</text>
+
+  <circle class="wfo-dot" cx="390" cy="250"/>
+  <text class="wfo-label" id="wfo-LSX" x="390" y="255">LSX</text>
+
+  <circle class="wfo-dot" cx="410" cy="260"/>
+  <text class="wfo-label" id="wfo-PAH" x="410" y="265">PAH</text>
+
+  <circle class="wfo-dot" cx="410" cy="280"/>
+  <text class="wfo-label" id="wfo-MEG" x="410" y="285">MEG</text>
+
+  <circle class="wfo-dot" cx="380" cy="290"/>
+  <text class="wfo-label" id="wfo-LZK" x="380" y="295">LZK</text>
+
+  <circle class="wfo-dot" cx="410" cy="315"/>
+  <text class="wfo-label" id="wfo-JAN" x="410" y="320">JAN</text>
+
+  <!-- Oklahoma / Texas -->
+  <circle class="wfo-dot" cx="280" cy="285"/>
+  <text class="wfo-label" id="wfo-AMA" x="280" y="290">AMA</text>
+
+  <circle class="wfo-dot" cx="320" cy="290"/>
+  <text class="wfo-label" id="wfo-OUN" x="320" y="295">OUN</text>
+
+  <circle class="wfo-dot" cx="340" cy="275"/>
+  <text class="wfo-label" id="wfo-TSA" x="340" y="280">TSA</text>
+
+  <circle class="wfo-dot" cx="290" cy="315"/>
+  <text class="wfo-label" id="wfo-LUB" x="290" y="320">LUB</text>
+
+  <circle class="wfo-dot" cx="280" cy="335"/>
+  <text class="wfo-label" id="wfo-MAF" x="280" y="340">MAF</text>
+
+  <circle class="wfo-dot" cx="300" cy="340"/>
+  <text class="wfo-label" id="wfo-SJT" x="300" y="345">SJT</text>
+
+  <circle class="wfo-dot" cx="330" cy="315"/>
+  <text class="wfo-label" id="wfo-FWD" x="330" y="320">FWD</text>
+
+  <circle class="wfo-dot" cx="310" cy="350"/>
+  <text class="wfo-label" id="wfo-EWX" x="310" y="355">EWX</text>
+
+  <circle class="wfo-dot" cx="350" cy="350"/>
+  <text class="wfo-label" id="wfo-HGX" x="350" y="355">HGX</text>
+
+  <circle class="wfo-dot" cx="320" cy="370"/>
+  <text class="wfo-label" id="wfo-CRP" x="320" y="375">CRP</text>
+
+  <circle class="wfo-dot" cx="310" cy="385"/>
+  <text class="wfo-label" id="wfo-BRO" x="310" y="390">BRO</text>
+
+  <circle class="wfo-dot" cx="370" cy="310"/>
+  <text class="wfo-label" id="wfo-SHV" x="370" y="315">SHV</text>
+
+  <circle class="wfo-dot" cx="390" cy="335"/>
+  <text class="wfo-label" id="wfo-LCH" x="390" y="340">LCH</text>
+
+  <!-- Gulf Coast -->
+  <circle class="wfo-dot" cx="420" cy="340"/>
+  <text class="wfo-label" id="wfo-LIX" x="420" y="345">LIX</text>
+
+  <circle class="wfo-dot" cx="455" cy="330"/>
+  <text class="wfo-label" id="wfo-MOB" x="455" y="335">MOB</text>
+
+  <circle class="wfo-dot" cx="480" cy="325"/>
+  <text class="wfo-label" id="wfo-TAE" x="480" y="330">TAE</text>
+
+  <!-- Alabama / Tennessee / Kentucky -->
+  <circle class="wfo-dot" cx="445" cy="300"/>
+  <text class="wfo-label" id="wfo-BMX" x="445" y="305">BMX</text>
+
+  <circle class="wfo-dot" cx="440" cy="280"/>
+  <text class="wfo-label" id="wfo-HUN" x="440" y="285">HUN</text>
+
+  <circle class="wfo-dot" cx="450" cy="255"/>
+  <text class="wfo-label" id="wfo-JKL" x="450" y="260">JKL</text>
+
+  <!-- Appalachian / Mid-Atlantic -->
+  <circle class="wfo-dot" cx="470" cy="240"/>
+  <text class="wfo-label" id="wfo-RLX" x="470" y="245">RLX</text>
+
+  <circle class="wfo-dot" cx="475" cy="215"/>
+  <text class="wfo-label" id="wfo-PBZ" x="475" y="220">PBZ</text>
+
+  <circle class="wfo-dot" cx="500" cy="250"/>
+  <text class="wfo-label" id="wfo-RNK" x="500" y="255">RNK</text>
+
+  <circle class="wfo-dot" cx="510" cy="225"/>
+  <text class="wfo-label" id="wfo-LWX" x="510" y="230">LWX</text>
+
+  <circle class="wfo-dot" cx="520" cy="210"/>
+  <text class="wfo-label" id="wfo-PHI" x="520" y="215">PHI</text>
+
+  <!-- New York / New England -->
+  <circle class="wfo-dot" cx="480" cy="185"/>
+  <text class="wfo-label" id="wfo-BUF" x="480" y="190">BUF</text>
+
+  <circle class="wfo-dot" cx="500" cy="185"/>
+  <text class="wfo-label" id="wfo-BGM" x="500" y="190">BGM</text>
+
+  <circle class="wfo-dot" cx="520" cy="180"/>
+  <text class="wfo-label" id="wfo-ALY" x="520" y="185">ALY</text>
+
+  <circle class="wfo-dot" cx="530" cy="200"/>
+  <text class="wfo-label" id="wfo-OKX" x="530" y="205">OKX</text>
+
+  <circle class="wfo-dot" cx="525" cy="160"/>
+  <text class="wfo-label" id="wfo-BTV" x="525" y="165">BTV</text>
+
+  <circle class="wfo-dot" cx="540" cy="165"/>
+  <text class="wfo-label" id="wfo-GYX" x="540" y="170">GYX</text>
+
+  <circle class="wfo-dot" cx="540" cy="185"/>
+  <text class="wfo-label" id="wfo-BOX" x="540" y="190">BOX</text>
+
+  <circle class="wfo-dot" cx="555" cy="130"/>
+  <text class="wfo-label" id="wfo-CAR" x="555" y="135">CAR</text>
+
+  <!-- Carolinas / Southeast -->
+  <circle class="wfo-dot" cx="520" cy="265"/>
+  <text class="wfo-label" id="wfo-RAH" x="520" y="270">RAH</text>
+
+  <circle class="wfo-dot" cx="530" cy="285"/>
+  <text class="wfo-label" id="wfo-ILM" x="530" y="290">ILM</text>
+
+  <circle class="wfo-dot" cx="520" cy="305"/>
+  <text class="wfo-label" id="wfo-CHS" x="520" y="310">CHS</text>
+
+  <!-- Florida -->
+  <circle class="wfo-dot" cx="510" cy="325"/>
+  <text class="wfo-label" id="wfo-JAX" x="510" y="330">JAX</text>
+
+  <circle class="wfo-dot" cx="505" cy="355"/>
+  <text class="wfo-label" id="wfo-TBW" x="505" y="360">TBW</text>
+
+  <circle class="wfo-dot" cx="530" cy="390"/>
+  <text class="wfo-label" id="wfo-MFL" x="530" y="395">MFL</text>
+</svg>
