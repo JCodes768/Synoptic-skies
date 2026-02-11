@@ -189,18 +189,18 @@ function findTermMatches(text) {
   for (const entry of glossaryData) {
     const escaped = entry.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
-    const match = regex.exec(text);
-    if (!match) continue;
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
 
-    const start = match.index;
-    const end = start + match[0].length;
+      // Skip if overlaps with an existing match
+      const overlaps = usedRanges.some(r => start < r.end && end > r.start);
+      if (overlaps) continue;
 
-    // Skip if overlaps with an existing match
-    const overlaps = usedRanges.some(r => start < r.end && end > r.start);
-    if (overlaps) continue;
-
-    matches.push({ start, end, term: entry.term, original: match[0] });
-    usedRanges.push({ start, end });
+      matches.push({ start, end, term: entry.term, original: match[0] });
+      usedRanges.push({ start, end });
+    }
   }
 
   return matches.sort((a, b) => a.start - b.start);
@@ -247,16 +247,6 @@ function handleTermHover(e) {
 
 function handleTermLeave() {
   scheduleHideTooltip();
-  // Revert sidebar to current carousel state after a delay
-  setTimeout(() => {
-    if (!document.querySelector('.glossary-term:hover')) {
-      if (carouselIndex >= 0 && afdTerms[carouselIndex]) {
-        renderSidebarTerm(afdTerms[carouselIndex], false);
-      } else {
-        showTermOfTheDay();
-      }
-    }
-  }, 400);
 }
 
 function handleTermClick(e) {
@@ -266,9 +256,7 @@ function handleTermClick(e) {
   showTooltip(e.target, term);
   showSidebarDefinition(term);
 
-  if (window.innerWidth < 768) {
-    showMobileDefinition(term);
-  }
+  showMobileDefinition(term);
 }
 
 let hideTimeout = null;
