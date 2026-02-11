@@ -322,9 +322,7 @@ a.site-title {
 }
 
 .widget-glossary {
-  position: sticky;
-  top: 80px;
-  z-index: 10;
+  /* no longer sticky — scrolls with sidebar */
 }
 
 /* ── Widget Cards ───────────────────────────────────────────── */
