@@ -3,267 +3,717 @@
     {
       "term": "trough",
       "short": "An elongated area of low atmospheric pressure.",
-      "long": "A trough is an elongated region of relatively low atmospheric pressure, often associated with fronts. Upper-level troughs bring rising air, clouds, and precipitation. On weather maps, troughs appear as dips in the height contours, channeling storm systems and moisture."
+      "long": "A trough is an elongated region of relatively low atmospheric pressure, often associated with fronts. Upper-level troughs bring rising air, clouds, and precipitation. On weather maps, troughs appear as dips in the height contours, channeling storm systems and moisture.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Trough_(meteorology)"
     },
     {
       "term": "ridge",
       "short": "An elongated area of high atmospheric pressure.",
-      "long": "A ridge is an elongated region of relatively high atmospheric pressure — the opposite of a trough. Ridges bring sinking air, clear skies, and warmer temperatures. A strong ridge over the West Coast is often called a 'heat dome' in summer and can block incoming storm systems."
+      "long": "A ridge is an elongated region of relatively high atmospheric pressure — the opposite of a trough. Ridges bring sinking air, clear skies, and warmer temperatures. A strong ridge over the West Coast is often called a 'heat dome' in summer and can block incoming storm systems.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ridge_(meteorology)"
     },
     {
       "term": "cold front",
       "short": "The leading edge of a cooler air mass replacing warmer air.",
-      "long": "A cold front is the boundary where a mass of cold air advances and undercuts warmer air ahead of it. The warm air is forced upward, often producing a narrow band of clouds, showers, and sometimes thunderstorms. After the front passes, expect cooler temperatures, lower humidity, and clearing skies."
+      "long": "A cold front is the boundary where a mass of cold air advances and undercuts warmer air ahead of it. The warm air is forced upward, often producing a narrow band of clouds, showers, and sometimes thunderstorms. After the front passes, expect cooler temperatures, lower humidity, and clearing skies.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Cold_front"
     },
     {
       "term": "warm front",
       "short": "The leading edge of a warmer air mass replacing cooler air.",
-      "long": "A warm front is the boundary where warm air advances over a retreating mass of cooler air. Because warm air is lighter, it rises gradually over the cooler air, creating a broad area of clouds and steady precipitation well ahead of the front's surface position. Warm fronts move slower than cold fronts."
+      "long": "A warm front is the boundary where warm air advances over a retreating mass of cooler air. Because warm air is lighter, it rises gradually over the cooler air, creating a broad area of clouds and steady precipitation well ahead of the front's surface position. Warm fronts move slower than cold fronts.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Warm_front"
     },
     {
       "term": "occluded front",
       "short": "A front formed when a cold front overtakes a warm front.",
-      "long": "An occluded front forms when a faster-moving cold front catches up to and merges with a warm front. The warm air is lifted entirely off the surface, trapped between two cooler air masses. Occluded fronts often bring prolonged periods of clouds and precipitation, and are associated with mature low-pressure systems."
+      "long": "An occluded front forms when a faster-moving cold front catches up to and merges with a warm front. The warm air is lifted entirely off the surface, trapped between two cooler air masses. Occluded fronts often bring prolonged periods of clouds and precipitation, and are associated with mature low-pressure systems.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Occluded_front"
     },
     {
       "term": "stationary front",
       "short": "A front with little or no movement.",
-      "long": "A stationary front is a boundary between two air masses that are not moving significantly. Neither the warm nor cold air is advancing. Stationary fronts can persist for days, bringing extended periods of cloudiness and precipitation along the boundary."
+      "long": "A stationary front is a boundary between two air masses that are not moving significantly. Neither the warm nor cold air is advancing. Stationary fronts can persist for days, bringing extended periods of cloudiness and precipitation along the boundary.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Stationary_front"
     },
     {
       "term": "zonal flow",
       "short": "West-to-east atmospheric flow with little north-south movement.",
-      "long": "Zonal flow describes a pattern where the jet stream and upper-level winds blow mostly from west to east with minimal north-south undulation. Zonal flow tends to keep weather systems moving quickly and prevents arctic air from plunging south or warm air from surging north. It typically brings benign, progressive weather."
+      "long": "Zonal flow describes a pattern where the jet stream and upper-level winds blow mostly from west to east with minimal north-south undulation. Zonal flow tends to keep weather systems moving quickly and prevents arctic air from plunging south or warm air from surging north. It typically brings benign, progressive weather.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Zonal_and_meridional_flow"
     },
     {
       "term": "meridional flow",
       "short": "Atmospheric flow with strong north-south undulations.",
-      "long": "Meridional flow describes a jet stream pattern with deep troughs and ridges — strong north-south undulations. This pattern allows cold air to dive south and warm air to surge north, creating more extreme weather events. Blocking patterns and persistent weather anomalies are more common during meridional flow."
+      "long": "Meridional flow describes a jet stream pattern with deep troughs and ridges — strong north-south undulations. This pattern allows cold air to dive south and warm air to surge north, creating more extreme weather events. Blocking patterns and persistent weather anomalies are more common during meridional flow.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Zonal_and_meridional_flow"
     },
     {
       "term": "jet stream",
       "short": "A fast, narrow band of wind in the upper atmosphere.",
-      "long": "The jet stream is a ribbon of strong winds (typically 100-200+ mph) at around 30,000 feet altitude, flowing roughly west to east. It marks the boundary between warm and cold air masses and steers surface weather systems. Storms tend to form and intensify along and south of the jet stream."
+      "long": "The jet stream is a ribbon of strong winds (typically 100-200+ mph) at around 30,000 feet altitude, flowing roughly west to east. It marks the boundary between warm and cold air masses and steers surface weather systems. Storms tend to form and intensify along and south of the jet stream.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Jet_stream"
     },
     {
       "term": "atmospheric river",
       "short": "A long, narrow corridor of concentrated moisture transport.",
-      "long": "An atmospheric river (AR) is a corridor of water vapor roughly 250-375 miles wide that can extend thousands of miles from the tropics to higher latitudes. When an AR makes landfall, it can produce heavy rain and snow, especially on mountain slopes. California receives 30-50% of its annual precipitation from atmospheric rivers. They are ranked on a 1-5 scale from beneficial to hazardous."
+      "long": "An atmospheric river (AR) is a corridor of water vapor roughly 250-375 miles wide that can extend thousands of miles from the tropics to higher latitudes. When an AR makes landfall, it can produce heavy rain and snow, especially on mountain slopes. California receives 30-50% of its annual precipitation from atmospheric rivers. They are ranked on a 1-5 scale from beneficial to hazardous.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Atmospheric_river"
     },
     {
       "term": "IVT",
       "short": "Integrated Vapor Transport — a measure of moisture flux in the atmosphere.",
-      "long": "Integrated Vapor Transport (IVT) measures the total amount of water vapor being transported through the atmosphere, calculated by integrating moisture and wind speed through the depth of the atmosphere. IVT is the primary metric used to identify and categorize atmospheric rivers. Values above 250 kg/m/s typically indicate an atmospheric river."
+      "long": "Integrated Vapor Transport (IVT) measures the total amount of water vapor being transported through the atmosphere, calculated by integrating moisture and wind speed through the depth of the atmosphere. IVT is the primary metric used to identify and categorize atmospheric rivers. Values above 250 kg/m/s typically indicate an atmospheric river.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Atmospheric_river"
     },
     {
       "term": "QPF",
       "short": "Quantitative Precipitation Forecast — predicted rainfall amounts.",
-      "long": "QPF stands for Quantitative Precipitation Forecast — the forecasted amount of liquid-equivalent precipitation (rain, or melted snow) for a given period, usually expressed in inches. QPF is one of the most challenging aspects of weather forecasting, as small errors in storm track or intensity can dramatically change local rainfall totals."
+      "long": "QPF stands for Quantitative Precipitation Forecast — the forecasted amount of liquid-equivalent precipitation (rain, or melted snow) for a given period, usually expressed in inches. QPF is one of the most challenging aspects of weather forecasting, as small errors in storm track or intensity can dramatically change local rainfall totals.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Quantitative_precipitation_forecast"
     },
     {
       "term": "precipitable water",
       "short": "Total water vapor in a column of atmosphere, if condensed to liquid.",
-      "long": "Precipitable water (PWAT) is the total amount of water vapor contained in a vertical column of atmosphere from the surface to the top. If all the moisture in that column were condensed and collected, it would equal the precipitable water value (measured in inches). High PWAT values indicate a moisture-rich atmosphere capable of producing heavy precipitation."
+      "long": "Precipitable water (PWAT) is the total amount of water vapor contained in a vertical column of atmosphere from the surface to the top. If all the moisture in that column were condensed and collected, it would equal the precipitable water value (measured in inches). High PWAT values indicate a moisture-rich atmosphere capable of producing heavy precipitation.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Precipitable_water"
     },
     {
       "term": "dew point",
       "short": "Temperature at which air becomes saturated and dew forms.",
-      "long": "The dew point is the temperature to which air must be cooled (at constant pressure) for water vapor to condense into liquid water. It's a direct measure of moisture content — higher dew points mean more moisture. Dew points above 60°F feel humid, above 70°F feel oppressive. In the Bay Area, dew points are typically in the 40s-50s°F."
+      "long": "The dew point is the temperature to which air must be cooled (at constant pressure) for water vapor to condense into liquid water. It's a direct measure of moisture content — higher dew points mean more moisture. Dew points above 60\u00b0F feel humid, above 70\u00b0F feel oppressive. In the Bay Area, dew points are typically in the 40s-50s\u00b0F.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Dew_point"
     },
     {
       "term": "CAPE",
       "short": "Convective Available Potential Energy — a measure of atmospheric instability.",
-      "long": "CAPE (Convective Available Potential Energy) measures the amount of energy available for convection (thunderstorm development). It's calculated by comparing a rising air parcel's temperature to the surrounding environment. Higher CAPE values indicate greater instability and potential for strong updrafts. Values above 1000 J/kg suggest significant thunderstorm potential; above 2500 J/kg indicates severe weather risk."
+      "long": "CAPE (Convective Available Potential Energy) measures the amount of energy available for convection (thunderstorm development). It's calculated by comparing a rising air parcel's temperature to the surrounding environment. Higher CAPE values indicate greater instability and potential for strong updrafts. Values above 1000 J/kg suggest significant thunderstorm potential; above 2500 J/kg indicates severe weather risk.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Convective_available_potential_energy"
     },
     {
       "term": "CIN",
       "short": "Convective Inhibition — energy suppressing thunderstorm development.",
-      "long": "Convective Inhibition (CIN) is a measure of the energy that prevents or suppresses convection. It acts as a 'cap' or 'lid' on the atmosphere — parcels of air must overcome this barrier before they can rise freely and form thunderstorms. A strong cap can suppress storms even when CAPE is high, but if the cap breaks, explosive development can occur."
+      "long": "Convective Inhibition (CIN) is a measure of the energy that prevents or suppresses convection. It acts as a 'cap' or 'lid' on the atmosphere — parcels of air must overcome this barrier before they can rise freely and form thunderstorms. A strong cap can suppress storms even when CAPE is high, but if the cap breaks, explosive development can occur.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Convective_inhibition"
     },
     {
       "term": "wind shear",
       "short": "Change in wind speed or direction with altitude.",
-      "long": "Wind shear is the change in wind speed and/or direction over a short distance, either vertically (with altitude) or horizontally. Vertical wind shear is critical for severe weather: moderate shear organizes thunderstorms into long-lived supercells, while excessive shear can tear storms apart. Low-level wind shear is also a significant aviation hazard."
+      "long": "Wind shear is the change in wind speed and/or direction over a short distance, either vertically (with altitude) or horizontally. Vertical wind shear is critical for severe weather: moderate shear organizes thunderstorms into long-lived supercells, while excessive shear can tear storms apart. Low-level wind shear is also a significant aviation hazard.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Wind_shear"
     },
     {
       "term": "onshore flow",
       "short": "Wind blowing from the ocean toward land.",
-      "long": "Onshore flow describes wind moving from the ocean onto land. In the Bay Area, onshore (westerly) flow brings cool, moist marine air through the Golden Gate and other gaps in the coastal mountains, producing fog, low clouds, and moderate temperatures. Onshore flow is the dominant pattern during summer."
+      "long": "Onshore flow describes wind moving from the ocean onto land. In the Bay Area, onshore (westerly) flow brings cool, moist marine air through the Golden Gate and other gaps in the coastal mountains, producing fog, low clouds, and moderate temperatures. Onshore flow is the dominant pattern during summer.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Sea_breeze"
     },
     {
       "term": "offshore flow",
       "short": "Wind blowing from land toward the ocean.",
-      "long": "Offshore flow describes wind moving from land toward the ocean. In California, offshore (easterly) flow brings warm, dry air from the interior valleys over the coastal mountains. This compresses and heats the air (Foehn effect), producing warm, dry conditions and excellent visibility. During autumn, strong offshore flow events are associated with critical fire weather conditions."
+      "long": "Offshore flow describes wind moving from land toward the ocean. In California, offshore (easterly) flow brings warm, dry air from the interior valleys over the coastal mountains. This compresses and heats the air (Foehn effect), producing warm, dry conditions and excellent visibility. During autumn, strong offshore flow events are associated with critical fire weather conditions.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Land_breeze"
     },
     {
       "term": "Santa Ana winds",
       "short": "Strong, dry offshore winds in Southern California.",
-      "long": "Santa Ana winds are strong, hot, dry winds that blow from the interior deserts through the mountain passes of Southern California. They typically occur in autumn and winter when high pressure builds over the Great Basin. While the Bay Area doesn't experience Santa Anas directly, similar offshore wind events (Diablo winds) affect the region."
+      "long": "Santa Ana winds are strong, hot, dry winds that blow from the interior deserts through the mountain passes of Southern California. They typically occur in autumn and winter when high pressure builds over the Great Basin. While the Bay Area doesn't experience Santa Anas directly, similar offshore wind events (Diablo winds) affect the region.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Santa_Ana_winds"
     },
     {
       "term": "Diablo winds",
       "short": "Strong, dry offshore winds in the San Francisco Bay Area.",
-      "long": "Diablo winds are the Bay Area's version of hot, dry offshore winds, named after Mount Diablo. They blow from the northeast, descending from the Central Valley over the coastal mountains. Like Santa Anas, they are associated with extreme fire weather danger. Diablo winds are less frequent but can be devastating, as seen in multiple major California wildfire events."
+      "long": "Diablo winds are the Bay Area's version of hot, dry offshore winds, named after Mount Diablo. They blow from the northeast, descending from the Central Valley over the coastal mountains. Like Santa Anas, they are associated with extreme fire weather danger. Diablo winds are less frequent but can be devastating, as seen in multiple major California wildfire events.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Diablo_wind"
     },
     {
       "term": "stratus",
       "short": "Low, flat, featureless cloud layer.",
-      "long": "Stratus clouds are low-level, uniform, gray cloud layers that often cover the entire sky like a blanket. In the Bay Area, marine stratus is the characteristic summer cloud that rolls in from the Pacific, engulfing the coast and pouring through the Golden Gate gap. It typically forms overnight and burns off ('burns back') by midday."
+      "long": "Stratus clouds are low-level, uniform, gray cloud layers that often cover the entire sky like a blanket. In the Bay Area, marine stratus is the characteristic summer cloud that rolls in from the Pacific, engulfing the coast and pouring through the Golden Gate gap. It typically forms overnight and burns off ('burns back') by midday.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Stratus_cloud"
     },
     {
       "term": "fog",
       "short": "A cloud at ground level reducing visibility.",
-      "long": "Fog is essentially a stratus cloud at ground level, reducing visibility to less than 0.6 miles (1 km). The Bay Area is famous for advection fog — warm, moist Pacific air flowing over the cold California Current creates fog that is pulled inland by temperature differences between the cool coast and warm interior valleys."
+      "long": "Fog is essentially a stratus cloud at ground level, reducing visibility to less than 0.6 miles (1 km). The Bay Area is famous for advection fog — warm, moist Pacific air flowing over the cold California Current creates fog that is pulled inland by temperature differences between the cool coast and warm interior valleys.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Fog"
     },
     {
       "term": "marine layer",
       "short": "A cool, moist layer of air near the coast beneath a temperature inversion.",
-      "long": "The marine layer is a mass of cool, dense, moist air that forms over the ocean and is trapped near the surface beneath a temperature inversion. Its depth determines whether the coast gets fog (deep marine layer) or just low clouds. In the Bay Area, the marine layer depth is a key forecast variable, especially in summer."
+      "long": "The marine layer is a mass of cool, dense, moist air that forms over the ocean and is trapped near the surface beneath a temperature inversion. Its depth determines whether the coast gets fog (deep marine layer) or just low clouds. In the Bay Area, the marine layer depth is a key forecast variable, especially in summer.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Marine_layer"
     },
     {
       "term": "inversion",
       "short": "A layer where temperature increases with altitude instead of decreasing.",
-      "long": "A temperature inversion occurs when a warm layer of air sits above a cooler layer, trapping the cool air near the surface. Inversions act as a lid, preventing vertical mixing. They are responsible for trapping fog, smog, and marine layers. The subsidence inversion created by the Pacific High is the dominant feature of Bay Area summer weather."
+      "long": "A temperature inversion occurs when a warm layer of air sits above a cooler layer, trapping the cool air near the surface. Inversions act as a lid, preventing vertical mixing. They are responsible for trapping fog, smog, and marine layers. The subsidence inversion created by the Pacific High is the dominant feature of Bay Area summer weather.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Temperature_inversion"
     },
     {
       "term": "VFR",
       "short": "Visual Flight Rules — good visibility conditions for aviation.",
-      "long": "VFR (Visual Flight Rules) indicates aviation weather conditions with ceiling above 3,000 feet and visibility greater than 5 miles. Pilots can fly by visual reference to the ground. This represents the best flying conditions."
+      "long": "VFR (Visual Flight Rules) indicates aviation weather conditions with ceiling above 3,000 feet and visibility greater than 5 miles. Pilots can fly by visual reference to the ground. This represents the best flying conditions.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Visual_flight_rules"
     },
     {
       "term": "MVFR",
       "short": "Marginal Visual Flight Rules — reduced but flyable visibility.",
-      "long": "MVFR (Marginal VFR) indicates conditions between VFR and IFR: ceiling 1,000-3,000 feet and/or visibility 3-5 miles. Pilots can still fly visually but with reduced margins. Common in the Bay Area when the marine layer is present but not fully engulfing airports."
+      "long": "MVFR (Marginal VFR) indicates conditions between VFR and IFR: ceiling 1,000-3,000 feet and/or visibility 3-5 miles. Pilots can still fly visually but with reduced margins. Common in the Bay Area when the marine layer is present but not fully engulfing airports.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Visual_flight_rules"
     },
     {
       "term": "IFR",
       "short": "Instrument Flight Rules — poor visibility requiring instrument navigation.",
-      "long": "IFR (Instrument Flight Rules) indicates conditions with ceiling 500-1,000 feet and/or visibility 1-3 miles. Pilots must navigate using instruments rather than visual reference. Bay Area airports frequently experience IFR conditions during summer fog events and winter storms."
+      "long": "IFR (Instrument Flight Rules) indicates conditions with ceiling 500-1,000 feet and/or visibility 1-3 miles. Pilots must navigate using instruments rather than visual reference. Bay Area airports frequently experience IFR conditions during summer fog events and winter storms.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Instrument_flight_rules"
     },
     {
       "term": "LIFR",
       "short": "Low Instrument Flight Rules — very poor visibility.",
-      "long": "LIFR (Low IFR) indicates the worst aviation weather category: ceiling below 500 feet and/or visibility below 1 mile. These conditions severely limit flight operations and can cause major delays at airports. Dense fog events in the Bay Area can produce LIFR conditions."
+      "long": "LIFR (Low IFR) indicates the worst aviation weather category: ceiling below 500 feet and/or visibility below 1 mile. These conditions severely limit flight operations and can cause major delays at airports. Dense fog events in the Bay Area can produce LIFR conditions.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Instrument_flight_rules"
     },
     {
       "term": "ceiling",
       "short": "Height of the lowest cloud layer covering more than half the sky.",
-      "long": "In aviation meteorology, the ceiling is the height above ground of the lowest layer of clouds reported as broken (5/8-7/8 coverage) or overcast (8/8 coverage). The ceiling determines flight rules category and affects landing approaches. A 'low ceiling' of a few hundred feet is characteristic of Bay Area fog events."
+      "long": "In aviation meteorology, the ceiling is the height above ground of the lowest layer of clouds reported as broken (5/8-7/8 coverage) or overcast (8/8 coverage). The ceiling determines flight rules category and affects landing approaches. A 'low ceiling' of a few hundred feet is characteristic of Bay Area fog events.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ceiling_(cloud)"
     },
     {
       "term": "high pressure",
       "short": "An area of sinking air bringing clear, stable conditions.",
-      "long": "A high-pressure system (anticyclone) is an area where atmospheric pressure is higher than surrounding areas. Air sinks in a high, suppressing cloud formation and precipitation. In the Northern Hemisphere, winds circulate clockwise around a high. The semi-permanent Pacific High is the dominant influence on Bay Area weather, especially in summer."
+      "long": "A high-pressure system (anticyclone) is an area where atmospheric pressure is higher than surrounding areas. Air sinks in a high, suppressing cloud formation and precipitation. In the Northern Hemisphere, winds circulate clockwise around a high. The semi-permanent Pacific High is the dominant influence on Bay Area weather, especially in summer.",
+      "wikipedia": "https://en.wikipedia.org/wiki/High-pressure_area"
     },
     {
       "term": "low pressure",
       "short": "An area of rising air often bringing clouds and precipitation.",
-      "long": "A low-pressure system (cyclone) is an area where atmospheric pressure is lower than surrounding areas. Air converges and rises in a low, producing clouds and precipitation. In the Northern Hemisphere, winds circulate counterclockwise around a low. Winter storms approaching California are low-pressure systems tracking across the Pacific."
+      "long": "A low-pressure system (cyclone) is an area where atmospheric pressure is lower than surrounding areas. Air converges and rises in a low, producing clouds and precipitation. In the Northern Hemisphere, winds circulate counterclockwise around a low. Winter storms approaching California are low-pressure systems tracking across the Pacific.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Low-pressure_area"
     },
     {
       "term": "upper-level",
       "short": "Referring to conditions high in the atmosphere, typically above 18,000 feet.",
-      "long": "Upper-level refers to weather features and conditions in the middle to upper troposphere, roughly 18,000-40,000 feet. Upper-level charts (especially the 500mb level, about 18,000 feet) show the large-scale flow pattern that steers surface weather systems. Forecasters analyze upper-level troughs, ridges, and jet streams to predict surface weather days in advance."
+      "long": "Upper-level refers to weather features and conditions in the middle to upper troposphere, roughly 18,000-40,000 feet. Upper-level charts (especially the 500mb level, about 18,000 feet) show the large-scale flow pattern that steers surface weather systems. Forecasters analyze upper-level troughs, ridges, and jet streams to predict surface weather days in advance.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Upper-atmospheric_dynamics"
     },
     {
       "term": "surface",
       "short": "Referring to weather conditions at or near ground level.",
-      "long": "Surface refers to atmospheric conditions at or near ground level, as opposed to upper-level features. Surface maps show sea-level pressure, fronts, wind, and temperature. Surface features (like fronts and pressure centers) are driven by the upper-level pattern but have their own important effects on local weather."
+      "long": "Surface refers to atmospheric conditions at or near ground level, as opposed to upper-level features. Surface maps show sea-level pressure, fronts, wind, and temperature. Surface features (like fronts and pressure centers) are driven by the upper-level pattern but have their own important effects on local weather.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Surface_weather_analysis"
     },
     {
       "term": "ensemble",
       "short": "Multiple model runs with slightly different starting conditions.",
-      "long": "An ensemble is a collection of weather model forecasts run simultaneously with slightly different initial conditions. Since we can't measure the atmosphere perfectly, ensembles explore the range of possible outcomes. When ensemble members agree, forecasters have high confidence; when they diverge, uncertainty is high. The GFS and ECMWF both produce ensemble systems."
+      "long": "An ensemble is a collection of weather model forecasts run simultaneously with slightly different initial conditions. Since we can't measure the atmosphere perfectly, ensembles explore the range of possible outcomes. When ensemble members agree, forecasters have high confidence; when they diverge, uncertainty is high. The GFS and ECMWF both produce ensemble systems.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ensemble_forecasting"
     },
     {
       "term": "GFS",
       "short": "Global Forecast System — the primary American weather model.",
-      "long": "The GFS (Global Forecast System) is the primary global weather prediction model run by NOAA/NCEP. It runs four times daily and produces forecasts out to 16 days. The GFS is freely available and widely used but generally considered less skillful than the European model (ECMWF) for medium-range forecasting."
+      "long": "The GFS (Global Forecast System) is the primary global weather prediction model run by NOAA/NCEP. It runs four times daily and produces forecasts out to 16 days. The GFS is freely available and widely used but generally considered less skillful than the European model (ECMWF) for medium-range forecasting.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Global_Forecast_System"
     },
     {
       "term": "ECMWF",
       "short": "European Centre for Medium-Range Weather Forecasts model.",
-      "long": "The ECMWF (often called 'the European model' or 'the Euro') is widely regarded as the world's most accurate global weather model. Run by the European Centre for Medium-Range Weather Forecasts, it typically outperforms the GFS in medium-range (3-10 day) forecasting. NWS forecasters frequently reference it in AFDs."
+      "long": "The ECMWF (often called 'the European model' or 'the Euro') is widely regarded as the world's most accurate global weather model. Run by the European Centre for Medium-Range Weather Forecasts, it typically outperforms the GFS in medium-range (3-10 day) forecasting. NWS forecasters frequently reference it in AFDs.",
+      "wikipedia": "https://en.wikipedia.org/wiki/European_Centre_for_Medium-Range_Weather_Forecasts"
     },
     {
       "term": "NAM",
       "short": "North American Mesoscale model — a regional weather model.",
-      "long": "The NAM (North American Mesoscale Forecast System) is a regional weather model covering North America with higher resolution than the GFS. It's better at resolving smaller-scale features like sea breezes, terrain effects, and convective systems. Runs four times daily with forecasts out to 84 hours."
+      "long": "The NAM (North American Mesoscale Forecast System) is a regional weather model covering North America with higher resolution than the GFS. It's better at resolving smaller-scale features like sea breezes, terrain effects, and convective systems. Runs four times daily with forecasts out to 84 hours.",
+      "wikipedia": "https://en.wikipedia.org/wiki/North_American_Mesoscale_Forecast_System"
     },
     {
       "term": "HRRR",
       "short": "High-Resolution Rapid Refresh — a frequently-updated short-range model.",
-      "long": "The HRRR (High-Resolution Rapid Refresh) is a high-resolution (3km) weather model that updates every hour with forecasts out to 48 hours. It excels at short-range forecasting of features like thunderstorms, fog, and local terrain effects. Forecasters rely on HRRR for the next 12-24 hours."
+      "long": "The HRRR (High-Resolution Rapid Refresh) is a high-resolution (3km) weather model that updates every hour with forecasts out to 48 hours. It excels at short-range forecasting of features like thunderstorms, fog, and local terrain effects. Forecasters rely on HRRR for the next 12-24 hours.",
+      "wikipedia": "https://en.wikipedia.org/wiki/High-Resolution_Rapid_Refresh"
     },
     {
       "term": "shortwave",
       "short": "A small-scale disturbance embedded in the larger flow pattern.",
-      "long": "A shortwave (or shortwave trough) is a small-scale ripple or disturbance embedded in the larger upper-level flow pattern. Shortwaves can trigger surface development, enhance precipitation, or destabilize the atmosphere as they pass through. They're often mentioned in AFDs as triggers for weather changes that the main trough/ridge pattern alone wouldn't explain."
+      "long": "A shortwave (or shortwave trough) is a small-scale ripple or disturbance embedded in the larger upper-level flow pattern. Shortwaves can trigger surface development, enhance precipitation, or destabilize the atmosphere as they pass through. They're often mentioned in AFDs as triggers for weather changes that the main trough/ridge pattern alone wouldn't explain.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Shortwave_(meteorology)"
     },
     {
       "term": "closed low",
       "short": "A low-pressure center fully enclosed by a circulation.",
-      "long": "A closed low is an upper-level low-pressure center that has become cut off from the main jet stream flow, with circulation completely encircling it. Closed lows can be slow-moving and unpredictable, sometimes stalling for days and producing prolonged periods of unsettled weather. They are notoriously difficult to forecast."
+      "long": "A closed low is an upper-level low-pressure center that has become cut off from the main jet stream flow, with circulation completely encircling it. Closed lows can be slow-moving and unpredictable, sometimes stalling for days and producing prolonged periods of unsettled weather. They are notoriously difficult to forecast.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Cut-off_low"
     },
     {
       "term": "cut-off low",
       "short": "A closed low that has separated from the main jet stream.",
-      "long": "A cut-off low is a closed low-pressure system that has become completely detached from the main westerly flow of the jet stream. These systems drift slowly (or stall) and can produce extended periods of clouds, rain, and cooler temperatures. They are among the most challenging features to forecast due to their erratic movement."
+      "long": "A cut-off low is a closed low-pressure system that has become completely detached from the main westerly flow of the jet stream. These systems drift slowly (or stall) and can produce extended periods of clouds, rain, and cooler temperatures. They are among the most challenging features to forecast due to their erratic movement.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Cut-off_low"
     },
     {
       "term": "subsidence",
       "short": "Large-scale sinking of air in the atmosphere.",
-      "long": "Subsidence is the large-scale sinking of air, typically associated with high-pressure systems. As air sinks, it compresses and warms, creating a temperature inversion and suppressing cloud formation. Subsidence from the Pacific High is responsible for California's dry summers and the persistent inversion that caps the marine layer."
+      "long": "Subsidence is the large-scale sinking of air, typically associated with high-pressure systems. As air sinks, it compresses and warms, creating a temperature inversion and suppressing cloud formation. Subsidence from the Pacific High is responsible for California's dry summers and the persistent inversion that caps the marine layer.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Subsidence_(atmosphere)"
     },
     {
       "term": "convection",
       "short": "Vertical air movement, often producing thunderstorms.",
-      "long": "Convection is the process of warm air rising due to buoyancy. In meteorology, it usually refers to the development of cumulonimbus clouds and thunderstorms. Deep convection can produce heavy rain, hail, lightning, and tornadoes. In the Bay Area, convection is relatively rare but can occur with cold upper-level lows or strong instability."
+      "long": "Convection is the process of warm air rising due to buoyancy. In meteorology, it usually refers to the development of cumulonimbus clouds and thunderstorms. Deep convection can produce heavy rain, hail, lightning, and tornadoes. In the Bay Area, convection is relatively rare but can occur with cold upper-level lows or strong instability.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Atmospheric_convection"
     },
     {
       "term": "lee trough",
       "short": "A trough of low pressure forming on the downwind side of mountains.",
-      "long": "A lee trough is an area of low pressure that develops on the downwind (lee) side of a mountain range. In California, a lee trough forms in the Central Valley when flow crosses the coastal mountains. The thermal lee trough is important for Bay Area weather — it drives the sea breeze and onshore flow pattern in summer."
+      "long": "A lee trough is an area of low pressure that develops on the downwind (lee) side of a mountain range. In California, a lee trough forms in the Central Valley when flow crosses the coastal mountains. The thermal lee trough is important for Bay Area weather — it drives the sea breeze and onshore flow pattern in summer.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Lee_trough"
     },
     {
       "term": "thermal trough",
       "short": "A trough of low pressure caused by intense surface heating.",
-      "long": "A thermal trough is a low-pressure area created by strong surface heating. In California, the Central Valley thermal trough forms in summer as the valley floor heats up, creating a pressure gradient that draws marine air through gaps in the coastal mountains (especially the Golden Gate). This drives the Bay Area's summer fog and wind patterns."
+      "long": "A thermal trough is a low-pressure area created by strong surface heating. In California, the Central Valley thermal trough forms in summer as the valley floor heats up, creating a pressure gradient that draws marine air through gaps in the coastal mountains (especially the Golden Gate). This drives the Bay Area's summer fog and wind patterns.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Thermal_low"
     },
     {
       "term": "monsoon",
       "short": "A seasonal wind shift bringing moisture from tropical regions.",
-      "long": "The North American Monsoon is a seasonal pattern that brings moisture from the Gulf of California and Gulf of Mexico into the southwestern United States during summer (July-September). While primarily affecting Arizona and New Mexico, monsoonal moisture can occasionally surge into California, bringing unusual humidity and thunderstorm activity."
+      "long": "The North American Monsoon is a seasonal pattern that brings moisture from the Gulf of California and Gulf of Mexico into the southwestern United States during summer (July-September). While primarily affecting Arizona and New Mexico, monsoonal moisture can occasionally surge into California, bringing unusual humidity and thunderstorm activity.",
+      "wikipedia": "https://en.wikipedia.org/wiki/North_American_monsoon"
     },
     {
       "term": "lapse rate",
       "short": "The rate at which temperature decreases with altitude.",
-      "long": "The lapse rate is the rate at which air temperature changes with altitude. The standard lapse rate is about 3.5°F per 1,000 feet. When the actual lapse rate is steeper (temperature drops faster), the atmosphere is unstable and prone to convection. When it's shallower or inverted, the atmosphere is stable."
+      "long": "The lapse rate is the rate at which air temperature changes with altitude. The standard lapse rate is about 3.5\u00b0F per 1,000 feet. When the actual lapse rate is steeper (temperature drops faster), the atmosphere is unstable and prone to convection. When it's shallower or inverted, the atmosphere is stable.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Lapse_rate"
     },
     {
       "term": "snow level",
       "short": "The elevation where precipitation transitions from rain to snow.",
-      "long": "The snow level is the lowest altitude at which precipitation falls as snow rather than rain. It's closely related to (but slightly lower than) the freezing level. In California storms, the snow level is critical for determining how much precipitation falls as rain vs. snow in the mountains, affecting water supply and flood risk."
+      "long": "The snow level is the lowest altitude at which precipitation falls as snow rather than rain. It's closely related to (but slightly lower than) the freezing level. In California storms, the snow level is critical for determining how much precipitation falls as rain vs. snow in the mountains, affecting water supply and flood risk.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Snow_line"
     },
     {
       "term": "freezing level",
-      "short": "The altitude where the temperature drops to 32°F (0°C).",
-      "long": "The freezing level is the height in the atmosphere where the temperature drops to 32°F (0°C). Above this level, precipitation falls as snow or ice. The freezing level rises and falls with weather systems — it drops with cold fronts and rises with warm fronts. It's a key forecast variable for mountain weather and precipitation type."
+      "short": "The altitude where the temperature drops to 32\u00b0F (0\u00b0C).",
+      "long": "The freezing level is the height in the atmosphere where the temperature drops to 32\u00b0F (0\u00b0C). Above this level, precipitation falls as snow or ice. The freezing level rises and falls with weather systems — it drops with cold fronts and rises with warm fronts. It's a key forecast variable for mountain weather and precipitation type.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Freezing_level"
     },
     {
       "term": "swell",
       "short": "Long-period ocean waves generated by distant storms.",
-      "long": "Swell consists of long-period ocean waves that have traveled far from the storm that generated them. Unlike choppy local wind waves, swell is organized and can travel thousands of miles across the ocean. Forecasters describe swell by height, period (seconds between waves), and direction. Long-period NW swell is common along the California coast."
+      "long": "Swell consists of long-period ocean waves that have traveled far from the storm that generated them. Unlike choppy local wind waves, swell is organized and can travel thousands of miles across the ocean. Forecasters describe swell by height, period (seconds between waves), and direction. Long-period NW swell is common along the California coast.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Swell_(ocean)"
     },
     {
       "term": "small craft advisory",
       "short": "A marine warning for winds 21-33 knots or rough seas.",
-      "long": "A Small Craft Advisory is issued when sustained winds of 21-33 knots (24-38 mph) and/or seas of 7 feet or greater are expected. It warns operators of small boats of potentially hazardous conditions. In the Bay Area, Small Craft Advisories are common during strong afternoon sea breezes and winter storms."
+      "long": "A Small Craft Advisory is issued when sustained winds of 21-33 knots (24-38 mph) and/or seas of 7 feet or greater are expected. It warns operators of small boats of potentially hazardous conditions. In the Bay Area, Small Craft Advisories are common during strong afternoon sea breezes and winter storms.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Small_craft_advisory"
     },
     {
       "term": "gale warning",
       "short": "A marine warning for winds 34-47 knots.",
-      "long": "A Gale Warning is issued for sustained winds of 34-47 knots (39-54 mph) over water. Gale conditions create very rough seas dangerous to most vessels. In the Bay Area, gale warnings are issued during strong winter storms and occasionally during intense offshore wind events."
+      "long": "A Gale Warning is issued for sustained winds of 34-47 knots (39-54 mph) over water. Gale conditions create very rough seas dangerous to most vessels. In the Bay Area, gale warnings are issued during strong winter storms and occasionally during intense offshore wind events.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Gale_warning"
+    },
+
+    {
+      "term": "PoPs",
+      "short": "Probability of Precipitation — the percent chance of measurable rain or snow.",
+      "long": "PoPs (Probability of Precipitation) is the likelihood that any given point in a forecast area will receive at least 0.01 inches of precipitation during a specified period. A 40% PoP means there's a 4-in-10 chance you'll see measurable rain at your location. It does not indicate how long or how hard it will rain, only the chance that it will.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Probability_of_precipitation"
+    },
+    {
+      "term": "NBM",
+      "short": "National Blend of Models — a statistically weighted blend of many weather models.",
+      "long": "The NBM (National Blend of Models) combines output from many different weather models — GFS, ECMWF, NAM, HRRR, and others — using statistical techniques that account for each model's known biases. Updated hourly, it generally produces more accurate forecasts than any single model alone. NWS forecasters increasingly use the NBM as their starting point.",
+      "wikipedia": "https://en.wikipedia.org/wiki/National_Blend_of_Models"
+    },
+    {
+      "term": "WAA",
+      "short": "Warm Air Advection — warm air being transported horizontally by the wind.",
+      "long": "Warm Air Advection (WAA) occurs when winds push warmer air into an area. WAA is associated with rising motion in the atmosphere, which can produce clouds and precipitation. Forecasters identify WAA by looking at winds blowing from warmer to cooler areas, or by veering winds (shifting clockwise with height).",
+      "wikipedia": "https://en.wikipedia.org/wiki/Warm_advection"
+    },
+    {
+      "term": "CAA",
+      "short": "Cold Air Advection — cold air being transported horizontally by the wind.",
+      "long": "Cold Air Advection (CAA) occurs when winds push cooler air into a region, replacing warmer air. CAA promotes sinking motion in the atmosphere, which tends to clear out clouds and lower temperatures. It's identified by winds blowing from cooler to warmer areas, or by backing winds (shifting counterclockwise with height).",
+      "wikipedia": "https://en.wikipedia.org/wiki/Cold_advection"
+    },
+    {
+      "term": "vorticity",
+      "short": "A measure of the spin or rotation in the atmosphere.",
+      "long": "Vorticity measures the local spinning motion of the atmosphere. Cyclonic (counterclockwise in the Northern Hemisphere) vorticity is associated with low pressure and rising air. Forecasters track vorticity at the 500mb level to identify disturbances that can trigger surface weather development. Areas of increasing vorticity often bring clouds and precipitation.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Vorticity"
+    },
+    {
+      "term": "PVA",
+      "short": "Positive Vorticity Advection — atmospheric spin being transported into an area.",
+      "long": "Positive Vorticity Advection (PVA) occurs when cyclonic spin is being carried into a region by the upper-level winds. PVA promotes rising motion and is one of the key triggers forecasters look for when predicting clouds, precipitation, and surface low development. When an AFD mentions PVA approaching, it usually means worsening weather.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Vorticity_advection"
+    },
+    {
+      "term": "divergence",
+      "short": "Air spreading apart horizontally, promoting rising motion below.",
+      "long": "Divergence is the horizontal spreading apart of air. When air diverges at upper levels, it creates a void that must be filled by rising air from below — this promotes cloud formation and precipitation. Conversely, convergence (air coming together) at the surface forces air upward. Forecasters look for upper-level divergence as a key ingredient for storm development.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Divergence"
+    },
+    {
+      "term": "frontogenesis",
+      "short": "The process of creating or strengthening a front.",
+      "long": "Frontogenesis is the tightening of the temperature gradient along a boundary, strengthening or creating a weather front. It's driven by wind patterns that push warm and cold air closer together. Frontogenesis forces air to rise along the front, producing bands of clouds and precipitation. It's the opposite of frontolysis, which weakens fronts.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Frontogenesis"
+    },
+    {
+      "term": "cyclogenesis",
+      "short": "The development or strengthening of a low-pressure system.",
+      "long": "Cyclogenesis is the formation or intensification of a cyclone (low-pressure system). It occurs when upper-level and surface conditions combine to promote sustained rising motion and pressure falls. Rapid cyclogenesis — sometimes called a 'bomb cyclone' when pressure drops 24+ millibars in 24 hours — can produce powerful storms with high winds and heavy precipitation.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Cyclogenesis"
+    },
+    {
+      "term": "overrunning",
+      "short": "Warm air riding up and over a cooler air mass.",
+      "long": "Overrunning occurs when warm, moist air flows up and over a dome of cooler air at the surface. This gradual lifting produces widespread, steady precipitation — often lasting hours or days. Overrunning is common ahead of warm fronts and along the north side of stationary fronts, and typically brings gray skies with persistent light-to-moderate rain or snow.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Overrunning"
+    },
+    {
+      "term": "warm sector",
+      "short": "The region between a warm front and a cold front in a low-pressure system.",
+      "long": "The warm sector is the wedge-shaped area between the warm front and the cold front of a mid-latitude cyclone. It contains the warmest, most humid air in the system. The warm sector is often where the most unstable air resides, making it a prime region for thunderstorms and severe weather before the cold front sweeps through.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Warm_sector"
+    },
+    {
+      "term": "veering winds",
+      "short": "Winds shifting clockwise with height — a signal of warm air advection.",
+      "long": "Veering winds shift direction clockwise as you go higher in the atmosphere (for example, from southerly at the surface to westerly aloft). This pattern indicates warm air advection — warm air being transported into the region. Forecasters use veering wind profiles as evidence that temperatures will rise and that rising motion (clouds, precipitation) may develop.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Wind_direction"
+    },
+    {
+      "term": "backing winds",
+      "short": "Winds shifting counterclockwise with height — a signal of cold air advection.",
+      "long": "Backing winds shift direction counterclockwise with increasing altitude (for example, from westerly at the surface to southerly aloft). This pattern indicates cold air advection — cooler air moving into the region. Backing winds near the surface are also important for severe weather, as they can enhance the wind shear environment that supports rotating thunderstorms.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Wind_direction"
+    },
+    {
+      "term": "sounding",
+      "short": "A vertical profile of temperature, moisture, and wind through the atmosphere.",
+      "long": "A sounding is a snapshot of the atmosphere's vertical structure, showing how temperature, moisture, and wind change with altitude. Soundings are obtained by launching weather balloons (radiosondes) or derived from model data. Forecasters analyze soundings to assess stability, identify inversions, estimate cloud bases, and evaluate severe weather potential.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Atmospheric_sounding"
+    },
+    {
+      "term": "baroclinic",
+      "short": "An atmosphere with horizontal temperature gradients that supports storm development.",
+      "long": "A baroclinic atmosphere is one where temperature varies horizontally — warm air in one region, cold air in another. This temperature contrast provides the energy that drives mid-latitude weather systems. Strong baroclinicity along fronts and jet stream zones fuels cyclogenesis and storm intensification. The opposite, barotropic, lacks these gradients and storms weaken.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Baroclinity"
+    },
+    {
+      "term": "orographic lift",
+      "short": "Air forced upward as it flows over terrain, enhancing precipitation.",
+      "long": "Orographic lift occurs when air is forced to rise over mountains or hills. As the air rises, it cools and moisture condenses, often producing clouds and enhanced precipitation on the windward side of the terrain. This is why mountain slopes facing the wind receive significantly more rain and snow than valleys on the lee side.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Orographic_lift"
+    },
+    {
+      "term": "synoptic scale",
+      "short": "Large-scale weather features spanning 1,000+ kilometers.",
+      "long": "Synoptic scale refers to weather features large enough to appear on continental-scale maps — highs, lows, fronts, and jet stream patterns spanning 1,000-5,000 km. A 'synoptic overview' in an AFD describes these large features that set the stage for local weather. Synoptic-scale systems typically evolve over days.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Synoptic_scale_meteorology"
+    },
+    {
+      "term": "mesoscale",
+      "short": "Medium-scale weather features spanning 2-1,000 kilometers.",
+      "long": "Mesoscale features are weather phenomena between the synoptic scale and the microscale — roughly 2 to 1,000 km. Thunderstorm clusters, sea breezes, mountain-valley circulations, and squall lines are all mesoscale. These features are harder to forecast than synoptic-scale patterns because they evolve quickly and are sensitive to local terrain and conditions.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Mesoscale_meteorology"
+    },
+    {
+      "term": "upper-level support",
+      "short": "Dynamic forcing aloft that helps surface weather systems develop.",
+      "long": "Upper-level support refers to favorable conditions in the upper atmosphere — such as divergence, positive vorticity advection, or a jet streak — that promote rising motion and help surface low-pressure systems develop or strengthen. When forecasters say a system 'lacks upper-level support,' it means the storm may struggle to intensify.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Weather_forecasting"
+    },
+    {
+      "term": "MCS",
+      "short": "Mesoscale Convective System — a large organized thunderstorm complex.",
+      "long": "A Mesoscale Convective System (MCS) is an organized cluster of thunderstorms that acts as a single system, spanning 100+ km. MCSs can produce widespread heavy rain, damaging winds, and flooding. They often develop in the evening and persist overnight, fueled by a low-level jet bringing warm, moist air into the system.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Mesoscale_convective_system"
+    },
+    {
+      "term": "LLJ",
+      "short": "Low-Level Jet — a narrow band of strong winds near the surface.",
+      "long": "A Low-Level Jet (LLJ) is a fast current of air at roughly 1,000-5,000 feet altitude. The Great Plains nocturnal LLJ is famous for feeding moisture from the Gulf of Mexico into the central U.S. overnight, fueling thunderstorms and MCSs. LLJs can also enhance precipitation by providing moisture and lift along fronts.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Low-level_jet"
+    },
+    {
+      "term": "virga",
+      "short": "Precipitation falling from a cloud but evaporating before reaching the ground.",
+      "long": "Virga is precipitation — rain, snow, or ice crystals — that falls from the base of a cloud but evaporates or sublimates in the dry air below before reaching the surface. It appears as wispy streaks hanging from clouds. Virga is common in arid regions and indicates dry air at lower levels. Evaporating virga can produce gusty downburst winds.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Virga"
+    },
+    {
+      "term": "graupel",
+      "short": "Soft, small ice pellets formed when supercooled water freezes onto snowflakes.",
+      "long": "Graupel (also called snow pellets) forms when supercooled water droplets freeze onto falling snowflakes in a process called riming. The result is small, round, soft ice pellets that bounce when they hit the ground — distinct from sleet (hard, clear ice) or hail (larger, layered ice). Graupel is common in convective winter showers and mountain storms.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Graupel"
+    },
+    {
+      "term": "SPC",
+      "short": "Storm Prediction Center — NOAA's center for severe weather forecasting.",
+      "long": "The Storm Prediction Center (SPC) in Norman, Oklahoma issues severe thunderstorm and tornado watches, convective outlooks, mesoscale discussions, and fire weather forecasts for the contiguous United States. When an AFD references SPC outlooks or probabilities, it's drawing on this specialized severe weather guidance.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Storm_Prediction_Center"
+    },
+    {
+      "term": "WPC",
+      "short": "Weather Prediction Center — NOAA's center for national weather guidance.",
+      "long": "The Weather Prediction Center (WPC) in College Park, Maryland provides national-scale forecast guidance including quantitative precipitation forecasts, surface frontal analyses, and winter weather outlooks. NWS local offices use WPC guidance as a starting point, and AFDs often reference WPC products when discussing precipitation amounts.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Weather_Prediction_Center"
+    },
+    {
+      "term": "return flow",
+      "short": "Southerly winds bringing warm, moist air back into a region.",
+      "long": "Return flow describes a pattern where southerly winds transport warm, moist air from the Gulf of Mexico or tropical ocean back into an area after a cold front has passed. This moisture return is a key ingredient for the next round of precipitation or thunderstorms, and forecasters watch for it as a setup for future weather events.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Return_flow"
+    },
+    {
+      "term": "cold pool",
+      "short": "A dome of cold, dense air at the surface, often from evaporating rain.",
+      "long": "A cold pool is a mass of cooler, denser air at the surface, often produced by evaporating precipitation (rain-cooled air) spreading outward from a thunderstorm. Cold pools can trigger new convection along their leading edge, where the dense air undercuts warmer surrounding air. Forecasters track cold pool interactions as a key factor in storm evolution.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Cold_pool"
+    },
+    {
+      "term": "rain shadow",
+      "short": "A dry area on the downwind side of a mountain range.",
+      "long": "A rain shadow is a region of reduced rainfall on the leeward (downwind) side of a mountain range. As moist air rises over the mountains, it cools and drops its moisture as rain or snow on the windward side. By the time the air descends the other side, it has lost much of its moisture and warms by compression, creating drier conditions.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Rain_shadow"
+    },
+    {
+      "term": "upslope flow",
+      "short": "Air flowing up terrain, producing clouds and enhanced precipitation.",
+      "long": "Upslope flow occurs when wind pushes air up a hillside or mountain slope. As the air rises, it cools and moisture condenses, producing clouds and often enhanced precipitation. Persistent upslope flow can bring extended periods of fog, drizzle, or steady snow to elevated terrain. It's the mechanism behind orographic precipitation enhancement.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Orographic_lift"
+    },
+    {
+      "term": "downslope flow",
+      "short": "Air descending terrain, producing warming and drying.",
+      "long": "Downslope flow occurs when air descends the lee side of mountains. As it sinks, it compresses and warms, often dramatically lowering humidity and raising temperatures. Strong downslope winds — such as chinook or foehn winds — can cause temperature jumps of 30-50\u00b0F in hours. Downslope flow also reduces cloud cover and improves visibility.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Foehn_wind"
+    },
+    {
+      "term": "capping inversion",
+      "short": "A warm layer aloft that prevents thunderstorms from forming.",
+      "long": "A capping inversion is a layer of warm air above the surface that acts as a lid, preventing the release of instability below. Storms cannot form until the cap is broken — either by intense surface heating, a front, or orographic lift. A strong cap can suppress convection all day despite high CAPE, but if the cap eventually breaks, severe storms may erupt suddenly.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Capping_inversion"
+    },
+    {
+      "term": "PBL",
+      "short": "Planetary Boundary Layer — the lowest layer of the atmosphere influenced by the surface.",
+      "long": "The Planetary Boundary Layer (PBL) is the lowest portion of the atmosphere directly affected by the Earth's surface, responding to surface heating, friction, and moisture within an hour or less. Its depth varies from a few hundred feet at night to a mile or more on hot afternoons. PBL depth affects air quality, fog formation, and how well the surface mixes with the free atmosphere.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Planetary_boundary_layer"
+    },
+    {
+      "term": "dendritic growth zone",
+      "short": "The temperature range where the fluffiest, most efficient snowflakes form.",
+      "long": "The dendritic growth zone (DGZ) is the layer of the atmosphere between about -12\u00b0C and -18\u00b0C (10\u00b0F to 0\u00b0F) where classic six-armed branching snowflakes grow most efficiently. When this layer is thick and saturated, snowfall rates are maximized and snow-to-liquid ratios are high, producing fluffy, accumulating snow. Forecasters reference the DGZ when predicting heavy snow events.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Dendrite_(crystal)"
+    },
+    {
+      "term": "SLR",
+      "short": "Snow-to-Liquid Ratio — how fluffy or dense the snow is.",
+      "long": "Snow-to-Liquid Ratio (SLR) is the ratio of snowfall depth to liquid water equivalent. A 10:1 ratio means 10 inches of snow from 1 inch of liquid — typical average snow. Cold, dry snow may have ratios of 15:1 to 20:1 (fluffy powder), while warm, wet snow can be 5:1 (heavy, packable). SLR determines whether 1 inch of liquid equivalent gives you 5 inches or 20 inches of snow.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Snow"
+    },
+    {
+      "term": "supercooled water",
+      "short": "Liquid water existing below 32\u00b0F (0\u00b0C) that can freeze on contact.",
+      "long": "Supercooled water is liquid water that remains unfrozen below 32\u00b0F. It's common in clouds and freezing rain/drizzle situations. When supercooled droplets contact a surface — an airplane wing, a power line, a road — they freeze instantly, creating a dangerous glaze of ice. Aircraft icing from supercooled water is a serious aviation hazard.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Supercooling"
+    },
+    {
+      "term": "chinook winds",
+      "short": "Warm, dry winds descending the lee side of mountains.",
+      "long": "Chinook winds (called foehn winds in Europe) are warm, dry downslope winds that occur on the lee side of mountain ranges. As air descends, it compresses and heats at about 5.5\u00b0F per 1,000 feet. Chinooks along the Rocky Mountain front can raise temperatures by 40-50\u00b0F in hours, rapidly melting snow. The term comes from the Chinook people of the Pacific Northwest.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Chinook_wind"
+    },
+    {
+      "term": "thickness",
+      "short": "The distance between two pressure levels — a proxy for average layer temperature.",
+      "long": "Thickness is the vertical distance between two atmospheric pressure levels, most commonly the 1000mb and 500mb surfaces. Since warmer air expands and is less dense, greater thickness indicates a warmer air column. Forecasters use the 540-decameter thickness line as a rough rain-snow boundary — precipitation tends to fall as snow where thickness is below 540dm.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Thickness_(meteorology)"
+    },
+    {
+      "term": "MOS",
+      "short": "Model Output Statistics — statistical corrections applied to raw model forecasts.",
+      "long": "Model Output Statistics (MOS) is a technique that uses historical relationships between model output and actual observations to correct systematic model errors. MOS equations adjust for local effects that models miss — terrain influences, urban heat islands, coastal effects. MOS-based temperature and precipitation forecasts are often more accurate than raw model output for specific locations.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Model_output_statistics"
+    },
+    {
+      "term": "deterministic",
+      "short": "A single best-guess forecast run, as opposed to an ensemble.",
+      "long": "A deterministic forecast is a single model run using the best available estimate of current atmospheric conditions. It produces one specific prediction of future weather. This contrasts with ensemble forecasting, which runs many slightly different versions to capture uncertainty. When forecasters say 'the deterministic GFS shows...' they mean the main high-resolution run, not the ensemble.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Numerical_weather_prediction"
+    },
+    {
+      "term": "longwave",
+      "short": "A large-scale upper-level trough or ridge spanning thousands of kilometers.",
+      "long": "Longwaves (or Rossby waves) are the broad undulations in the upper-level flow pattern, typically 3-7 circling the hemisphere, each spanning 3,000-6,000 km. They move slowly and set the overall weather regime for a region over days to weeks. Shortwaves ride along within longwave patterns. A persistent longwave trough means extended storminess; a longwave ridge means extended warmth and dryness.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Rossby_wave"
+    },
+    {
+      "term": "HREF",
+      "short": "High-Resolution Ensemble Forecast — a convective-scale ensemble system.",
+      "long": "The HREF (High-Resolution Ensemble Forecast) is an ensemble of multiple high-resolution (~3 km) models designed for convective-scale forecasting. It combines runs from different model cores to capture uncertainty in thunderstorm and mesoscale events. Forecasters reference HREF probabilities when discussing severe weather, heavy rain, or snowband placement.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ensemble_forecasting"
+    },
+    {
+      "term": "RAP",
+      "short": "Rapid Refresh — an hourly-updated regional weather model.",
+      "long": "The RAP (Rapid Refresh) is a regional weather model covering North America at 13 km resolution, updated every hour. It's the parent model of the HRRR and is designed to provide frequently refreshed short-range forecasts. Forecasters use RAP for near-term guidance on features like fronts, precipitation type, and aviation weather.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Rapid_Refresh"
+    },
+    {
+      "term": "SREF",
+      "short": "Short Range Ensemble Forecast — a multi-model ensemble system.",
+      "long": "The SREF (Short Range Ensemble Forecast) is a 21-member ensemble system that uses multiple model cores with varied initial conditions to produce probabilistic forecasts out to 87 hours. Forecasters use SREF to assess forecast uncertainty and the probability of specific weather events like heavy precipitation or severe storms.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Ensemble_forecasting"
+    },
+    {
+      "term": "bow echo",
+      "short": "A curved radar signature indicating damaging straight-line winds.",
+      "long": "A bow echo is a distinctive outward-bowing shape on radar produced by a line of thunderstorms being pushed forward by strong rear-inflow winds. The apex of the bow is where the strongest winds occur at the surface, often exceeding 70 mph. Bow echoes are responsible for many widespread wind damage events and can produce brief tornadoes at their northern end.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Bow_echo"
+    },
+    {
+      "term": "derecho",
+      "short": "A widespread, long-lived windstorm from a fast-moving line of thunderstorms.",
+      "long": "A derecho is a widespread, long-lived convective windstorm producing a swath of damaging winds at least 250 miles long. Derechos are associated with fast-moving bow echoes or squall lines, with wind gusts often exceeding 75 mph over a large area. Though less well-known than tornadoes, derechos can cause equally catastrophic damage across entire states.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Derecho"
+    },
+    {
+      "term": "QLCS",
+      "short": "Quasi-Linear Convective System — an organized line of thunderstorms.",
+      "long": "A QLCS (Quasi-Linear Convective System) is a line of thunderstorms organized roughly in a row, including squall lines and bow echoes. QLCSs are common ahead of cold fronts and can produce widespread damaging winds, heavy rain, and embedded tornadoes — though QLCS tornadoes are often brief and harder to warn for than those from supercells.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Mesoscale_convective_system"
+    },
+    {
+      "term": "LCL",
+      "short": "Lifting Condensation Level — the height where cloud bases form.",
+      "long": "The Lifting Condensation Level (LCL) is the altitude at which a rising parcel of air cools to its dew point and water vapor begins to condense into cloud droplets. The LCL determines cloud base height. A low LCL means clouds form close to the surface (relevant for fog and low visibility); a high LCL means higher cloud bases and drier air near the surface.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Lifted_condensation_level"
+    },
+    {
+      "term": "LFC",
+      "short": "Level of Free Convection — the height where a storm can sustain itself.",
+      "long": "The Level of Free Convection (LFC) is the altitude where a lifted air parcel becomes warmer than its surroundings and begins to rise freely on its own buoyancy. Below the LFC, the parcel needs external forcing (a front, orographic lift, or heating) to keep rising. The lower the LFC, the easier it is for thunderstorms to develop once the cap is broken.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Level_of_free_convection"
+    },
+    {
+      "term": "omega",
+      "short": "Vertical motion in the atmosphere — negative values mean air is rising.",
+      "long": "Omega is the meteorological term for vertical velocity measured in pressure coordinates (pascals per second). Confusingly, negative omega means upward motion (rising air, which promotes clouds and precipitation), while positive omega means sinking (clearing skies). When forecasters reference omega fields or omega forcing, they're discussing the pattern of rising and sinking air across the region.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Omega_equation"
+    },
+    {
+      "term": "isentropic lift",
+      "short": "Air rising along tilted surfaces of constant potential temperature.",
+      "long": "Isentropic lift occurs when air moves along surfaces of constant potential temperature (isentropes), which tilt upward from warm to cold regions. Warm, moist air riding up these tilted surfaces can produce widespread clouds and precipitation even in the absence of strong fronts or significant dynamics. It's a common mechanism for overrunning-type precipitation events.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Isentropic_process"
+    },
+    {
+      "term": "rex block",
+      "short": "A persistent blocking pattern with high pressure over low pressure.",
+      "long": "A Rex block is an atmospheric blocking pattern where a high-pressure system sits directly north of a low-pressure system. This configuration is very stable and can persist for days to weeks, deflecting the jet stream and locking weather patterns in place. Regions under the low get prolonged clouds and rain, while areas under the high get extended dry, warm conditions.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Blocking_(meteorology)"
+    },
+    {
+      "term": "omega block",
+      "short": "A blocking pattern shaped like the Greek letter \u03a9, stalling weather patterns.",
+      "long": "An omega block is named for its resemblance to the Greek letter \u03a9 — a large ridge flanked by two troughs. The ridge brings persistent warmth and dryness to the region beneath it, while the flanking troughs bring unsettled weather. Like other blocking patterns, omega blocks can stall for days or weeks, producing prolonged weather extremes.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Blocking_(meteorology)"
+    },
+    {
+      "term": "water vapor imagery",
+      "short": "Satellite view showing moisture distribution in the middle and upper atmosphere.",
+      "long": "Water vapor imagery is a satellite product that reveals the distribution of moisture at mid and upper levels of the atmosphere (roughly 10,000-40,000 feet). Unlike visible satellite imagery, water vapor imagery works day and night and shows features invisible to the eye — jet streams, upper-level lows, and dry intrusions. Dark areas indicate dry sinking air; bright areas indicate moist rising air.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Satellite_imagery"
+    },
+    {
+      "term": "GOES",
+      "short": "Geostationary Operational Environmental Satellite — the U.S. weather satellite system.",
+      "long": "GOES (Geostationary Operational Environmental Satellite) is NOAA's fleet of weather satellites orbiting 22,236 miles above Earth at the same speed Earth rotates, keeping them fixed over one spot. The current generation (GOES-16, -18, -19) carries the Advanced Baseline Imager (ABI), which captures imagery of the Western Hemisphere every minute. GOES provides the satellite images you see in weather forecasts.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Geostationary_Operational_Environmental_Satellite"
+    },
+    {
+      "term": "skew-T",
+      "short": "A thermodynamic chart used to analyze atmospheric stability and moisture.",
+      "long": "A skew-T log-P diagram is the primary chart meteorologists use to visualize a sounding — the vertical profile of temperature, dewpoint, and wind. Temperature lines are skewed at an angle (hence the name), making it easier to assess stability, identify inversions, estimate cloud layers, and calculate indices like CAPE and CIN. Forecasters reference skew-T diagrams when evaluating thunderstorm or winter weather potential.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Skew-T_log-P_diagram"
+    },
+    {
+      "term": "radiosonde",
+      "short": "A balloon-borne instrument package that measures atmospheric conditions aloft.",
+      "long": "A radiosonde is a small instrument package carried into the atmosphere by a weather balloon, measuring temperature, humidity, pressure, and wind as it ascends to around 100,000 feet. Data is transmitted back to the ground by radio. Radiosondes are launched twice daily (00Z and 12Z) from sites worldwide, providing the critical upper-air observations that initialize weather models.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Radiosonde"
+    },
+    {
+      "term": "backdoor cold front",
+      "short": "A cold front that approaches from an unusual direction, typically the northeast.",
+      "long": "A backdoor cold front approaches from the east or northeast rather than the typical west or northwest. These fronts bring cooler air from the ocean or from a high-pressure system to the north. Along the U.S. East Coast, backdoor cold fronts can drop temperatures 20+\u00b0F as cool maritime air replaces warm continental air. They are tricky to forecast because they move against the prevailing flow.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Cold_front"
+    },
+    {
+      "term": "mixed layer",
+      "short": "A well-mixed portion of the lower atmosphere with uniform temperature and moisture.",
+      "long": "The mixed layer is the part of the boundary layer where turbulent mixing — driven by surface heating or wind — creates roughly uniform temperature, moisture, and wind speed with height. On sunny afternoons, the mixed layer can extend thousands of feet upward. Its depth affects pollutant dispersal, cloud base heights, and how effectively surface heat and moisture are distributed.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Mixed_layer"
+    },
+    {
+      "term": "bulk shear",
+      "short": "The total change in wind speed and direction through a layer of the atmosphere.",
+      "long": "Bulk shear measures the total wind change — both speed and direction — between two levels of the atmosphere (commonly surface to 6 km). It's a critical parameter for severe weather forecasting: 0-6 km bulk shear above 35-40 knots supports organized, long-lived thunderstorms and supercells. Higher shear generally means storms are more likely to become severe.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Wind_shear"
+    },
+    {
+      "term": "helicity",
+      "short": "A measure of corkscrew motion in the atmosphere, related to tornado potential.",
+      "long": "Helicity measures the tendency of air to follow a corkscrew or spiral path. Storm-relative helicity (SRH) in the lowest 1-3 km of the atmosphere is a key predictor of supercell thunderstorms and tornadoes. Higher helicity values (above 150-200 m\u00b2/s\u00b2) indicate a strongly rotating environment that's favorable for tornado development.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Helicity_(meteorology)"
+    },
+    {
+      "term": "dewpoint depression",
+      "short": "The difference between the temperature and the dewpoint — a measure of dryness.",
+      "long": "Dewpoint depression is simply the temperature minus the dewpoint. A small depression (0-5\u00b0F) means the air is nearly saturated — fog or clouds are likely. A large depression (30+\u00b0F) means very dry air. Forecasters use dewpoint depression to assess cloud formation potential, fog risk, and fire weather danger. When the depression reaches zero, the air is saturated.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Dew_point_depression"
+    },
+    {
+      "term": "EML",
+      "short": "Elevated Mixed Layer — a dry, steep-lapse-rate layer aloft that can cap storms.",
+      "long": "An Elevated Mixed Layer (EML) is a layer of warm, dry air at mid-levels of the atmosphere, typically originating from arid high-elevation terrain like the Mexican Plateau or Desert Southwest. The EML acts as a strong cap on convection, but if storms manage to break through, the steep lapse rates within the EML can fuel explosive storm development and large hail.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Temperature_inversion"
+    },
+    {
+      "term": "lifted index",
+      "short": "A stability number — negative values indicate an unstable, stormy atmosphere.",
+      "long": "The Lifted Index (LI) compares the temperature of a parcel lifted from the surface to the environmental temperature at 500mb (about 18,000 feet). A negative LI means the parcel is warmer than its surroundings (unstable), and more negative values indicate stronger instability. LI of 0 to -3 suggests possible thunderstorms; below -6 indicates a significant severe weather risk.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Lifted_index"
+    },
+    {
+      "term": "leeside cyclogenesis",
+      "short": "Formation of a low-pressure system on the downwind side of mountains.",
+      "long": "Leeside cyclogenesis is the development of a surface low-pressure system on the lee (downwind) side of a mountain range. As upper-level disturbances cross the Rockies, the stretching and compression of air columns can spin up new surface lows on the east side — the famous Colorado and Alberta lows form this way. These lee cyclones can rapidly intensify as they move east.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Lee_cyclogenesis"
+    },
+    {
+      "term": "barotropic",
+      "short": "An atmosphere without horizontal temperature gradients — storms tend to weaken.",
+      "long": "A barotropic atmosphere is one where temperature is uniform horizontally at each level — no fronts, no temperature contrasts. Without these gradients, there's no energy source for mid-latitude storm development, and existing storms weaken. When forecasters describe a system as 'becoming barotropic,' it means the storm is losing its temperature-driven energy and will decay.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Barotropic_atmosphere"
+    },
+    {
+      "term": "PWAT",
+      "short": "Total Precipitable Water — alternate abbreviation for precipitable water.",
+      "long": "PWAT (Precipitable Water or Total Precipitable Water) measures the total water vapor in a vertical column of atmosphere, expressed as the depth of liquid water if it were all condensed. Values above 1 inch are considered moist; above 1.5-2 inches is very moist and capable of producing heavy rainfall. PWAT is a key ingredient forecasters assess when predicting heavy precipitation events.",
+      "wikipedia": "https://en.wikipedia.org/wiki/Precipitable_water"
     }
   ]
 }

@@ -851,6 +851,27 @@ a.site-title {
   color: var(--color-link-hover);
 }
 
+.glossary-wiki-link {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.2px;
+  margin-top: var(--space-sm);
+}
+.glossary-wiki-link:hover {
+  color: var(--color-accent);
+}
+
+.glossary-sidebar-nav .glossary-wiki-link {
+  margin-top: 0;
+}
+
+.glossary-entry-long .glossary-wiki-link {
+  display: block;
+  margin-top: var(--space-md);
+}
+
 .glossary-sidebar-nav {
   display: flex;
   align-items: center;

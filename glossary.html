@@ -97,7 +97,10 @@
             <span class="glossary-entry-term">${escapeHTML(t.term)}</span>
             <span class="glossary-entry-short">${escapeHTML(t.short)}</span>
           </summary>
-          <div class="glossary-entry-long">${escapeHTML(t.long)}</div>
+          <div class="glossary-entry-long">
+            ${escapeHTML(t.long)}
+            ${t.wikipedia ? `<a href="${escapeHTML(t.wikipedia)}" target="_blank" rel="noopener" class="glossary-wiki-link">Read more on Wikipedia &rarr;</a>` : ''}
+          </div>
         </details>
       `).join('');
     }

@@ -107,12 +107,17 @@ export function showTermOfTheDay() {
 function renderSidebarTerm(entry, isTotd) {
   if (!sidebarEl || !entry) return;
 
+  const wikiLink = entry.wikipedia
+    ? `<a href="${esc(entry.wikipedia)}" target="_blank" rel="noopener" class="glossary-wiki-link">Wikipedia &rarr;</a>`
+    : '';
+
   sidebarEl.innerHTML = `
     ${isTotd ? '<div class="glossary-totd-label">Term of the Day</div>' : '<div class="glossary-totd-label">Glossary</div>'}
     <h4 class="glossary-sidebar-term">${esc(entry.term)}</h4>
     <p class="glossary-sidebar-definition">${esc(entry.long)}</p>
     <div class="glossary-sidebar-nav">
       <button class="glossary-next-btn" aria-label="Next term">Next term &rarr;</button>
+      ${wikiLink}
       <a href="glossary.html" class="glossary-browse-link">Browse all</a>
     </div>
   `;
@@ -309,10 +314,17 @@ function showSidebarDefinition(termKey) {
   const entry = glossaryData.find(t => t.term.toLowerCase() === termKey.toLowerCase());
   if (!entry) return;
 
+  const wikiLink = entry.wikipedia
+    ? `<a href="${esc(entry.wikipedia)}" target="_blank" rel="noopener" class="glossary-wiki-link">Wikipedia &rarr;</a>`
+    : '';
+
   sidebarEl.innerHTML = `
     <h4 class="glossary-sidebar-term">${esc(entry.term)}</h4>
     <p class="glossary-sidebar-definition">${esc(entry.long)}</p>
-    <a href="glossary.html" class="glossary-browse-link">Browse all terms &rarr;</a>
+    <div class="glossary-sidebar-nav">
+      ${wikiLink}
+      <a href="glossary.html" class="glossary-browse-link">Browse all terms &rarr;</a>
+    </div>
   `;
   sidebarEl.classList.add('glossary-active');
 }
@@ -326,11 +338,16 @@ function showMobileDefinition(termKey) {
 
   const sheet = document.createElement('div');
   sheet.className = 'glossary-bottom-sheet';
+  const mobileWiki = entry.wikipedia
+    ? `<a href="${esc(entry.wikipedia)}" target="_blank" rel="noopener" class="glossary-wiki-link">Read more on Wikipedia &rarr;</a>`
+    : '';
+
   sheet.innerHTML = `
     <div class="glossary-bottom-sheet-content">
       <button class="glossary-bottom-sheet-close" aria-label="Close">&times;</button>
       <h4>${esc(entry.term)}</h4>
       <p>${esc(entry.long)}</p>
+      ${mobileWiki}
     </div>
   `;
 
