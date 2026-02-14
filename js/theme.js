@@ -18,7 +18,7 @@ export function initTheme() {
   } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     setTheme('dark');
   } else {
-    setTheme('light');
+    setTheme('dark');
   }
 
   // Listen for OS-level theme changes

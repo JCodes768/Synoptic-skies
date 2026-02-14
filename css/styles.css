@@ -153,7 +153,7 @@ body::after {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 1;
   background: repeating-linear-gradient(
     0deg,
     transparent,
@@ -393,8 +393,14 @@ a.site-title {
 }
 
 .weather-icon {
-  opacity: 0.9;
-  transition: filter var(--transition-base);
+  opacity: 0.85;
+  transition: color var(--transition-base);
+  line-height: 1;
+}
+
+[data-theme="dark"] .weather-icon {
+  color: var(--color-accent);
+  opacity: 1;
 }
 
 .temp-value {
@@ -457,9 +463,12 @@ a.site-title {
 }
 
 .conditions-compact .conditions-icon {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .conditions-compact .temp-value {
@@ -601,7 +610,8 @@ a.site-title {
   border-bottom: none;
 }
 
-.forecast-period.nighttime {
+.forecast-period.nighttime .forecast-name-row,
+.forecast-period.nighttime .forecast-desc {
   opacity: 0.65;
 }
 
@@ -633,6 +643,22 @@ a.site-title {
 .forecast-temp {
   font-family: var(--font-mono);
   font-weight: 700;
+  font-size: var(--font-size-sm);
+}
+
+.forecast-precip {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-accent);
+  opacity: 0.8;
+}
+
+.forecast-moon {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.moon-phase-icon {
   font-size: var(--font-size-sm);
 }
 

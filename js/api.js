@@ -143,7 +143,8 @@ export async function fetchForecast() {
     detailedForecast: period.detailedForecast,
     icon: period.icon,
     isDaytime: period.isDaytime,
-    startTime: period.startTime
+    startTime: period.startTime,
+    precipChance: period.probabilityOfPrecipitation?.value ?? null
   }));
 }
 

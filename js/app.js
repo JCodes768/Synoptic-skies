@@ -9,40 +9,60 @@ import { loadGlossary, initGlossaryUI, highlightTerms, selectTermOfTheDay, showT
 import { initSatellite } from './satellite.js';
 import { initTheme } from './theme.js';
 
-// ── Meteocons Integration ───────────────────────────────────
-// Using Meteocons by Bas Milius via jsDelivr CDN, rendered in grayscale
-
-const METEOCON_BASE = 'https://cdn.jsdelivr.net/gh/basmilius/weather-icons@dev/production/fill/svg/';
+// ── Weather Icons Integration ───────────────────────────────
+// Using Weather Icons by Erik Flowers
+// https://github.com/erikflowers/weather-icons
 
 /**
- * Map NWS short forecast text to a Meteocon icon filename
+ * Map NWS short forecast text to a Weather Icons class name.
+ *
+ * Strategy:
+ *   - Precipitation & phenomena → always neutral (no sun/moon)
+ *   - Cloud-dominant (mostly cloudy, overcast) → neutral cloud
+ *   - Mixed (partly cloudy/sunny) → day/night cloud variant
+ *   - Sun-dominant (mostly sunny/clear) → day/night sunny variant
+ *   - Clear/sunny → day/night sunny
  */
-function getIconName(shortForecast, isDaytime = true) {
+function getIconClass(shortForecast, isDaytime = true) {
   const text = shortForecast.toLowerCase();
 
-  if (text.includes('thunder') || text.includes('tstm')) return 'thunderstorms';
-  if (text.includes('blizzard')) return 'snow';
-  if (text.includes('sleet') || text.includes('freezing rain')) return 'sleet';
-  if (text.includes('snow') || text.includes('flurr')) return 'snow';
-  if (text.includes('rain') || text.includes('shower')) return isDaytime ? 'partly-cloudy-day-rain' : 'partly-cloudy-night-rain';
-  if (text.includes('drizzle')) return 'drizzle';
-  if (text.includes('fog') || text.includes('mist')) return isDaytime ? 'fog-day' : 'fog-night';
-  if (text.includes('haze') || text.includes('smoke')) return isDaytime ? 'haze-day' : 'haze-night';
-  if (text.includes('wind') && !text.includes('cloud')) return 'wind';
-  if (text.includes('overcast')) return isDaytime ? 'overcast-day' : 'overcast-night';
-  if (text.includes('mostly cloudy')) return isDaytime ? 'overcast-day' : 'overcast-night';
-  if (text.includes('partly cloudy') || text.includes('partly sunny')) return isDaytime ? 'partly-cloudy-day' : 'partly-cloudy-night';
-  if (text.includes('mostly sunny') || text.includes('mostly clear')) return isDaytime ? 'partly-cloudy-day' : 'partly-cloudy-night';
-  if (text.includes('sunny') || text.includes('clear')) return isDaytime ? 'clear-day' : 'clear-night';
-  if (text.includes('cloud')) return 'cloudy';
+  // Precipitation & phenomena — always neutral, no sun/moon
+  if (text.includes('thunder') || text.includes('tstm')) return 'wi-thunderstorm';
+  if (text.includes('blizzard')) return 'wi-snow-wind';
+  if (text.includes('sleet') || text.includes('freezing rain')) return 'wi-sleet';
+  if (text.includes('snow') || text.includes('flurr')) return 'wi-snow';
+  if (text.includes('heavy rain')) return 'wi-showers';
+  if (text.includes('rain') && text.includes('wind')) return 'wi-rain-wind';
+  if (text.includes('shower')) return 'wi-showers';
+  if (text.includes('light rain')) return 'wi-sprinkle';
+  if (text.includes('rain')) return 'wi-rain';
+  if (text.includes('drizzle')) return 'wi-sprinkle';
+  if (text.includes('fog') || text.includes('mist')) return 'wi-fog';
+  if (text.includes('haze') || text.includes('smoke')) return 'wi-dust';
+  if (text.includes('wind') && !text.includes('cloud')) return 'wi-strong-wind';
 
-  return isDaytime ? 'partly-cloudy-day' : 'partly-cloudy-night';
+  // Cloud-dominant — neutral cloud
+  if (text.includes('overcast')) return 'wi-cloudy';
+  if (text.includes('mostly cloudy')) return 'wi-cloudy';
+
+  // Mixed — day/night variant (sun/moon peeking through clouds)
+  if (text.includes('partly cloudy') || text.includes('partly sunny')) return isDaytime ? 'wi-day-cloudy' : 'wi-night-alt-cloudy';
+
+  // Sun-dominant — day/night sunny (a few clouds, but mostly clear)
+  if (text.includes('mostly sunny') || text.includes('mostly clear')) return isDaytime ? 'wi-day-sunny' : 'wi-night-clear';
+
+  // Clear/sunny
+  if (text.includes('sunny') || text.includes('clear')) return isDaytime ? 'wi-day-sunny' : 'wi-night-clear';
+
+  // Generic cloud fallback
+  if (text.includes('cloud')) return 'wi-cloudy';
+
+  return isDaytime ? 'wi-day-sunny' : 'wi-night-clear';
 }
 
 function weatherIconHTML(shortForecast, isDaytime = true, size = '48') {
-  const name = getIconName(shortForecast, isDaytime);
-  const url = `${METEOCON_BASE}${name}.svg`;
-  return `<img src="${url}" alt="" class="weather-icon" width="${size}" height="${size}" loading="lazy" onerror="this.style.display='none'">`;
+  const iconClass = getIconClass(shortForecast, isDaytime);
+  return `<i class="wi ${iconClass} weather-icon" style="font-size: ${size}px;"></i>`;
 }
 
 /**
@@ -51,6 +71,55 @@ function weatherIconHTML(shortForecast, isDaytime = true, size = '48') {
 function isDaytimeNow() {
   const hour = new Date().getHours();
   return hour >= 6 && hour < 20;
+}
+
+// ── Moon Phase ──────────────────────────────────────────────
+
+const MOON_ICON_CLASSES = [
+  'wi-moon-new',
+  'wi-moon-waxing-crescent-1', 'wi-moon-waxing-crescent-2', 'wi-moon-waxing-crescent-3',
+  'wi-moon-waxing-crescent-4', 'wi-moon-waxing-crescent-5', 'wi-moon-waxing-crescent-6',
+  'wi-moon-first-quarter',
+  'wi-moon-waxing-gibbous-1', 'wi-moon-waxing-gibbous-2', 'wi-moon-waxing-gibbous-3',
+  'wi-moon-waxing-gibbous-4', 'wi-moon-waxing-gibbous-5', 'wi-moon-waxing-gibbous-6',
+  'wi-moon-full',
+  'wi-moon-waning-gibbous-1', 'wi-moon-waning-gibbous-2', 'wi-moon-waning-gibbous-3',
+  'wi-moon-waning-gibbous-4', 'wi-moon-waning-gibbous-5', 'wi-moon-waning-gibbous-6',
+  'wi-moon-third-quarter',
+  'wi-moon-waning-crescent-1', 'wi-moon-waning-crescent-2', 'wi-moon-waning-crescent-3',
+  'wi-moon-waning-crescent-4', 'wi-moon-waning-crescent-5', 'wi-moon-waning-crescent-6',
+];
+
+const MOON_PHASE_NAMES = [
+  'New Moon',
+  'Waxing Crescent', 'Waxing Crescent', 'Waxing Crescent',
+  'Waxing Crescent', 'Waxing Crescent', 'Waxing Crescent',
+  'First Quarter',
+  'Waxing Gibbous', 'Waxing Gibbous', 'Waxing Gibbous',
+  'Waxing Gibbous', 'Waxing Gibbous', 'Waxing Gibbous',
+  'Full Moon',
+  'Waning Gibbous', 'Waning Gibbous', 'Waning Gibbous',
+  'Waning Gibbous', 'Waning Gibbous', 'Waning Gibbous',
+  'Third Quarter',
+  'Waning Crescent', 'Waning Crescent', 'Waning Crescent',
+  'Waning Crescent', 'Waning Crescent', 'Waning Crescent',
+];
+
+/**
+ * Calculate the current moon phase index (0–27) based on a known new moon.
+ * Reference new moon: 2024-01-11T11:57Z
+ */
+function getMoonPhaseIndex(date = new Date()) {
+  const LUNAR_CYCLE = 29.53058770576;
+  const knownNewMoon = new Date('2024-01-11T11:57:00Z');
+  const daysSince = (date - knownNewMoon) / (1000 * 60 * 60 * 24);
+  const phase = ((daysSince % LUNAR_CYCLE) + LUNAR_CYCLE) % LUNAR_CYCLE;
+  return Math.round(phase / LUNAR_CYCLE * 28) % 28;
+}
+
+function getMoonPhase(date) {
+  const idx = getMoonPhaseIndex(date);
+  return { iconClass: MOON_ICON_CLASSES[idx], name: MOON_PHASE_NAMES[idx] };
 }
 
 // ── Text Size Controls ──────────────────────────────────────
@@ -85,7 +154,7 @@ function renderCurrentConditions(data) {
   if (!el) return;
 
   const daytime = isDaytimeNow();
-  const icon = weatherIconHTML(data.textDescription, daytime, '44');
+  const icon = weatherIconHTML(data.textDescription, daytime, '32');
 
   el.innerHTML = `
     <div class="conditions-compact">
@@ -96,6 +165,7 @@ function renderCurrentConditions(data) {
     <div class="conditions-details-compact">
       <span class="detail-compact"><span class="detail-label">Wind</span> ${data.windDirection} ${data.windSpeed ?? '--'} mph${data.windGust ? ` (G${data.windGust})` : ''}</span>
       <span class="detail-compact"><span class="detail-label">Dew Pt</span> ${data.dewpoint ?? '--'}\u00B0F</span>
+      <span class="detail-compact"><i class="wi ${getMoonPhase().iconClass} moon-phase-icon"></i> ${getMoonPhase().name}</span>
     </div>
   `;
 
@@ -108,16 +178,25 @@ function renderForecast(periods) {
 
   const display = periods.slice(0, 10);
 
-  el.innerHTML = display.map(period => {
+  el.innerHTML = display.map((period, i) => {
     const icon = weatherIconHTML(period.shortForecast, period.isDaytime, '28');
+    const precipTag = period.precipChance != null && period.precipChance > 0
+      ? ` <span class="forecast-precip">(${period.precipChance}%)</span>`
+      : '';
+    // Calculate moon phase for this period's date
+    const periodDate = new Date(period.startTime);
+    const moonIcon = !period.isDaytime
+      ? `<i class="wi ${getMoonPhase(periodDate).iconClass} forecast-moon"></i>`
+      : '';
     return `
       <div class="forecast-period ${period.isDaytime ? 'daytime' : 'nighttime'}">
         <div class="forecast-icon">${icon}</div>
         <div class="forecast-name-row">
           <span class="forecast-name">${escapeHTML(period.name)}</span>
+          ${moonIcon}
           <span class="forecast-temp">${period.temperature}\u00B0${period.temperatureUnit}</span>
         </div>
-        <div class="forecast-desc">${escapeHTML(period.shortForecast)}</div>
+        <div class="forecast-desc">${escapeHTML(period.shortForecast)}${precipTag}</div>
       </div>
     `;
   }).join('');
