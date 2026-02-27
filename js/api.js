@@ -6,7 +6,7 @@
 const API_BASE = 'https://api.weather.gov';
 const USER_AGENT = '(synopticskies.com, joshcodes@proton.me)';
 
-// Default config — MTR (San Francisco Bay Area), KSFO, 94110 area
+// Default config — MTR (San Francisco Bay Area), KSFO, 94131 area
 export const CONFIG = {
   office: 'MTR',
   officeName: 'San Francisco Bay Area',
@@ -16,7 +16,7 @@ export const CONFIG = {
   gridpoint: { wfo: 'MTR', x: 85, y: 105 },
   lat: 37.7516,
   lon: -122.4477,
-  zip: '94110'
+  zip: '94131'
 };
 
 const headers = {

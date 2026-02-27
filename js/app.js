@@ -484,16 +484,14 @@ async function init() {
   // Load glossary data first (needed before AFD rendering)
   await loadGlossary();
 
-  // Check for saved location and apply it before loading data
-  const savedLocation = localStorage.getItem(LOCATION_STORAGE_KEY);
-  if (savedLocation) {
-    try {
-      await lookupLocation(savedLocation);
-      updateHeaderForLocation();
-    } catch (e) {
-      console.warn('Saved location lookup failed, using default:', e);
-      localStorage.removeItem(LOCATION_STORAGE_KEY);
-    }
+  // Check for saved location and apply it before loading data; fall back to 94131
+  const savedLocation = localStorage.getItem(LOCATION_STORAGE_KEY) || '94131';
+  try {
+    await lookupLocation(savedLocation);
+    updateHeaderForLocation();
+  } catch (e) {
+    console.warn('Location lookup failed, using built-in default:', e);
+    if (savedLocation !== '94131') localStorage.removeItem(LOCATION_STORAGE_KEY);
   }
 
   await loadAllData();
