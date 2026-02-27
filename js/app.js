@@ -3,7 +3,7 @@
  * Orchestrates data fetching, rendering, and UI interactions.
  */
 
-import { fetchLatestAFD, fetchCurrentConditions, fetchForecast, fetchAlerts, lookupLocation, CONFIG } from './api.js';
+import { fetchLatestAFD, fetchCurrentConditions, fetchForecast, fetchHourlyForecast, fetchAlerts, lookupLocation, CONFIG } from './api.js';
 import { parseAFD, bodyToHTML } from './afd-parser.js';
 import { loadGlossary, initGlossaryUI, highlightTerms, selectTermOfTheDay, showTermOfTheDay, buildAfdTermList } from './glossary.js';
 import { initSatellite } from './satellite.js';
@@ -172,6 +172,74 @@ function renderCurrentConditions(data) {
   el.classList.remove('loading');
 }
 
+function renderHourlyForecast(periods) {
+  const el = document.getElementById('hourly-forecast');
+  if (!el || !periods || periods.length === 0) return;
+
+  // Skip the current hour — start from the next one
+  const now = new Date();
+  const startIdx = periods.findIndex(p => new Date(p.startTime) > now);
+  const hours = periods.slice(startIdx >= 0 ? startIdx : 1, (startIdx >= 0 ? startIdx : 1) + 48);
+  const temps = hours.map(h => h.temperature);
+  const minTemp = Math.min(...temps);
+  const maxTemp = Math.max(...temps);
+  const tempRange = maxTemp - minTemp || 1;
+
+  let lastDate = null;
+  let html = '<div class="hourly-day-sep"><span>Hourly</span></div>';
+
+  hours.forEach((hour, i) => {
+    const dt = new Date(hour.startTime);
+    const dateStr = dt.toLocaleDateString('en-US', { weekday: 'short' });
+
+    // Day separator
+    if (lastDate !== null && dateStr !== lastDate) {
+      html += `<div class="hourly-day-sep"><span>${dateStr}</span></div>`;
+    }
+    lastDate = dateStr;
+
+    // Time label
+    const timeLabel = dt.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
+
+    // Icon
+    const icon = weatherIconHTML(hour.shortForecast, hour.isDaytime, '16');
+
+    // Precip — only show if >= 15%
+    const precip = hour.precipChance != null && hour.precipChance >= 15
+      ? `<div class="hourly-precip"><i class="wi wi-raindrop"></i> ${hour.precipChance}%</div>`
+      : '<div class="hourly-precip"></div>';
+
+    // Store normalized temp position (0=coldest, 1=warmest) for CSS-driven color
+    const t = ((hour.temperature - minTemp) / tempRange).toFixed(3);
+
+    html += `
+      <div class="hourly-item">
+        <div class="hourly-time">${escapeHTML(timeLabel)}</div>
+        <div class="hourly-icon">${icon}</div>
+        ${precip}
+        <div class="hourly-temp" data-t="${t}">${hour.temperature}&deg;</div>
+      </div>
+    `;
+  });
+
+  el.innerHTML = `<div class="hourly-forecast">${html}</div>`;
+  colorizeHourlyTemps();
+}
+
+function colorizeHourlyTemps() {
+  const style = getComputedStyle(document.documentElement);
+  const warm = style.getPropertyValue('--color-temp-warm').trim().split(',').map(Number);
+  const cold = style.getPropertyValue('--color-temp-cold').trim().split(',').map(Number);
+
+  document.querySelectorAll('.hourly-temp[data-t]').forEach(el => {
+    const t = parseFloat(el.dataset.t);
+    const r = Math.round(cold[0] + (warm[0] - cold[0]) * t);
+    const g = Math.round(cold[1] + (warm[1] - cold[1]) * t);
+    const b = Math.round(cold[2] + (warm[2] - cold[2]) * t);
+    el.style.color = `rgb(${r},${g},${b})`;
+  });
+}
+
 function renderForecast(periods) {
   const el = document.getElementById('forecast');
   if (!el) return;
@@ -180,7 +248,7 @@ function renderForecast(periods) {
 
   el.innerHTML = display.map((period, i) => {
     const icon = weatherIconHTML(period.shortForecast, period.isDaytime, '28');
-    const precipTag = period.precipChance != null && period.precipChance > 0
+    const precipTag = period.precipChance != null && period.precipChance >= 15
       ? ` <span class="forecast-precip">(${period.precipChance}%)</span>`
       : '';
     // Calculate moon phase for this period's date
@@ -494,6 +562,10 @@ async function init() {
     if (savedLocation !== '94131') localStorage.removeItem(LOCATION_STORAGE_KEY);
   }
 
+  // Re-colorize hourly temps when theme toggles
+  new MutationObserver(() => colorizeHourlyTemps())
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
   await loadAllData();
 }
 
@@ -518,10 +590,11 @@ async function loadAllData() {
   }
 
   // Fetch all API data in parallel
-  const [afdResult, conditionsResult, forecastResult, alertsResult] = await Promise.allSettled([
+  const [afdResult, conditionsResult, forecastResult, hourlyResult, alertsResult] = await Promise.allSettled([
     fetchLatestAFD(),
     fetchCurrentConditions(),
     fetchForecast(),
+    fetchHourlyForecast(),
     fetchAlerts()
   ]);
 
@@ -560,6 +633,11 @@ async function loadAllData() {
   } else {
     showError('current-conditions', 'Unable to load current conditions.');
     console.error('Conditions fetch failed:', conditionsResult.reason);
+  }
+
+  // Render hourly forecast
+  if (hourlyResult.status === 'fulfilled') {
+    renderHourlyForecast(hourlyResult.value);
   }
 
   // Render forecast

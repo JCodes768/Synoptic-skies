@@ -149,6 +149,24 @@ export async function fetchForecast() {
 }
 
 /**
+ * Fetch hourly forecast for the next 24–48 hours
+ */
+export async function fetchHourlyForecast() {
+  const { wfo, x, y } = CONFIG.gridpoint;
+  const url = `${API_BASE}/gridpoints/${wfo}/${x},${y}/forecast/hourly`;
+  const data = await apiFetch(url, `hourly-${wfo}-${x}-${y}`, 600000);
+
+  return data.properties.periods.map(period => ({
+    startTime: period.startTime,
+    temperature: period.temperature,
+    temperatureUnit: period.temperatureUnit,
+    shortForecast: period.shortForecast,
+    isDaytime: period.isDaytime,
+    precipChance: period.probabilityOfPrecipitation?.value ?? null
+  }));
+}
+
+/**
  * Fetch active weather alerts for the area
  */
 export async function fetchAlerts() {
@@ -263,7 +281,8 @@ function clearCaches() {
   for (let i = 0; i < sessionStorage.length; i++) {
     const key = sessionStorage.key(i);
     if (key.startsWith('afd-') || key.startsWith('conditions-') ||
-        key.startsWith('forecast-') || key.startsWith('alerts-') ||
+        key.startsWith('forecast-') || key.startsWith('hourly-') ||
+        key.startsWith('alerts-') ||
         key === 'synoptic-skies-gist') {
       keysToRemove.push(key);
     }

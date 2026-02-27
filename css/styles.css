@@ -47,6 +47,10 @@
 
   --scanline-opacity: 0.015;
 
+  /* Hourly temp gradient */
+  --color-temp-warm: 212, 133, 59;
+  --color-temp-cold: 59, 130, 206;
+
   /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
@@ -117,6 +121,10 @@
   --color-skeleton-shine: #2a3442;
 
   --scanline-opacity: 0.03;
+
+  /* Hourly temp gradient */
+  --color-temp-warm: 77, 184, 164;
+  --color-temp-cold: 59, 130, 206;
 }
 
 /* ── Reset ──────────────────────────────────────────────────── */
@@ -547,6 +555,105 @@ a.site-title {
 
 .conditions-bar .alert-item:last-child {
   margin-bottom: 0;
+}
+
+/* ── Hourly Forecast Strip ──────────────────────────────────── */
+
+.hourly-forecast {
+  display: flex;
+  overflow-x: auto;
+  gap: 0;
+  padding: var(--space-sm) 0 var(--space-xs);
+  border-top: 1px solid var(--color-border-light);
+  margin-top: var(--space-sm);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.hourly-forecast::-webkit-scrollbar {
+  height: 4px;
+}
+
+.hourly-forecast::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hourly-forecast::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+.hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 56px;
+  padding: 0 var(--space-xs);
+  flex-shrink: 0;
+}
+
+.hourly-time {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  margin-bottom: 2px;
+}
+
+.hourly-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+[data-theme="dark"] .hourly-icon .weather-icon {
+  color: #fff;
+}
+
+.hourly-precip {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-accent);
+  white-space: nowrap;
+  min-height: 12px;
+  line-height: 1;
+}
+
+.hourly-precip .wi-raindrop {
+  font-size: 9px;
+  margin-right: 1px;
+}
+
+.hourly-temp {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+  margin-top: 0;
+}
+
+.hourly-day-sep {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  flex-shrink: 0;
+  padding: 0 2px;
+  border-left: 1px solid var(--color-border-light);
+}
+
+.hourly-day-sep span {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 /* ── Satellite ──────────────────────────────────────────────── */
@@ -1551,6 +1658,10 @@ a.site-title {
 
   .widget-glossary {
     display: none;
+  }
+
+  .hourly-item {
+    min-width: 48px;
   }
 }
 
