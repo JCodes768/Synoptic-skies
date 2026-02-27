@@ -179,7 +179,7 @@ function renderHourlyForecast(periods) {
   // Skip the current hour — start from the next one
   const now = new Date();
   const startIdx = periods.findIndex(p => new Date(p.startTime) > now);
-  const hours = periods.slice(startIdx >= 0 ? startIdx : 1, (startIdx >= 0 ? startIdx : 1) + 48);
+  const hours = periods.slice(startIdx >= 0 ? startIdx : 1, (startIdx >= 0 ? startIdx : 1) + 72);
   const temps = hours.map(h => h.temperature);
   const minTemp = Math.min(...temps);
   const maxTemp = Math.max(...temps);
