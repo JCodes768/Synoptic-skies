@@ -105,6 +105,13 @@ const MOON_PHASE_NAMES = [
   'Waning Crescent', 'Waning Crescent', 'Waning Crescent',
 ];
 
+const MOON_MILESTONES = {
+  0:  { label: 'NM', cls: 'forecast-moon--new' },
+  7:  { label: 'FQ', cls: 'forecast-moon--quarter' },
+  14: { label: 'FM', cls: 'forecast-moon--full' },
+  21: { label: 'TQ', cls: 'forecast-moon--quarter' },
+};
+
 /**
  * Calculate the current moon phase index (0–27) based on a known new moon.
  * Reference new moon: 2024-01-11T11:57Z
@@ -253,9 +260,15 @@ function renderForecast(periods) {
       : '';
     // Calculate moon phase for this period's date
     const periodDate = new Date(period.startTime);
-    const moonIcon = !period.isDaytime
-      ? `<i class="wi ${getMoonPhase(periodDate).iconClass} forecast-moon"></i>`
-      : '';
+    let moonIcon = '';
+    if (!period.isDaytime) {
+      const idx = getMoonPhaseIndex(periodDate);
+      const milestone = MOON_MILESTONES[idx];
+      if (milestone) {
+        const iconClass = MOON_ICON_CLASSES[idx];
+        moonIcon = `<span class="forecast-moon-badge ${milestone.cls}"><i class="wi ${iconClass}"></i><span class="forecast-moon-label">${milestone.label}</span></span>`;
+      }
+    }
     return `
       <div class="forecast-period ${period.isDaytime ? 'daytime' : 'nighttime'}">
         <div class="forecast-icon">${icon}</div>

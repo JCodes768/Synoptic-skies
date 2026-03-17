@@ -760,10 +760,33 @@ a.site-title {
   opacity: 0.8;
 }
 
-.forecast-moon {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
+.forecast-moon-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  gap: 1px;
+  flex-shrink: 0;
 }
+
+.forecast-moon-badge i {
+  font-size: 1rem;
+}
+
+.forecast-moon-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.forecast-moon--full { color: #c8a84b; }
+.forecast-moon--quarter,
+.forecast-moon--new  { color: #8a7a68; }
+
+[data-theme="dark"] .forecast-moon--full    { color: #d4c070; }
+[data-theme="dark"] .forecast-moon--quarter,
+[data-theme="dark"] .forecast-moon--new     { color: #7a8fa8; }
 
 .moon-phase-icon {
   font-size: var(--font-size-sm);
