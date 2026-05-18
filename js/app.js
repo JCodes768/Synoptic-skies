@@ -8,6 +8,7 @@ import { parseAFD, bodyToHTML } from './afd-parser.js';
 import { loadGlossary, initGlossaryUI, highlightTerms, selectTermOfTheDay, showTermOfTheDay, buildAfdTermList } from './glossary.js';
 import { initSatellite } from './satellite.js';
 import { initTheme } from './theme.js';
+import { IssuancePredictor } from './issuance-predictor.js';
 
 // ── Weather Icons Integration ───────────────────────────────
 // Using Weather Icons by Erik Flowers
@@ -283,6 +284,30 @@ function renderForecast(periods) {
   }).join('');
 
   el.classList.remove('loading');
+}
+
+function renderIssuancePrediction(issuanceTimeISO) {
+  const el = document.getElementById('issuance-prediction');
+  const link = document.getElementById('analytics-link');
+  if (!el) return;
+
+  const result = IssuancePredictor.getNextExpected(new Date(issuanceTimeISO));
+  if (!result || result.state === 'just_issued') {
+    el.hidden = true;
+    if (link) link.hidden = true;
+    return;
+  }
+
+  let text;
+  if (result.state === 'in_window') {
+    text = `· may update soon`;
+  } else {
+    text = `· next expected ${IssuancePredictor.formatWindow(result.startHour, result.endHour)}`;
+  }
+
+  el.textContent = text;
+  el.hidden = false;
+  if (link) link.hidden = false;
 }
 
 function renderAFD(parsed) {
@@ -624,6 +649,7 @@ async function loadAllData() {
     }
 
     renderAFD(parsed);
+    renderIssuancePrediction(afdResult.value.issuanceTime);
     renderForecasterCard(parsed.authors);
 
     // Store AFD for Gist feature

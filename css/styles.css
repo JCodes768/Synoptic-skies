@@ -272,6 +272,25 @@ a.site-title {
   color: var(--color-text-muted);
 }
 
+#issuance-prediction {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.analytics-link {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.analytics-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
 .header-actions {
   display: flex;
   align-items: center;
@@ -1581,6 +1600,97 @@ a.site-title {
   margin: var(--space-lg) 0;
   font-style: italic;
   color: var(--color-text-muted);
+}
+
+/* -- Analytics page ------------------------------------------------------ */
+
+.analytics-intro {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.analytics-note {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.analytics-chart-wrap {
+  margin: var(--space-md) 0;
+}
+
+#issuance-histogram {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hist-bar {
+  fill: var(--color-text-muted);
+  opacity: 0.35;
+}
+
+.hist-bar-peak {
+  fill: var(--color-accent);
+  opacity: 0.85;
+}
+
+.hist-now {
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 2 2;
+  opacity: 0.6;
+}
+
+.histogram-hour-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: 4px;
+  padding: 0 2px;
+}
+
+.peak-windows-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.peak-window-item {
+  display: flex;
+  gap: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  align-items: baseline;
+}
+
+.pw-label {
+  color: var(--color-text-muted);
+  min-width: 120px;
+}
+
+.pw-time {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.pw-prob {
+  color: var(--color-text-muted);
+}
+
+.analytics-meta-section code {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  background: var(--color-surface);
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid var(--color-border, #e0d8cc);
 }
 
 /* -- WFO Map ------------------------------------------------------ */

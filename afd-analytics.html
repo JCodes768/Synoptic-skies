@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MTR AFD issuance timing analytics — when does the San Francisco Bay Area NWS typically issue forecasts?">
+  <title>AFD Analytics — Synoptic Skies</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="header-logo">
+          <svg width="28" height="28" viewBox="0 0 80 80" fill="none" class="site-icon" aria-hidden="true">
+            <defs>
+              <linearGradient id="isoGrad" x1="0.5" y1="0" x2="0.5" y2="1">
+                <stop offset="0%" stop-color="#e8a44a"/>
+                <stop offset="45%" stop-color="#b87838"/>
+                <stop offset="100%" stop-color="#4a88b8"/>
+              </linearGradient>
+            </defs>
+            <path d="M60 14C60 14 20 14 16 34C14 44 40 40 40 40C40 40 66 36 64 46C60 66 20 66 20 66" stroke="url(#isoGrad)" stroke-width="2.5" fill="none" opacity="0.35" stroke-linecap="round"/>
+            <path d="M54 24C54 24 28 24 26 36C25 42 40 40 40 40C40 40 55 38 54 44C52 56 28 56 28 56" stroke="url(#isoGrad)" stroke-width="4" fill="none" opacity="0.8" stroke-linecap="round"/>
+            <path d="M48 34C48 34 34 34 34 38C34 40 40 40 40 40C40 40 46 40 46 42C46 46 34 46 34 46" stroke="url(#isoGrad)" stroke-width="2.5" fill="none" opacity="0.4" stroke-linecap="round"/>
+            <circle cx="40" cy="40" r="2.5" fill="#c08040" opacity="0.5"/>
+          </svg>
+          <a href="index.html" class="site-title"><span>Synoptic Skies</span></a>
+        </div>
+        <div class="header-subtitle">AFD Issuance Analytics &mdash; WFO MTR</div>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" aria-label="Switch to dark mode">Dark Mode</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="about-page">
+    <h1>AFD Issuance Timing</h1>
+    <p class="analytics-intro">When does the San Francisco Bay Area NWS (WFO MTR) typically issue Area Forecast Discussions? Based on <span id="meta-sample"></span>.</p>
+
+    <section class="about-section">
+      <h2>Issuance Pattern</h2>
+      <p class="analytics-note">Each bar represents one hour of the day (Pacific time). Height shows how often an AFD was issued during that hour over the sample period.</p>
+      <div class="analytics-chart-wrap">
+        <svg id="issuance-histogram" viewBox="0 0 264 60" aria-label="Hourly AFD issuance frequency chart" role="img">
+          <!-- rendered by JS -->
+        </svg>
+        <div class="histogram-hour-labels" aria-hidden="true">
+          <span>12 AM</span><span>6 AM</span><span>12 PM</span><span>6 PM</span><span>12 AM</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Peak Windows</h2>
+      <ul id="peak-windows-list" class="peak-windows-list">
+        <!-- rendered by JS -->
+      </ul>
+    </section>
+
+    <section class="about-section analytics-meta-section">
+      <h2>About This Data</h2>
+      <p id="meta-detail"></p>
+      <p>To refresh: <code>node scripts/analyze-issuance.js</code> then redeploy.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Data from the National Weather Service / NOAA</p>
+    <div class="footer-links">
+      <a href="index.html">Back to Forecast</a>
+      <a href="glossary.html">Glossary</a>
+      <a href="https://github.com/JCodes768/Synoptic-skies" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initTheme } from './js/theme.js';
+    import { IssuancePredictor } from './js/issuance-predictor.js';
+    initTheme();
+
+    const hours = IssuancePredictor.getHourlyProbabilities();
+    const peaks = IssuancePredictor.getPeakWindows();
+    const meta  = IssuancePredictor.getMeta();
+
+    // Meta text
+    const generated = new Date(meta.generatedAt);
+    const dateStr = generated.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    document.getElementById('meta-sample').textContent =
+      `${meta.sampleCount} AFDs over ${meta.sampleDays} days`;
+    document.getElementById('meta-detail').textContent =
+      `Data covers ${meta.sampleDays} days of issuances for WFO ${meta.wfo}. ` +
+      `${meta.sampleCount} total AFDs analyzed. Generated ${dateStr}.`;
+
+    // Histogram
+    const svg = document.getElementById('issuance-histogram');
+    const maxProb = Math.max(...hours.map(h => h.probability), 0.01);
+    const BAR_W = 10, GAP = 1, HEIGHT = 50, Y_TOP = 5;
+    const currentHour = (() => {
+      const h = parseInt(new Intl.DateTimeFormat('en-US', {
+        hour: 'numeric', hour12: false, timeZone: 'America/Los_Angeles'
+      }).format(new Date()), 10);
+      return h === 24 ? 0 : h;
+    })();
+
+    hours.forEach(({ hour, probability }) => {
+      const isPeak = peaks.some(w => hour >= w.startHour && hour <= w.endHour);
+      const isCurrent = hour === currentHour;
+      const barH = Math.max(2, (probability / maxProb) * HEIGHT);
+      const x = hour * (BAR_W + GAP);
+      const y = Y_TOP + HEIGHT - barH;
+
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', y);
+      rect.setAttribute('width', BAR_W);
+      rect.setAttribute('height', barH);
+      rect.setAttribute('rx', '1');
+      rect.setAttribute('class', isPeak ? 'hist-bar hist-bar-peak' : 'hist-bar');
+      svg.appendChild(rect);
+
+      if (isCurrent) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x + BAR_W / 2);
+        line.setAttribute('y1', Y_TOP - 3);
+        line.setAttribute('x2', x + BAR_W / 2);
+        line.setAttribute('y2', Y_TOP + HEIGHT + 2);
+        line.setAttribute('class', 'hist-now');
+        svg.appendChild(line);
+      }
+    });
+
+    // Peak windows list
+    const list = document.getElementById('peak-windows-list');
+    if (peaks.length === 0) {
+      list.innerHTML = '<li>No clear peak windows identified in current sample.</li>';
+    } else {
+      peaks.forEach(w => {
+        const displayEnd = w.startHour === w.endHour ? w.startHour + 1 : w.endHour;
+        function fmtH(h) {
+          if (h === 0 || h === 24) return '12 AM';
+          if (h === 12) return '12 PM';
+          return `${h % 12} ${h < 12 ? 'AM' : 'PM'}`;
+        }
+        const li = document.createElement('li');
+        li.className = 'peak-window-item';
+        li.innerHTML = `<span class="pw-label">${w.label}</span>` +
+          `<span class="pw-time">${fmtH(w.startHour)}–${fmtH(displayEnd)}</span>` +
+          `<span class="pw-prob">${Math.round(w.probability * 100)}% of days</span>`;
+        list.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>
