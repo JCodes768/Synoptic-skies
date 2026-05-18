@@ -287,27 +287,25 @@ function renderForecast(periods) {
 }
 
 function renderIssuancePrediction(issuanceTimeISO) {
-  const el = document.getElementById('issuance-prediction');
-  const link = document.getElementById('analytics-link');
-  if (!el) return;
+  document.getElementById('afd-prediction-line')?.remove();
 
   const result = IssuancePredictor.getNextExpected(new Date(issuanceTimeISO));
-  if (!result || result.state === 'just_issued') {
-    el.hidden = true;
-    if (link) link.hidden = true;
-    return;
-  }
+  if (!result) return;
 
   let text;
   if (result.state === 'in_window') {
-    text = `· may update soon`;
+    text = `Next update may arrive soon`;
   } else {
-    text = `· next expected ${IssuancePredictor.formatWindow(result.startHour, result.endHour)}`;
+    text = `Next expected ${IssuancePredictor.formatWindow(result.startHour, result.endHour)}`;
   }
 
-  el.textContent = text;
-  el.hidden = false;
-  if (link) link.hidden = false;
+  const line = document.createElement('span');
+  line.id = 'afd-prediction-line';
+  line.className = 'afd-section-range';
+  line.innerHTML = `${text} &middot; <a href="afd-analytics.html" class="afd-prediction-link">analytics &rarr;</a>`;
+
+  const firstIssuedLine = document.querySelector('#afd-content .afd-section-range');
+  firstIssuedLine?.insertAdjacentElement('afterend', line);
 }
 
 function renderAFD(parsed) {

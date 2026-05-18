@@ -155,12 +155,6 @@ export const IssuancePredictor = (() => {
   }
 
   function getNextExpected(lastIssuedAt) {
-    const lastMs  = lastIssuedAt instanceof Date ? lastIssuedAt.getTime() : new Date(lastIssuedAt).getTime();
-    const nowMs   = Date.now();
-    const ageHrs  = (nowMs - lastMs) / 3_600_000;
-
-    if (ageHrs < 1) return { state: 'just_issued' };
-
     const currentHour = getPacificHour();
     const windows = ISSUANCE_DATA.peakWindows;
 

@@ -49,12 +49,9 @@
       <h2>Issuance Pattern</h2>
       <p class="analytics-note">Each bar represents one hour of the day (Pacific time). Height shows how often an AFD was issued during that hour over the sample period.</p>
       <div class="analytics-chart-wrap">
-        <svg id="issuance-histogram" viewBox="0 0 264 60" aria-label="Hourly AFD issuance frequency chart" role="img">
+        <svg id="issuance-histogram" viewBox="0 0 264 80" aria-label="Hourly AFD issuance frequency chart" role="img">
           <!-- rendered by JS -->
         </svg>
-        <div class="histogram-hour-labels" aria-hidden="true">
-          <span>12 AM</span><span>6 AM</span><span>12 PM</span><span>6 PM</span><span>12 AM</span>
-        </div>
       </div>
     </section>
 
@@ -103,7 +100,9 @@
     // Histogram
     const svg = document.getElementById('issuance-histogram');
     const maxProb = Math.max(...hours.map(h => h.probability), 0.01);
-    const BAR_W = 10, GAP = 1, HEIGHT = 50, Y_TOP = 5;
+    const BAR_W = 10, GAP = 1, HEIGHT = 50, Y_TOP = 5, LABEL_Y = 60;
+    const NS = 'http://www.w3.org/2000/svg';
+
     const currentHour = (() => {
       const h = parseInt(new Intl.DateTimeFormat('en-US', {
         hour: 'numeric', hour12: false, timeZone: 'America/Los_Angeles'
@@ -111,14 +110,21 @@
       return h === 24 ? 0 : h;
     })();
 
+    function fmtLabel(h) {
+      if (h === 0 || h === 24) return '12a';
+      if (h === 12) return '12p';
+      return h < 12 ? `${h}a` : `${h - 12}p`;
+    }
+
     hours.forEach(({ hour, probability }) => {
       const isPeak = peaks.some(w => hour >= w.startHour && hour <= w.endHour);
       const isCurrent = hour === currentHour;
       const barH = Math.max(2, (probability / maxProb) * HEIGHT);
       const x = hour * (BAR_W + GAP);
+      const cx = x + BAR_W / 2;
       const y = Y_TOP + HEIGHT - barH;
 
-      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      const rect = document.createElementNS(NS, 'rect');
       rect.setAttribute('x', x);
       rect.setAttribute('y', y);
       rect.setAttribute('width', BAR_W);
@@ -128,14 +134,24 @@
       svg.appendChild(rect);
 
       if (isCurrent) {
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', x + BAR_W / 2);
+        const line = document.createElementNS(NS, 'line');
+        line.setAttribute('x1', cx);
         line.setAttribute('y1', Y_TOP - 3);
-        line.setAttribute('x2', x + BAR_W / 2);
+        line.setAttribute('x2', cx);
         line.setAttribute('y2', Y_TOP + HEIGHT + 2);
         line.setAttribute('class', 'hist-now');
         svg.appendChild(line);
       }
+
+      // Per-bar rotated label
+      const text = document.createElementNS(NS, 'text');
+      text.setAttribute('x', cx);
+      text.setAttribute('y', LABEL_Y);
+      text.setAttribute('text-anchor', 'end');
+      text.setAttribute('transform', `rotate(-90, ${cx}, ${LABEL_Y})`);
+      text.setAttribute('class', isCurrent ? 'hist-label hist-label-now' : 'hist-label');
+      text.textContent = fmtLabel(hour);
+      svg.appendChild(text);
     });
 
     // Peak windows list

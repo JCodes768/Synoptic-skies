@@ -272,10 +272,15 @@ a.site-title {
   color: var(--color-text-muted);
 }
 
-#issuance-prediction {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
+.afd-prediction-link {
   color: var(--color-text-muted);
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.afd-prediction-link:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
 .analytics-link {
@@ -1643,14 +1648,15 @@ a.site-title {
   opacity: 0.6;
 }
 
-.histogram-hour-labels {
-  display: flex;
-  justify-content: space-between;
+.hist-label {
   font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-  margin-top: 4px;
-  padding: 0 2px;
+  font-size: 5px;
+  fill: var(--color-text-muted);
+}
+
+.hist-label-now {
+  fill: var(--color-accent);
+  font-weight: 600;
 }
 
 .peak-windows-list {
