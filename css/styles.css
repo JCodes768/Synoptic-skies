@@ -583,13 +583,87 @@ a.site-title {
 
 /* ── Hourly Forecast Strip ──────────────────────────────────── */
 
+.hourly-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  border-top: 1px solid var(--color-border-light);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+}
+
+.hourly-day-btn {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-bg-alt);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hourly-day-btn:hover,
+.hourly-day-btn[aria-current="true"] {
+  background: var(--color-accent-glow);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.hourly-scroller {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-xs);
+}
+
+/* Arrows are for mice and trackpads only — touch already has swipe */
+.hourly-arrow {
+  display: none;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  background: var(--color-bg-alt);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hourly-arrow {
+    display: flex;
+  }
+}
+
+.hourly-arrow:hover:not(:disabled) {
+  background: var(--color-accent-glow);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.hourly-arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
 .hourly-forecast {
   display: flex;
+  flex: 1;
+  min-width: 0;
+  position: relative;
   overflow-x: auto;
   gap: 0;
   padding: var(--space-sm) 0 var(--space-xs);
-  border-top: 1px solid var(--color-border-light);
-  margin-top: var(--space-sm);
+  scroll-snap-type: x proximity;
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
 }
@@ -614,6 +688,7 @@ a.site-title {
   min-width: 56px;
   padding: 0 var(--space-xs);
   flex-shrink: 0;
+  scroll-snap-align: start;
 }
 
 .hourly-time {

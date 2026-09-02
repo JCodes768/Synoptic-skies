@@ -194,15 +194,21 @@ function renderHourlyForecast(periods) {
   const tempRange = maxTemp - minTemp || 1;
 
   let lastDate = null;
+  const days = [];
   let html = '<div class="hourly-day-sep"><span>Hourly</span></div>';
 
   hours.forEach((hour, i) => {
     const dt = new Date(hour.startTime);
     const dateStr = dt.toLocaleDateString('en-US', { weekday: 'short' });
 
-    // Day separator
-    if (lastDate !== null && dateStr !== lastDate) {
-      html += `<div class="hourly-day-sep"><span>${dateStr}</span></div>`;
+    // Day separator, and mark the first hour of each day as a jump target
+    let dayStartAttr = '';
+    if (dateStr !== lastDate) {
+      if (lastDate !== null) {
+        html += `<div class="hourly-day-sep"><span>${dateStr}</span></div>`;
+      }
+      days.push({ key: dateStr, label: days.length === 0 ? 'Today' : dateStr });
+      dayStartAttr = ` data-day-start="${dateStr}"`;
     }
     lastDate = dateStr;
 
@@ -221,7 +227,7 @@ function renderHourlyForecast(periods) {
     const t = ((hour.temperature - minTemp) / tempRange).toFixed(3);
 
     html += `
-      <div class="hourly-item">
+      <div class="hourly-item"${dayStartAttr}>
         <div class="hourly-time">${escapeHTML(timeLabel)}</div>
         <div class="hourly-icon">${icon}</div>
         ${precip}
@@ -230,8 +236,75 @@ function renderHourlyForecast(periods) {
     `;
   });
 
-  el.innerHTML = `<div class="hourly-forecast">${html}</div>`;
+  const nav = days.map((d, i) =>
+    `<button type="button" class="hourly-day-btn" data-day-target="${d.key}"${i === 0 ? ' aria-current="true"' : ''}>${escapeHTML(d.label)}</button>`
+  ).join('');
+
+  el.innerHTML = `
+    <div class="hourly-nav">${nav}</div>
+    <div class="hourly-scroller">
+      <button type="button" class="hourly-arrow" data-dir="-1" aria-label="Scroll to earlier hours">&lsaquo;</button>
+      <div class="hourly-forecast">${html}</div>
+      <button type="button" class="hourly-arrow" data-dir="1" aria-label="Scroll to later hours">&rsaquo;</button>
+    </div>
+  `;
   colorizeHourlyTemps();
+  initHourlyNav(el);
+}
+
+function initHourlyNav(root) {
+  const strip = root.querySelector('.hourly-forecast');
+  if (!strip) return;
+
+  const arrows = [...root.querySelectorAll('.hourly-arrow')];
+  const dayBtns = [...root.querySelectorAll('.hourly-day-btn')];
+
+  // The CSS reduced-motion block can't reach JS-driven scrolling
+  const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+
+  // .hourly-forecast is positioned, so offsetLeft is the scroll offset of each day
+  const dayOffsets = dayBtns.map(btn => {
+    const target = strip.querySelector(`[data-day-start="${btn.dataset.dayTarget}"]`);
+    return target ? target.offsetLeft : 0;
+  });
+
+  function update() {
+    const max = strip.scrollWidth - strip.clientWidth;
+    const x = strip.scrollLeft;
+
+    arrows.forEach(a => {
+      a.disabled = Number(a.dataset.dir) < 0 ? x <= 1 : x >= max - 1;
+    });
+
+    // The last day may start past max scroll, so pin it when we bottom out
+    // (only when there is actually somewhere to scroll)
+    let active = 0;
+    dayOffsets.forEach((off, i) => { if (off <= x + 2) active = i; });
+    if (max > 0 && x >= max - 1) active = dayBtns.length - 1;
+
+    dayBtns.forEach((b, i) => {
+      if (i === active) b.setAttribute('aria-current', 'true');
+      else b.removeAttribute('aria-current');
+    });
+  }
+
+  arrows.forEach(a => a.addEventListener('click', () => {
+    strip.scrollBy({ left: Number(a.dataset.dir) * strip.clientWidth * 0.85, behavior });
+  }));
+
+  dayBtns.forEach((b, i) => b.addEventListener('click', () => {
+    // The first day scrolls fully home so the "Hourly" label stays visible
+    strip.scrollTo({ left: i === 0 ? 0 : dayOffsets[i], behavior });
+  }));
+
+  let ticking = false;
+  strip.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; update(); });
+  });
+
+  update();
 }
 
 function colorizeHourlyTemps() {
